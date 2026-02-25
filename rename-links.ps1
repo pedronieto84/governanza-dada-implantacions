@@ -1,0 +1,1 @@
+$c = Get-Content "INSTRUCTIONS.md" -Raw; $global:i = 1; $nc = [regex]::Replace($c, "(?:\./)?assets/[^\)]+\.png", { param($m); $r = "./assets/$($global:i).png"; $global:i++; return $r }); Set-Content "INSTRUCTIONS.md" -Value $nc -Encoding UTF8
