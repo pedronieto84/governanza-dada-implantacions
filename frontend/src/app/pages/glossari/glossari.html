@@ -1,0 +1,13 @@
+<div class="flex flex-col gap-6">
+  <div class="text-3xl font-bold">3. Plantilla de glossari corporatiu</div>
+  
+  <div role="tablist" class="tabs tabs-bordered">
+    <a role="tab" class="tab text-lg pb-2" routerLink="taula" routerLinkActive="tab-active font-bold text-primary border-primary">Glossari</a>
+    <a role="tab" class="tab text-lg pb-2" routerLink="relacion" routerLinkActive="tab-active font-bold text-primary border-primary">Rel. Glossari</a>
+    <a role="tab" class="tab text-lg pb-2" routerLink="llegenda" routerLinkActive="tab-active font-bold text-primary border-primary">Llegenda</a>
+  </div>
+
+  <div class="mt-2 bg-base-100 p-6 rounded-2xl shadow-sm border border-base-200 flex-1">
+    <router-outlet></router-outlet>
+  </div>
+</div>

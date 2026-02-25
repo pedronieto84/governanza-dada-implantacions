@@ -1,0 +1,56 @@
+<div class="drawer lg:drawer-open">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col">
+    <!-- Navbar para móviles -->
+    <div class="navbar bg-base-100 w-full lg:hidden">
+      <div class="flex-none">
+        <label for="my-drawer-2" class="btn btn-square btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </label>
+      </div>
+      <div class="flex-1 px-2 mx-2 text-xl font-bold">Gobernanza de Datos</div>
+    </div>
+    
+    <!-- Contenido Principal -->
+    <main class="flex-1 overflow-y-auto bg-base-200 p-6">
+      <div class="max-w-7xl mx-auto">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Sidebar -->
+  <div class="drawer-side">
+    <label for="my-drawer-2" class="drawer-overlay"></label>
+    <div class="menu w-80 min-h-full bg-base-100 text-base-content p-4">
+      <!-- Título Sidebar -->
+      <div class="mb-5 px-4">
+        <h2 class="text-2xl font-bold text-primary">Gobernanza</h2>
+        <p class="text-xs text-base-content/60">Dashboard Principal</p>
+      </div>
+      <ul class="menu">
+        <!-- Pestaña 1 -->
+        <li>
+          <a routerLink="/questionari" routerLinkActive="active font-bold text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+            1. Qüestionari d'avaluació
+          </a>
+        </li>
+        <!-- Pestaña 2 -->
+        <li>
+          <a routerLink="/inventari" routerLinkActive="active font-bold text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>
+            2. Inventari d'Actius
+          </a>
+        </li>
+        <!-- Pestaña 3 -->
+        <li>
+          <a routerLink="/glossari" routerLinkActive="active font-bold text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+            3. Glossari Corporatiu
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
