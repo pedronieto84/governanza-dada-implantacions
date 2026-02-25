@@ -2,10 +2,46 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-mapa-responsables',
-  imports: [],
   templateUrl: './mapa-responsables.html',
   styleUrl: './mapa-responsables.css',
+  standalone: true
 })
 export class MapaResponsables {
+  rolsClau = [
+    { name: 'Responsable de dades (Data Stewart)', resp: '', email: '', phone: '', obs: '' },
+    { name: 'Propietari de dades (Data Owner)', resp: '', email: '', phone: '', obs: '' },
+    { name: 'Referent de dades (Data Stewart)', resp: 'Gemma Àlvarez', email: 'alvarezmgm@premiadedalt.cat', phone: '936931509', obs: 'Cap de Recursos humans i de Serveis a les persones: sol·licita accés a Informàtica per un treballador nou' },
+    { name: 'Referent de dades (Data Stewart)', resp: 'Nuria Riera', email: 'rieran@premiadedalt.cat', phone: '674951891', obs: 'Serveis Socials, demana a Informàtica per afegir un treballador nou' },
+    { name: '', resp: 'Teresa Pallarés', email: 'pallarestm@premiadedalt.cat', phone: '670961003', obs: 'Tresoreria i Intervenció, mateixa dinàmica.' },
+    { name: '', resp: 'Pedro Obrero Román', email: 'obrerorp@premiadedalt.cat', phone: '607118371', obs: 'Responsable d\'Informàtica que accedeix a les peticions dels diferents departaments' }
+  ];
 
+  arees = [
+    { name: 'Recursos Humans', resp: '', email: '', phone: '', obs: '' },
+    { name: 'Serveis Socials', resp: '', email: '', phone: '', obs: '' },
+    { name: 'Tresoreria i Intervenció', resp: '', email: '', phone: '', obs: '' },
+    { name: 'Informàtica', resp: '', email: '', phone: '', obs: '' },
+    { name: 'Organigrames tècnic i funcional', resp: '', email: '', phone: '', obs: '' }
+  ];
+
+  processos = [
+    { name: 'Contractes menors', resp: 'Cada departament', email: '', phone: '', obs: 'Contractació' },
+    { name: 'Subvencions', resp: 'Cada departament', email: '', phone: '', obs: 'Cada departament gestiona les seves' },
+    { name: 'Licitacions', resp: 'Secretaria', email: 'botemmr@premiadedalt.cat', phone: '936931511', obs: '' },
+    { name: 'Llicències d\'obres', resp: 'Urbanisme (Lluís Garcia)', email: 'garciajll@premiadedalt.cat', phone: '', obs: '' },
+    { name: 'Inscripcions a les Escoles', resp: 'Educació (Eli Gumma)', email: '', phone: '', obs: '' },
+    { name: 'Denúncies / Infraccions', resp: 'Policia (Carlos Matallan)', email: '', phone: '', obs: '' },
+    { name: 'Altes i baixes de personal', resp: 'Recursos Humans', email: '', phone: '', obs: '' },
+    { name: 'Pagament de Nòmines', resp: 'Recursos Humans', email: '', phone: '', obs: '' },
+    { name: 'Pagament a Proveïdors', resp: 'Tresoreria', email: '', phone: '', obs: '' }
+  ];
+
+  projectes = [
+    { name: 'El Pla de Govern 2023 - 2027', resp: '', email: '', phone: '', obs: '' }
+  ];
+
+  altres = [
+    { name: 'Responsable de Tecnologia', resp: '', email: '', phone: '', obs: '' },
+    { name: 'Responsable de Seguretat', resp: '', email: '', phone: '', obs: '' }
+  ];
 }

@@ -1,1 +1,158 @@
-<p>mapa-responsables works!</p>
+<div class="flex flex-col gap-8">
+
+  <!-- Rols Clau -->
+  <div class="card bg-base-100 shadow-xl border border-base-200">
+    <div class="card-body p-0">
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl">Rols Clau</h2>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr class="bg-base-200 text-base">
+              <th>Rol</th>
+              <th>Responsable</th>
+              <th>Correu responsable</th>
+              <th>Telèfon responsable</th>
+              <th>Observacions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of rolsClau; track item.name) {
+              <tr>
+                <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
+                <td>{{item.resp}}</td>
+                <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
+                <td>{{item.phone}}</td>
+                <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Àrees / Dominis -->
+  <div class="card bg-base-100 shadow-xl border border-base-200">
+    <div class="card-body p-0">
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl">Àrees / Dominis</h2>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr class="bg-base-200 text-base">
+              <th>Nom de l'àrea</th>
+              <th>Responsable</th>
+              <th>Correu responsable</th>
+              <th>Telèfon responsable</th>
+              <th>Observacions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of arees; track item.name) {
+              <tr>
+                <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
+                <td>{{item.resp}}</td>
+                <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
+                <td>{{item.phone}}</td>
+                <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Processos clau -->
+  <div class="card bg-base-100 shadow-xl border border-base-200">
+    <div class="card-body p-0">
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl">Processos clau</h2>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr class="bg-base-200 text-base">
+              <th>Nom del procés</th>
+              <th>Responsable</th>
+              <th>Correu responsable</th>
+              <th>Telèfon responsable</th>
+              <th>Observacions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of processos; track item.name) {
+              <tr>
+                <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
+                <td>{{item.resp}}</td>
+                <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
+                <td>{{item.phone}}</td>
+                <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projectes estratègics -->
+  <div class="card bg-base-100 shadow-xl border border-base-200">
+    <div class="card-body p-0">
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl">Projectes estratègics (p.e. PAM, Dades obertes etc.)</h2>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr class="bg-base-200 text-base">
+              <th>Nom del projecte</th>
+              <th>Responsable</th>
+              <th>Correu responsable</th>
+              <th>Telèfon responsable</th>
+              <th>Observacions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of projectes; track item.name) {
+              <tr>
+                <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
+                <td>{{item.resp}}</td>
+                <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
+                <td>{{item.phone}}</td>
+                <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Altres responsables -->
+  <div class="card bg-base-100 shadow-xl border border-base-200">
+    <div class="card-body p-0">
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl">Altres responsables</h2>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr class="bg-base-200 text-base">
+              <th>Àmbit de responsabilitat</th>
+              <th>Responsable</th>
+              <th>Correu responsable</th>
+              <th>Telèfon responsable</th>
+              <th>Observacions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of altres; track item.name) {
+              <tr>
+                <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
+                <td>{{item.resp}}</td>
+                <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
+                <td>{{item.phone}}</td>
+                <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

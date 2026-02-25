@@ -1,1 +1,60 @@
-<p>sistemas works!</p>
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
+      Inventari de Sistemes
+    </h2>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-zebra table-sm w-full">
+        <thead>
+          <tr class="bg-base-200 text-xs">
+            <th class="min-w-32">Nom curt</th>
+            <th>És extern?</th>
+            <th class="min-w-32">Descripció</th>
+            <th class="min-w-48">Tipus</th>
+            <th class="min-w-48">Proveïdor</th>
+            <th class="min-w-32">Admin de sistemes</th>
+            <th class="min-w-32">Email Admin</th>
+            <th class="min-w-32">Dept. Admin</th>
+            <th class="min-w-32">Arquitecte de la dada</th>
+            <th class="min-w-32">Email Arquitecte</th>
+            <th class="min-w-32">Dept. Arquitecte</th>
+          </tr>
+        </thead>
+        <tbody class="text-xs">
+          @for (item of sistemas; track item.nomCurt) {
+            <tr>
+              <td class="font-medium whitespace-normal">{{item.nomCurt}}</td>
+              <td class="text-center">
+                <span class="badge" [class.badge-primary]="item.extern === 'Sí'" [class.badge-ghost]="item.extern === 'No'">{{item.extern}}</span>
+              </td>
+              <td class="whitespace-normal">{{item.descripcio}}</td>
+              <td class="whitespace-normal">{{item.tipus}}</td>
+              <td class="whitespace-normal">{{item.proveidor}}</td>
+              <td class="whitespace-normal">{{item.adminSis}}</td>
+              <td class="whitespace-normal">
+                @if (item.adminEmail) {
+                  @if (item.adminEmail.includes('@')) {
+                    <a href="mailto:{{item.adminEmail}}" class="link link-primary">{{item.adminEmail}}</a>
+                  } @else {
+                    {{item.adminEmail}}
+                  }
+                }
+              </td>
+              <td class="whitespace-normal">{{item.adminUnitat}}</td>
+              <td class="whitespace-normal">{{item.arqDada}}</td>
+              <td class="whitespace-normal">
+                @if (item.arqEmail && item.arqEmail.includes('@')) {
+                  <a href="mailto:{{item.arqEmail}}" class="link link-primary">{{item.arqEmail}}</a>
+                } @else {
+                  {{item.arqEmail}}
+                }
+              </td>
+              <td class="whitespace-normal">{{item.arqUnitat}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
