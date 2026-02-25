@@ -1,0 +1,36 @@
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16h16M4 12h16m-7 8h7M4 8h16M4 4h16" /></svg>
+      Relacions d'atributs a atributs (Model de Dades)
+    </h2>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-bordered table-zebra table-sm w-full min-w-[1200px] text-sm">
+        <thead class="bg-primary text-primary-content text-left">
+          <tr>
+            <th class="border-r border-base-300 w-32">Atribut d'origen</th>
+            <th class="border-r border-base-300 w-32">Atribut de destinació</th>
+            <th class="border-r border-base-300 w-64">Tipus de relació</th>
+            <th class="border-r border-base-300 w-48">Entitat d'origen</th>
+            <th class="border-r border-base-300 w-32 text-center">Sistema d'origen</th>
+            <th class="border-r border-base-300 w-48">Entitat de destinació</th>
+            <th class="w-32 text-center">Sistema de destinació</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of relacions; track $index) {
+            <tr class="hover whitespace-normal">
+              <td class="font-bold border-r border-base-300">{{item.atrOrigen}}</td>
+              <td class="font-bold border-r border-base-300">{{item.atrDesti}}</td>
+              <td class="border-r border-base-300 text-info">{{item.tipus}}</td>
+              <td class="border-r border-base-300">{{item.entitatOrigen}}</td>
+              <td class="border-r border-base-300 text-center">{{item.sistemaOrigen}}</td>
+              <td class="border-r border-base-300">{{item.entitatDesti}}</td>
+              <td class="text-center">{{item.sistemaDesti}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

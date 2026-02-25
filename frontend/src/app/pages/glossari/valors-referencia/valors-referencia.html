@@ -1,0 +1,28 @@
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+      Relacions no Jeràrquiques (Valors de Referència)
+    </h2>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-bordered table-zebra table-sm w-full text-sm">
+        <thead class="bg-primary text-primary-content text-left">
+          <tr>
+            <th class="border-r border-base-300 w-1/4">Terme d'origen</th>
+            <th class="border-r border-base-300 w-1/4">Terme relacionat</th>
+            <th class="w-1/2">Tipus de relació</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of relacions; track $index) {
+            <tr class="hover whitespace-normal">
+              <td class="font-bold border-r border-base-300">{{item.origen}}</td>
+              <td class="font-medium border-r border-base-300">{{item.relacionat}}</td>
+              <td class="text-base-content/80">{{item.tipus}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

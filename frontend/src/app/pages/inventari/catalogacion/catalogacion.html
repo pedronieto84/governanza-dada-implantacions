@@ -1,0 +1,54 @@
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+      Catalogació de dades
+    </h2>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-bordered table-zebra table-sm w-full min-w-[2000px] text-xs">
+        <thead class="bg-primary text-primary-content text-center">
+          <tr>
+            <th class="border-r border-base-300 w-12">Id</th>
+            <th class="border-r border-base-300 w-32">Nom</th>
+            <th class="border-r border-base-300 w-32">Descripció</th>
+            <th class="border-r border-base-300 w-32">Sistema</th>
+            <th class="border-r border-base-300 w-32">Nom del terme relacionat (Glossari)</th>
+            <th class="border-r border-base-300 w-24">Tipus</th>
+            <th class="border-r border-base-300 w-24">Informació geogràfica (SÍ/NO)</th>
+            <th class="border-r border-base-300 w-24">Informació ciutadania (SÍ/NO)</th>
+            <th class="border-r border-base-300 w-24">Informació d'empreses (SÍ/NO)</th>
+            <th class="border-r border-base-300 w-24">Informació de gènere (SÍ/NO)</th>
+            <th class="border-r border-base-300 w-48">Valoració del llindar per evitar identificació</th>
+            <th class="border-r border-base-300 w-48">Valoració d'esbiaixos en la recopilació</th>
+            <th class="border-r border-base-300 w-24">Valoració global de qualitat</th>
+            <th class="border-r border-base-300 w-24">Protecció de dades</th>
+            <th class="border-r border-base-300 w-24">Automàtic segons interoperabilitat</th>
+            <th class="w-32">Visibilitat</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of dades; track item.id) {
+            <tr class="hover whitespace-normal">
+              <td class="font-bold border-r border-base-300 text-center">{{item.id}}</td>
+              <td class="border-r border-base-300 font-medium">{{item.nom}}</td>
+              <td class="border-r border-base-300">{{item.desc}}</td>
+              <td class="border-r border-base-300">{{item.sistema}}</td>
+              <td class="border-r border-base-300">{{item.terme}}</td>
+              <td class="border-r border-base-300">{{item.tipus}}</td>
+              <td class="border-r border-base-300 text-center">{{item.infoGeo}}</td>
+              <td class="border-r border-base-300 text-center">{{item.infoCiu}}</td>
+              <td class="border-r border-base-300 text-center">{{item.infoEmp}}</td>
+              <td class="border-r border-base-300 text-center">{{item.infoGen}}</td>
+              <td class="border-r border-base-300 text-center">{{item.llindar}}</td>
+              <td class="border-r border-base-300 text-center">{{item.esbiaix}}</td>
+              <td class="border-r border-base-300 text-center">{{item.qualitat}}</td>
+              <td class="border-r border-base-300 text-center">{{item.proteccio}}</td>
+              <td class="border-r border-base-300 text-center">{{item.autoOp}}</td>
+              <td class="text-center">{{item.visibilitat}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

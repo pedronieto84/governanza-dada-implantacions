@@ -1,0 +1,46 @@
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+      Fonts i destinacions de la informació
+    </h2>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-bordered table-zebra table-sm w-full min-w-[1500px] text-xs">
+        <thead class="bg-primary text-primary-content text-center">
+          <tr>
+            <th class="border-r border-base-300 w-32">Nom de l'Entitat</th>
+            <th class="border-r border-base-300 w-24">Intraoperabilitat (altres depts)</th>
+            <th class="border-r border-base-300 w-24">Interoperabilitat (altres admins)</th>
+            <th class="border-r border-base-300 w-24">Interès de la ciutadania</th>
+            <th class="border-r border-base-300 w-48">Obertura</th>
+            <th class="border-r border-base-300 w-24">Restriccions a l'obertura</th>
+            <th class="border-r border-base-300 w-24">L'entitat existeix una única vegada?</th>
+            <th class="border-r border-base-300 w-24">S'utilitzen llenguatges controlats?</th>
+            <th class="border-r border-base-300 w-24">Les dades són completes (històric)?</th>
+            <th class="border-r border-base-300 w-24">Les dades són completes (actuals)?</th>
+            <th class="border-r border-base-300 w-24">Enviaments o transf. periòdiques?</th>
+            <th class="w-24">CRITICITAT</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of dades; track item.nom) {
+            <tr class="hover whitespace-normal">
+              <td class="font-bold border-r border-base-300">{{item.nom}}</td>
+              <td class="border-r border-base-300 text-center">{{item.intraOp}}</td>
+              <td class="border-r border-base-300 text-center">{{item.interOp}}</td>
+              <td class="border-r border-base-300 text-center">{{item.interes}}</td>
+              <td class="border-r border-base-300 text-center">{{item.obertura}}</td>
+              <td class="border-r border-base-300 text-center">{{item.restriccions}}</td>
+              <td class="border-r border-base-300 text-center">{{item.entitatUnica}}</td>
+              <td class="border-r border-base-300 text-center">{{item.llenguatges}}</td>
+              <td class="border-r border-base-300 text-center">{{item.completesHist}}</td>
+              <td class="border-r border-base-300 text-center">{{item.completesActuals}}</td>
+              <td class="border-r border-base-300 text-center">{{item.enviaments}}</td>
+              <td class="text-center font-bold" [class.text-error]="item.criticat === 'SÍ'">{{item.criticat}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

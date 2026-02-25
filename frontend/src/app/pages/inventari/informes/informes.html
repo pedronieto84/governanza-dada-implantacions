@@ -1,0 +1,40 @@
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+      Inventari d'informes corporatius i quadres de comandament
+    </h2>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-bordered table-zebra table-sm w-full min-w-[1200px] text-xs">
+        <thead class="bg-primary text-primary-content text-center">
+          <tr>
+            <th class="border-r border-base-300 w-32">Nom de l'Entitat</th>
+            <th class="border-r border-base-300 w-32">S'hi ha construït quadres de comandament?</th>
+            <th class="border-r border-base-300 w-32">Referent tècnic</th>
+            <th class="border-r border-base-300 w-48">Correu electrònic Referent tècnic</th>
+            <th class="border-r border-base-300 w-32">Unitat orgànica Referent tècnic</th>
+            <th class="border-r border-base-300 w-32">Arquitecte de la dada</th>
+            <th class="border-r border-base-300 w-48">Correu electrònic Arquitecte de la dada</th>
+            <th class="border-r border-base-300 w-32">Unitat orgànica Arquitecte de la dada</th>
+            <th class="w-48">Observacions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of dades; track item.nom) {
+            <tr class="hover whitespace-normal">
+              <td class="font-bold border-r border-base-300">{{item.nom}}</td>
+              <td class="border-r border-base-300 text-center font-bold text-primary">{{item.quadresCmd}}</td>
+              <td class="border-r border-base-300 text-center">{{item.refTecnic}}</td>
+              <td class="border-r border-base-300 text-center">{{item.emailRef}}</td>
+              <td class="border-r border-base-300 text-center">{{item.unitatRef}}</td>
+              <td class="border-r border-base-300 text-center">{{item.arqDada}}</td>
+              <td class="border-r border-base-300 text-center">{{item.emailArq}}</td>
+              <td class="border-r border-base-300 text-center">{{item.unitatArq}}</td>
+              <td class="text-left italic text-base-content/70">{{item.obs}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

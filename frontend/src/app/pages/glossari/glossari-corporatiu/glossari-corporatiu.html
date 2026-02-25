@@ -1,0 +1,46 @@
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+      Glossari de Dades Mestres
+    </h2>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-bordered table-zebra table-sm w-full min-w-[1500px] text-xs">
+        <thead class="bg-primary text-primary-content text-center">
+          <tr>
+            <th class="border-r border-base-300 w-48">Terme de glossari</th>
+            <th class="border-r border-base-300 w-32">Tipus</th>
+            <th class="border-r border-base-300 w-48">Descripció de format</th>
+            <th class="border-r border-base-300 w-48">Fórmula de càlcul (mètrica)</th>
+            <th class="border-r border-base-300 w-48">Comentaris</th>
+            <th class="border-r border-base-300 w-48">Noms d'àlies</th>
+            <th class="border-r border-base-300 w-32">Referent de Govern</th>
+            <th class="border-r border-base-300 w-48">Correu electrònic del Referent de Govern</th>
+            <th class="border-r border-base-300 w-32">Unitat Orgànica Referent de Govern</th>
+            <th class="border-r border-base-300 w-32">Responsable Funcional</th>
+            <th class="border-r border-base-300 w-48">Correu electrònic del Responsable Funcional</th>
+            <th class="w-32">Unitat orgànica Responsable Funcional</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of termes; track item.terme) {
+            <tr class="hover whitespace-normal">
+              <td class="font-bold border-r border-base-300 bg-base-200/50">{{item.terme}}</td>
+              <td class="border-r border-base-300 text-center">{{item.tipus}}</td>
+              <td class="border-r border-base-300 text-left">{{item.descFormat}}</td>
+              <td class="border-r border-base-300 text-left">{{item.formula}}</td>
+              <td class="border-r border-base-300 text-left">{{item.comentaris}}</td>
+              <td class="border-r border-base-300 text-left italic">{{item.alies}}</td>
+              <td class="border-r border-base-300 text-center">{{item.refGovern}}</td>
+              <td class="border-r border-base-300 text-center text-primary">{{item.emailRefGov}}</td>
+              <td class="border-r border-base-300 text-center">{{item.unitatRefGov}}</td>
+              <td class="border-r border-base-300 text-center">{{item.respFuncional}}</td>
+              <td class="border-r border-base-300 text-center text-primary">{{item.emailRespFunc}}</td>
+              <td class="text-center">{{item.unitatRespFunc}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

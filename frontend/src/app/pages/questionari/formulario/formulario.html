@@ -1,0 +1,54 @@
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+      Formulari Qüestionari
+    </h2>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-bordered table-xs w-full text-center min-w-[1400px]">
+        <thead>
+          <tr class="bg-primary text-white">
+            <th rowspan="2" class="w-12 border-r border-base-300">ID</th>
+            <th colspan="4" class="border-r border-base-300">Respostes</th>
+            <th colspan="4" class="border-r border-base-300">Accions</th>
+            <th rowspan="2" class="border-r border-base-300">Àmbit</th>
+            <th rowspan="2" class="border-r border-base-300 w-32">Procés</th>
+            <th rowspan="2" class="border-r border-base-300 w-48">Pla acció</th>
+            <th rowspan="2" class="border-r border-base-300">Prioritat</th>
+            <th rowspan="2">Calendari</th>
+          </tr>
+          <tr class="bg-base-200 text-base-content">
+            <th class="w-32 border-r border-base-300 text-error">1</th>
+            <th class="w-32 border-r border-base-300 text-warning">2</th>
+            <th class="w-32 border-r border-base-300 text-info">3</th>
+            <th class="w-32 border-r border-base-300 text-success">4</th>
+            <th class="w-32 border-r border-base-300 text-error">1</th>
+            <th class="w-32 border-r border-base-300 text-warning">2</th>
+            <th class="w-32 border-r border-base-300 text-info">3</th>
+            <th class="w-32 border-r border-base-300 text-success">4</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of preguntas; track item.id) {
+            <tr class="hover">
+              <td class="font-bold border-r border-base-300 bg-base-100">{{item.id}}</td>
+              <td class="border-r border-base-300 whitespace-normal text-left text-xs bg-error/10">{{item.respostes[0]}}</td>
+              <td class="border-r border-base-300 whitespace-normal text-left text-xs">{{item.respostes[1]}}</td>
+              <td class="border-r border-base-300 whitespace-normal text-left text-xs">{{item.respostes[2]}}</td>
+              <td class="border-r border-base-300 whitespace-normal text-left text-xs">{{item.respostes[3]}}</td>
+              <td class="border-r border-base-300 whitespace-normal text-left text-xs bg-error/10">{{item.accions[0]}}</td>
+              <td class="border-r border-base-300 whitespace-normal text-left text-xs">{{item.accions[1]}}</td>
+              <td class="border-r border-base-300 whitespace-normal text-left text-xs">{{item.accions[2]}}</td>
+              <td class="border-r border-base-300 whitespace-normal text-left text-xs">{{item.accions[3]}}</td>
+              <td class="border-r border-base-300 font-medium">{{item.ambit}}</td>
+              <td class="border-r border-base-300 whitespace-normal text-left text-xs">{{item.proces}}</td>
+              <td class="border-r border-base-300 whitespace-normal text-left text-xs font-semibold">{{item.plaAccio}}</td>
+              <td class="border-r border-base-300 font-bold text-lg text-center">{{item.prioritat}}</td>
+              <td>{{item.calendari}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
