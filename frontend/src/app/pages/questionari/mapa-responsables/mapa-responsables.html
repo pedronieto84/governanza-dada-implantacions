@@ -161,15 +161,25 @@
       </div>
     </div>
   </div>
+
   } @else {
-    <!-- Organigrama Container -->
-    <div class="card bg-base-100 shadow-xl border border-base-200 w-full overflow-hidden h-[600px]">
-      <div class="card-body p-0">
-        <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center">
-          Visualització d'Organigrama
-          <button class="btn btn-sm btn-secondary" (click)="openAddModal()">Afegir Empleat</button>
+    <!-- Organigrama Container (Fullscreen Modal or Normal Card) -->
+    <div [class]="isFullscreen ? 'fixed inset-0 z-50 bg-base-100 flex flex-col p-4' : 'card bg-base-100 shadow-xl border border-base-200 w-full overflow-hidden h-[600px]'">
+      <div [class]="isFullscreen ? 'flex-1 flex flex-col' : 'card-body p-0 flex flex-col'">
+        <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center" [class.rounded-t-2xl]="!isFullscreen" [class.rounded-none]="isFullscreen">
+          <span>Visualització d'Organigrama</span>
+          <div class="flex gap-2 items-center">
+            <button class="btn btn-sm btn-secondary" (click)="openAddModal()">Afegir Empleat</button>
+            <button class="btn btn-sm btn-ghost btn-square" (click)="toggleFullscreen()" title="Ampliar / Tancar ampliació">
+              @if (isFullscreen) {
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 hover:text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+              }
+            </button>
+          </div>
         </h2>
-        <div class="w-full h-full min-h-[500px] bg-slate-100" #chartContainer></div>
+        <div class="w-full flex-1 min-h-[500px] bg-slate-100" #chartContainer></div>
       </div>
     </div>
   }
