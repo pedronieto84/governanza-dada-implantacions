@@ -1,0 +1,9 @@
+{
+  "sistemas": [
+    { "nomCurt": "Servidor POSSE", "extern": "No", "descripcio": "", "tipus": "Servidor amb un programa que es diu SIGEP instal·lat al servidor", "proveidor": "AITOS és l'empresa que va instal·lar i manté el programa...", "adminSis": "Departament d'Informàtica", "adminEmail": "obrermpm@premiadedalt.cat", "adminUnitat": "Polítiques Digitals", "arqDada": "AITOS", "arqEmail": "AITOS", "arqUnitat": "AITOS" },
+    { "nomCurt": "Gestor d'expedients", "extern": "Sí", "descripcio": "Gestor d'expedients", "tipus": "Gestor d'expedients", "proveidor": "Audifilm", "adminSis": "Secretaria i Polítiques Digitals", "adminEmail": "", "adminUnitat": "", "arqDada": "Audifilm", "arqEmail": "Audifilm", "arqUnitat": "Audifilm" },
+    { "nomCurt": "Comptabilitat Diputació", "extern": "Sí", "descripcio": "Comptabilitat", "tipus": "Comptabilitat", "proveidor": "Diputació Barcelona (Berger Levraux)", "adminSis": "Polítiques Digitals / Intervenció", "adminEmail": "Intervenció dona permisos", "adminUnitat": "", "arqDada": "Informàtica / Intervenció", "arqEmail": "", "arqUnitat": "" },
+    { "nomCurt": "Factures", "extern": "Sí", "descripcio": "Factures", "tipus": "Factures", "proveidor": "Diputació Barcelona (Berger Levraux)", "adminSis": "Polítiques Digitals / Intervenció", "adminEmail": "Intervenció dona permisos", "adminUnitat": "", "arqDada": "Informàtica / Intervenció", "arqEmail": "", "arqUnitat": "" },
+    { "nomCurt": "Tràmits", "extern": "Sí", "descripcio": "Portal de tràmits", "tipus": "Portal de tràmits", "proveidor": "Diputació Barcelona", "adminSis": "Polítiques Digitals / OAC", "adminEmail": "OAC", "adminUnitat": "", "arqDada": "Informàtica / Intervenció", "arqEmail": "", "arqUnitat": "" }
+  ]
+}

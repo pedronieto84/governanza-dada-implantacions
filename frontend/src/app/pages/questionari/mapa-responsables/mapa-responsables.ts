@@ -62,6 +62,45 @@ export class MapaResponsables implements OnInit {
     });
   }
 
+  // --- Table Row CRUD ---
+  isRowModalOpen = false;
+  currentTableKey: string = '';
+  currentRowIndex: number = -1;
+  currentRow: any = {};
+
+  openRowModal(tableKey: string, index: number) {
+    this.currentTableKey = tableKey;
+    this.currentRowIndex = index;
+    this.currentRow = { ...(this as any)[tableKey][index] };
+    this.isRowModalOpen = true;
+  }
+
+  addRow(tableKey: string) {
+    this.currentTableKey = tableKey;
+    this.currentRowIndex = -1;
+    this.currentRow = { name: '', resp: '', email: '', phone: '', obs: '' };
+    this.isRowModalOpen = true;
+  }
+
+  deleteRow(tableKey: string, index: number) {
+    (this as any)[tableKey].splice(index, 1);
+    this.saveData();
+  }
+
+  saveRow() {
+    if (this.currentRowIndex === -1) {
+      (this as any)[this.currentTableKey].push({ ...this.currentRow });
+    } else {
+      (this as any)[this.currentTableKey][this.currentRowIndex] = { ...this.currentRow };
+    }
+    this.isRowModalOpen = false;
+    this.saveData();
+  }
+
+  closeRowModal() {
+    this.isRowModalOpen = false;
+  }
+
   rolsClau = [
     { name: 'Responsable de dades (Data Stewart)', resp: '', email: '', phone: '', obs: '' },
     { name: 'Propietari de dades (Data Owner)', resp: '', email: '', phone: '', obs: '' },

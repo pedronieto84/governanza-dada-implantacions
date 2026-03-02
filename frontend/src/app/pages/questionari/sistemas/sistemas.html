@@ -19,10 +19,11 @@
             <th class="min-w-32">Arquitecte de la dada</th>
             <th class="min-w-32">Email Arquitecte</th>
             <th class="min-w-32">Dept. Arquitecte</th>
+            <th class="w-20">Accions</th>
           </tr>
         </thead>
         <tbody class="text-xs">
-          @for (item of sistemas; track item.nomCurt) {
+          @for (item of sistemas; track $index) {
             <tr>
               <td class="font-medium whitespace-normal">{{item.nomCurt}}</td>
               <td class="text-center">
@@ -51,10 +52,87 @@
                 }
               </td>
               <td class="whitespace-normal">{{item.arqUnitat}}</td>
+              <td class="flex gap-1 items-center">
+                <button class="btn btn-xs btn-ghost text-blue-500" (click)="openModal($index)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                </button>
+                <button class="btn btn-xs btn-ghost text-red-500" (click)="deleteItem($index)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+              </td>
             </tr>
           }
         </tbody>
       </table>
     </div>
+    <div class="p-3 border-t border-base-200">
+      <button class="btn btn-sm btn-outline btn-primary gap-1" (click)="openModal(-1)">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Afegir sistema
+      </button>
+    </div>
   </div>
 </div>
+
+<!-- Modal Editar / Afegir Sistema -->
+<dialog id="sistema_modal" class="modal" [class.modal-open]="isModalOpen">
+  <div class="modal-box w-11/12 max-w-3xl">
+    <h3 class="font-bold text-lg">{{ editIndex === -1 ? 'Afegir Sistema' : 'Editar Sistema' }}</h3>
+    <div class="py-4 grid grid-cols-2 gap-4">
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Nom curt</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.nomCurt" />
+      </label>
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">És extern?</span></div>
+        <select class="select select-bordered" [(ngModel)]="currentItem.extern">
+          <option>Sí</option>
+          <option>No</option>
+        </select>
+      </label>
+      <label class="form-control w-full col-span-2">
+        <div class="label"><span class="label-text">Descripció</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.descripcio" />
+      </label>
+      <label class="form-control w-full col-span-2">
+        <div class="label"><span class="label-text">Tipus</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.tipus" />
+      </label>
+      <label class="form-control w-full col-span-2">
+        <div class="label"><span class="label-text">Proveïdor</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.proveidor" />
+      </label>
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Admin de sistemes</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.adminSis" />
+      </label>
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Email Admin</span></div>
+        <input type="email" class="input input-bordered w-full" [(ngModel)]="currentItem.adminEmail" />
+      </label>
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Dept. Admin</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.adminUnitat" />
+      </label>
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Arquitecte de la dada</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.arqDada" />
+      </label>
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Email Arquitecte</span></div>
+        <input type="email" class="input input-bordered w-full" [(ngModel)]="currentItem.arqEmail" />
+      </label>
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Dept. Arquitecte</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.arqUnitat" />
+      </label>
+    </div>
+    <div class="modal-action">
+      <button class="btn" (click)="closeModal()">Cancel·lar</button>
+      <button class="btn btn-primary" (click)="saveItem()">Guardar</button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button (click)="closeModal()">close</button>
+  </form>
+</dialog>

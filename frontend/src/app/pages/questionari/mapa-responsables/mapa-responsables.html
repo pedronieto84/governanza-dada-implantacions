@@ -15,25 +15,35 @@
         <table class="table table-zebra w-full">
           <thead>
             <tr class="bg-base-200 text-base">
-              <th>Rol</th>
-              <th>Responsable</th>
-              <th>Correu responsable</th>
-              <th>Telèfon responsable</th>
-              <th>Observacions</th>
+              <th>Rol</th><th>Responsable</th><th>Correu responsable</th><th>Telèfon responsable</th><th>Observacions</th><th class="w-20">Accions</th>
             </tr>
           </thead>
           <tbody>
-            @for (item of rolsClau; track item.name) {
+            @for (item of rolsClau; track $index) {
               <tr>
                 <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
                 <td>{{item.resp}}</td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
                 <td>{{item.phone}}</td>
                 <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
+                <td class="flex gap-2 items-center">
+                  <button class="btn btn-xs btn-ghost text-blue-500" (click)="openRowModal('rolsClau', $index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                  </button>
+                  <button class="btn btn-xs btn-ghost text-red-500" (click)="deleteRow('rolsClau', $index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </td>
               </tr>
             }
           </tbody>
         </table>
+      </div>
+      <div class="p-3 border-t border-base-200">
+        <button class="btn btn-sm btn-outline btn-primary gap-1" (click)="addRow('rolsClau')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Afegir fila
+        </button>
       </div>
     </div>
   </div>
@@ -46,25 +56,35 @@
         <table class="table table-zebra w-full">
           <thead>
             <tr class="bg-base-200 text-base">
-              <th>Nom de l'àrea</th>
-              <th>Responsable</th>
-              <th>Correu responsable</th>
-              <th>Telèfon responsable</th>
-              <th>Observacions</th>
+              <th>Nom de l'àrea</th><th>Responsable</th><th>Correu responsable</th><th>Telèfon responsable</th><th>Observacions</th><th class="w-20">Accions</th>
             </tr>
           </thead>
           <tbody>
-            @for (item of arees; track item.name) {
+            @for (item of arees; track $index) {
               <tr>
                 <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
                 <td>{{item.resp}}</td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
                 <td>{{item.phone}}</td>
                 <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
+                <td class="flex gap-2 items-center">
+                  <button class="btn btn-xs btn-ghost text-blue-500" (click)="openRowModal('arees', $index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                  </button>
+                  <button class="btn btn-xs btn-ghost text-red-500" (click)="deleteRow('arees', $index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </td>
               </tr>
             }
           </tbody>
         </table>
+      </div>
+      <div class="p-3 border-t border-base-200">
+        <button class="btn btn-sm btn-outline btn-primary gap-1" (click)="addRow('arees')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Afegir fila
+        </button>
       </div>
     </div>
   </div>
@@ -77,25 +97,35 @@
         <table class="table table-zebra w-full">
           <thead>
             <tr class="bg-base-200 text-base">
-              <th>Nom del procés</th>
-              <th>Responsable</th>
-              <th>Correu responsable</th>
-              <th>Telèfon responsable</th>
-              <th>Observacions</th>
+              <th>Nom del procés</th><th>Responsable</th><th>Correu responsable</th><th>Telèfon responsable</th><th>Observacions</th><th class="w-20">Accions</th>
             </tr>
           </thead>
           <tbody>
-            @for (item of processos; track item.name) {
+            @for (item of processos; track $index) {
               <tr>
                 <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
                 <td>{{item.resp}}</td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
                 <td>{{item.phone}}</td>
                 <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
+                <td class="flex gap-2 items-center">
+                  <button class="btn btn-xs btn-ghost text-blue-500" (click)="openRowModal('processos', $index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                  </button>
+                  <button class="btn btn-xs btn-ghost text-red-500" (click)="deleteRow('processos', $index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </td>
               </tr>
             }
           </tbody>
         </table>
+      </div>
+      <div class="p-3 border-t border-base-200">
+        <button class="btn btn-sm btn-outline btn-primary gap-1" (click)="addRow('processos')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Afegir fila
+        </button>
       </div>
     </div>
   </div>
@@ -108,25 +138,35 @@
         <table class="table table-zebra w-full">
           <thead>
             <tr class="bg-base-200 text-base">
-              <th>Nom del projecte</th>
-              <th>Responsable</th>
-              <th>Correu responsable</th>
-              <th>Telèfon responsable</th>
-              <th>Observacions</th>
+              <th>Nom del projecte</th><th>Responsable</th><th>Correu responsable</th><th>Telèfon responsable</th><th>Observacions</th><th class="w-20">Accions</th>
             </tr>
           </thead>
           <tbody>
-            @for (item of projectes; track item.name) {
+            @for (item of projectes; track $index) {
               <tr>
                 <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
                 <td>{{item.resp}}</td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
                 <td>{{item.phone}}</td>
                 <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
+                <td class="flex gap-2 items-center">
+                  <button class="btn btn-xs btn-ghost text-blue-500" (click)="openRowModal('projectes', $index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                  </button>
+                  <button class="btn btn-xs btn-ghost text-red-500" (click)="deleteRow('projectes', $index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </td>
               </tr>
             }
           </tbody>
         </table>
+      </div>
+      <div class="p-3 border-t border-base-200">
+        <button class="btn btn-sm btn-outline btn-primary gap-1" (click)="addRow('projectes')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Afegir fila
+        </button>
       </div>
     </div>
   </div>
@@ -139,25 +179,35 @@
         <table class="table table-zebra w-full">
           <thead>
             <tr class="bg-base-200 text-base">
-              <th>Àmbit de responsabilitat</th>
-              <th>Responsable</th>
-              <th>Correu responsable</th>
-              <th>Telèfon responsable</th>
-              <th>Observacions</th>
+              <th>Àmbit de responsabilitat</th><th>Responsable</th><th>Correu responsable</th><th>Telèfon responsable</th><th>Observacions</th><th class="w-20">Accions</th>
             </tr>
           </thead>
           <tbody>
-            @for (item of altres; track item.name) {
+            @for (item of altres; track $index) {
               <tr>
                 <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
                 <td>{{item.resp}}</td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
                 <td>{{item.phone}}</td>
                 <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
+                <td class="flex gap-2 items-center">
+                  <button class="btn btn-xs btn-ghost text-blue-500" (click)="openRowModal('altres', $index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                  </button>
+                  <button class="btn btn-xs btn-ghost text-red-500" (click)="deleteRow('altres', $index)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </td>
               </tr>
             }
           </tbody>
         </table>
+      </div>
+      <div class="p-3 border-t border-base-200">
+        <button class="btn btn-sm btn-outline btn-primary gap-1" (click)="addRow('altres')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Afegir fila
+        </button>
       </div>
     </div>
   </div>
@@ -222,5 +272,41 @@
   </div>
   <form method="dialog" class="modal-backdrop">
     <button (click)="closeModal()">close</button>
+  </form>
+</dialog>
+
+<!-- Modal Editar / Afegir Fila de Taula -->
+<dialog id="row_modal" class="modal" [class.modal-open]="isRowModalOpen">
+  <div class="modal-box w-11/12 max-w-2xl">
+    <h3 class="font-bold text-lg">{{ currentRowIndex === -1 ? 'Afegir Fila' : 'Editar Fila' }}</h3>
+    <div class="py-4 grid grid-cols-2 gap-4">
+      <label class="form-control w-full col-span-2">
+        <div class="label"><span class="label-text">Nom / Àmbit</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentRow.name" />
+      </label>
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Responsable</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentRow.resp" />
+      </label>
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Correu</span></div>
+        <input type="email" class="input input-bordered w-full" [(ngModel)]="currentRow.email" />
+      </label>
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Telèfon</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentRow.phone" />
+      </label>
+      <label class="form-control w-full col-span-2">
+        <div class="label"><span class="label-text">Observacions</span></div>
+        <textarea class="textarea textarea-bordered w-full" rows="3" [(ngModel)]="currentRow.obs"></textarea>
+      </label>
+    </div>
+    <div class="modal-action">
+      <button class="btn" (click)="closeRowModal()">Cancel·lar</button>
+      <button class="btn btn-primary" (click)="saveRow()">Guardar</button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button (click)="closeRowModal()">close</button>
   </form>
 </dialog>
