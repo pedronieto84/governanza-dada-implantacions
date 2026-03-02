@@ -1,7 +1,10 @@
-import { Component, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 // @ts-ignore
 import { OrgChart } from 'd3-org-chart';
+
+const API_BASE = 'http://localhost:3005';
 
 @Component({
   selector: 'app-mapa-responsables',
@@ -10,7 +13,7 @@ import { OrgChart } from 'd3-org-chart';
   standalone: true,
   imports: [FormsModule]
 })
-export class MapaResponsables {
+export class MapaResponsables implements OnInit {
   viewMode: 'tabla' | 'organigrama' = 'tabla';
   isFullscreen = false;
   @ViewChild('chartContainer') chartContainer!: ElementRef;
@@ -23,12 +26,40 @@ export class MapaResponsables {
   isEditing = false;
   currentEmployee: any = { id: '', parentId: '', name: '', position: '' };
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private http: HttpClient) {
     // Expose methods to global scope for D3 node HTML string binding
     (window as any).triggerOrgNodeEdit = (nodeId: string) => this.openEditModal(nodeId);
     (window as any).triggerOrgNodeAdd = (parentId: string) => this.openAddModalWithParent(parentId);
     (window as any).triggerOrgNodeDelete = (nodeId: string) => this.deleteEmployeeById(nodeId);
     (window as any).triggerOrgNodeSelect = (nodeId: string) => this.selectNode(nodeId);
+  }
+
+  ngOnInit() {
+    this.http.get<any>(`${API_BASE}/api/data/mapa-responsables`).subscribe({
+      next: (data) => {
+        if (data.rolsClau) this.rolsClau = data.rolsClau;
+        if (data.arees) this.arees = data.arees;
+        if (data.processos) this.processos = data.processos;
+        if (data.projectes) this.projectes = data.projectes;
+        if (data.altres) this.altres = data.altres;
+        if (data.orgData) this.orgData = data.orgData;
+      },
+      error: () => console.warn('No saved data found, using defaults.')
+    });
+  }
+
+  saveData() {
+    const payload = {
+      rolsClau: this.rolsClau,
+      arees: this.arees,
+      processos: this.processos,
+      projectes: this.projectes,
+      altres: this.altres,
+      orgData: this.orgData
+    };
+    this.http.post(`${API_BASE}/api/data/mapa-responsables`, payload).subscribe({
+      error: (err) => console.error('Error saving data', err)
+    });
   }
 
   rolsClau = [
@@ -136,6 +167,7 @@ export class MapaResponsables {
     
     this.closeModal();
     this.renderChart();
+    this.saveData();
   }
 
   deleteEmployee() {
@@ -156,6 +188,7 @@ export class MapaResponsables {
     
     this.closeModal();
     this.renderChart();
+    this.saveData();
   }
 
   toggleFullscreen() {
