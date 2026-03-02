@@ -165,9 +165,52 @@
     <!-- Organigrama Container -->
     <div class="card bg-base-100 shadow-xl border border-base-200 w-full overflow-hidden h-[600px]">
       <div class="card-body p-0">
-        <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl">Visualització d'Organigrama</h2>
-        <div class="w-full h-full min-h-[500px]" #chartContainer></div>
+        <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center">
+          Visualització d'Organigrama
+          <button class="btn btn-sm btn-secondary" (click)="openAddModal()">Afegir Empleat</button>
+        </h2>
+        <div class="w-full h-full min-h-[500px] bg-slate-100" #chartContainer></div>
       </div>
     </div>
   }
 </div>
+
+<!-- Modal Affegir/Editar Empleat -->
+<dialog id="employee_modal" class="modal" [class.modal-open]="isModalOpen">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">{{isEditing ? 'Editar Empleat' : 'Afegir Empleat'}}</h3>
+    <div class="py-4 flex flex-col gap-4">
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Nom</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentEmployee.name" />
+      </label>
+      
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Posició / Rol</span></div>
+        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentEmployee.position" />
+      </label>
+      
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Reporta a (Deixar buit si és Arrel)</span></div>
+        <select class="select select-bordered" [(ngModel)]="currentEmployee.parentId">
+          <option value="">Cap (Arrel)</option>
+          @for (emp of orgData; track emp.id) {
+            @if (emp.id !== currentEmployee.id) {
+              <option [value]="emp.id">{{emp.name}} ({{emp.position}})</option>
+            }
+          }
+        </select>
+      </label>
+    </div>
+    <div class="modal-action">
+      @if(isEditing && currentEmployee.parentId !== '') {
+        <button class="btn btn-error mr-auto" (click)="deleteEmployee()">Eliminar</button>
+      }
+      <button class="btn" (click)="closeModal()">Cancel·lar</button>
+      <button class="btn btn-primary" (click)="saveEmployee()">Guardar</button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button (click)="closeModal()">close</button>
+  </form>
+</dialog>

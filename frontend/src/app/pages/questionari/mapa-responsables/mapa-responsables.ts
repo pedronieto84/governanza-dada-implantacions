@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 // @ts-ignore
 import { OrgChart } from 'd3-org-chart';
 
@@ -6,12 +7,19 @@ import { OrgChart } from 'd3-org-chart';
   selector: 'app-mapa-responsables',
   templateUrl: './mapa-responsables.html',
   styleUrl: './mapa-responsables.css',
-  standalone: true
+  standalone: true,
+  imports: [FormsModule]
 })
 export class MapaResponsables {
   viewMode: 'tabla' | 'organigrama' = 'tabla';
   @ViewChild('chartContainer') chartContainer!: ElementRef;
   chart: any;
+
+  isModalOpen = false;
+  isEditing = false;
+  currentEmployee: any = { id: '', parentId: '', name: '', position: '' };
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   rolsClau = [
     { name: 'Responsable de dades (Data Stewart)', resp: '', email: '', phone: '', obs: '' },
@@ -68,6 +76,62 @@ export class MapaResponsables {
     }
   }
 
+  openAddModal() {
+    this.isEditing = false;
+    this.currentEmployee = { 
+      id: Date.now().toString(), 
+      parentId: this.orgData.length > 0 ? this.orgData[0].id : '', 
+      name: '', 
+      position: '' 
+    };
+    this.isModalOpen = true;
+    this.cdr.detectChanges();
+  }
+
+  openEditModal(nodeId: string) {
+    const emp = this.orgData.find(e => e.id === nodeId);
+    if (emp) {
+      this.isEditing = true;
+      this.currentEmployee = { ...emp };
+      this.isModalOpen = true;
+      this.cdr.detectChanges();
+    }
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  saveEmployee() {
+    if (this.isEditing) {
+      const idx = this.orgData.findIndex(e => e.id === this.currentEmployee.id);
+      if (idx !== -1) {
+        this.orgData[idx] = { ...this.currentEmployee };
+      }
+    } else {
+      this.orgData.push({ ...this.currentEmployee });
+    }
+    
+    this.closeModal();
+    this.renderChart();
+  }
+
+  deleteEmployee() {
+    // Reasignar los hijos del empleado eliminado al padre del empleado eliminado
+    const empToDelete = this.orgData.find(e => e.id === this.currentEmployee.id);
+    if (empToDelete) {
+      this.orgData.forEach(e => {
+        if (e.parentId === empToDelete.id) {
+          e.parentId = empToDelete.parentId;
+        }
+      });
+      this.orgData = this.orgData.filter(e => e.id !== this.currentEmployee.id);
+    }
+    
+    this.closeModal();
+    this.renderChart();
+  }
+
   renderChart() {
     if (!this.chartContainer) return;
 
@@ -80,17 +144,21 @@ export class MapaResponsables {
         .childrenMargin((d: any) => 40)
         .compactMarginBetween((d: any) => 15)
         .compactMarginPair((d: any) => 80)
+        .onNodeClick((d: any) => {
+           const nodeId = typeof d === 'string' ? d : (d.data ? d.data.id : d);
+           this.openEditModal(nodeId);
+        })
         .nodeContent((d: any) => {
           return `
-            <div style="font-family: 'Inter', sans-serif; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); width: 260px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 12px; box-sizing: border-box;">
-              <div style="font-size: 15px; font-weight: 600; color: #111827; text-align: center; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">${d.data.name}</div>
-              <div style="font-size: 12px; color: #4338ca; font-weight: 500; text-align: center; background-color: #e0e7ff; padding: 4px 10px; border-radius: 9999px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">${d.data.position}</div>
+            <div style="font-family: 'Inter', sans-serif; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); width: 260px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 12px; box-sizing: border-box; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#4338ca'; this.style.boxShadow='0 10px 15px -3px rgba(67, 56, 202, 0.2)';" onmouseout="this.style.borderColor='#e5e7eb'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)';">
+              <div style="font-size: 15px; font-weight: 600; color: #111827; text-align: center; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;">${d.data.name}</div>
+              <div style="font-size: 12px; color: #4338ca; font-weight: 500; text-align: center; background-color: #e0e7ff; padding: 4px 10px; border-radius: 9999px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;">${d.data.position}</div>
             </div>
           `;
         })
         .render();
     } else {
-      this.chart.render();
+      this.chart.data(this.orgData).render();
     }
   }
 }
