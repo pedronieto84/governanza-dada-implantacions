@@ -103,7 +103,14 @@
           <tbody>
             @for (item of processos; track $index) {
               <tr>
-                <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
+                <td class="font-medium max-w-xs whitespace-normal">
+                  <span>{{item.name}}</span>
+                  @if (item.areas && item.areas.length > 0) {
+                    <span class="ml-1 text-gray-500 text-xs font-normal">({{item.areas.join(', ')}})</span>
+                  } @else if (item.area) {
+                    <span class="ml-1 text-gray-500 text-xs font-normal">({{item.area}})</span>
+                  }
+                </td>
                 <td>{{item.resp}}</td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
                 <td>{{item.phone}}</td>
@@ -314,13 +321,52 @@
           <p class="text-xs text-base-content/50 mt-1">
             💡 Si el teu procés no apareix a la llista, escriu-lo manualment i quedarà desat igualment.
           </p>
+        } @else if (currentTableKey === 'rolsClau') {
+          <select class="select select-bordered w-full" [(ngModel)]="currentRow.name">
+            <option value="">-- Selecciona un rol --</option>
+            <option value="Responsable de dades (Data Stewart)">Responsable de dades (Data Stewart)</option>
+            <option value="Propietari de dades (Data Owner)">Propietari de dades (Data Owner)</option>
+            <option value="Referent de dades (Data Stewart)">Referent de dades (Data Stewart)</option>
+          </select>
         } @else {
           <input type="text" class="input input-bordered w-full" [(ngModel)]="currentRow.name" />
         }
       </div>
+      @if (currentTableKey === 'processos') {
+        <div class="form-control w-full col-span-2">
+          <div class="label"><span class="label-text">Àrees associades</span></div>
+          <div class="flex flex-wrap gap-2 p-3 border border-base-300 rounded-lg bg-base-100">
+            @if (arees.length === 0) {
+              <span class="text-sm text-base-content/50 italic">Afegeix àrees a la taula per poder-les seleccionar</span>
+            }
+            @for (area of arees; track area.name) {
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="checkbox checkbox-primary checkbox-sm"
+                  [checked]="currentRow.areas && currentRow.areas.includes(area.name)"
+                  (change)="toggleArea(area.name, $any($event.target).checked)" />
+                <span class="text-sm">{{area.name}}</span>
+              </label>
+            }
+          </div>
+        </div>
+      }
       <label class="form-control w-full">
         <div class="label"><span class="label-text">Responsable</span></div>
-        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentRow.resp" />
+        @if (currentTableKey !== 'rolsClau') {
+          <select class="select select-bordered w-full" [(ngModel)]="currentRow.resp" (ngModelChange)="onResponsableSelect($event)">
+            <option value="">-- Selecciona responsable --</option>
+            @for (persona of rolsClauPersones; track persona.resp) {
+              <option [value]="persona.resp">{{persona.resp}}</option>
+            }
+            <option value="__custom__">✏️ Escriu manualment...</option>
+          </select>
+          @if (customRespMode) {
+            <input type="text" class="input input-bordered w-full mt-2" [(ngModel)]="currentRow.resp"
+              placeholder="Escriu el nom del responsable..." />
+          }
+        } @else {
+          <input type="text" class="input input-bordered w-full" [(ngModel)]="currentRow.resp" />
+        }
       </label>
       <label class="form-control w-full">
         <div class="label"><span class="label-text">Correu</span></div>

@@ -41,6 +41,41 @@
       "email": "obrerorp@premiadedalt.cat",
       "phone": "607118371",
       "obs": "Responsable d'Informàtica que accedeix a les peticions dels diferents departaments"
+    },
+    {
+      "name": "",
+      "resp": "Lluis García",
+      "email": "garciajll@premiadedalt.cat",
+      "phone": "666530168",
+      "obs": "Urbanisme o territori, mateixa dinàmica que abans."
+    },
+    {
+      "name": "",
+      "resp": "Virginia Merlos",
+      "email": "merloscv@premiadedalt.cat",
+      "phone": "637755094",
+      "obs": "Promoció econòmica, mateixa dinàmica."
+    },
+    {
+      "name": "",
+      "resp": "Eli Gummà",
+      "email": "gummabe@premiadedalt.cat",
+      "phone": "667470681",
+      "obs": "Educació i joventut, mateixa dinàmica."
+    },
+    {
+      "name": "",
+      "resp": "Carlos Matallan",
+      "email": "prmd.pl1335@premiadedalt.cat",
+      "phone": "936931500",
+      "obs": "Policia, sargent cap."
+    },
+    {
+      "name": "",
+      "resp": "Mireia Boté",
+      "email": "botemmr@premiadedalt.cat",
+      "phone": "936931511",
+      "obs": "Secretaria"
     }
   ],
   "arees": [
@@ -86,63 +121,80 @@
       "resp": "Cada departament",
       "email": "",
       "phone": "",
-      "obs": "Contractació"
+      "obs": "Contractació",
+      "areas": []
     },
     {
       "name": "Subvencions",
       "resp": "Cada departament",
       "email": "",
       "phone": "",
-      "obs": "Cada departament gestiona les seves"
+      "obs": "Cada departament gestiona les seves",
+      "areas": []
     },
     {
       "name": "Licitacions",
       "resp": "Secretaria",
       "email": "botemmr@premiadedalt.cat",
       "phone": "936931511",
-      "obs": ""
+      "obs": "",
+      "areas": []
     },
     {
       "name": "Llicències d'obres",
       "resp": "Urbanisme (Lluís Garcia)",
       "email": "garciajll@premiadedalt.cat",
       "phone": "",
-      "obs": ""
+      "obs": "",
+      "areas": []
     },
     {
       "name": "Inscripcions a les Escoles",
       "resp": "Educació (Eli Gumma)",
       "email": "",
       "phone": "",
-      "obs": ""
+      "obs": "",
+      "areas": []
     },
     {
       "name": "Denúncies / Infraccions",
       "resp": "Policia (Carlos Matallan)",
       "email": "",
       "phone": "",
-      "obs": ""
+      "obs": "",
+      "areas": []
     },
     {
       "name": "Altes i baixes de personal",
       "resp": "Recursos Humans",
       "email": "",
       "phone": "",
-      "obs": ""
+      "obs": "",
+      "areas": ["Recursos Humans"]
     },
     {
       "name": "Pagament de Nòmines",
       "resp": "Recursos Humans",
       "email": "",
       "phone": "",
-      "obs": ""
+      "obs": "",
+      "areas": ["Recursos Humans"]
     },
     {
       "name": "Pagament a Proveïdors",
       "resp": "Tresoreria",
       "email": "",
       "phone": "",
-      "obs": ""
+      "obs": "",
+      "areas": ["Tresoreria i Intervenció"]
+    },
+    {
+      "name": "Llicència d'obres majors",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
     }
   ],
   "projectes": [

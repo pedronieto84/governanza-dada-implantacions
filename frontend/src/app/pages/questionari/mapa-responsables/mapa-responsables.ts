@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { retry } from 'rxjs/operators';
 // @ts-ignore
 import { OrgChart } from 'd3-org-chart';
 
-const API_BASE = 'http://localhost:3005';
+import { API_BASE } from '../../../api.config';
+
 
 @Component({
   selector: 'app-mapa-responsables',
@@ -35,7 +37,7 @@ export class MapaResponsables implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get<any>(`${API_BASE}/api/data/mapa-responsables`).subscribe({
+    this.http.get<any>(`${API_BASE}/api/data/mapa-responsables`).pipe(retry({ count: 5, delay: 2000 })).subscribe({
       next: (data) => {
         if (data.rolsClau) this.rolsClau = data.rolsClau;
         if (data.arees) this.arees = data.arees;
@@ -67,6 +69,7 @@ export class MapaResponsables implements OnInit {
   currentTableKey: string = '';
   currentRowIndex: number = -1;
   currentRow: any = {};
+  customRespMode = false;
 
   openRowModal(tableKey: string, index: number) {
     this.currentTableKey = tableKey;
@@ -78,7 +81,7 @@ export class MapaResponsables implements OnInit {
   addRow(tableKey: string) {
     this.currentTableKey = tableKey;
     this.currentRowIndex = -1;
-    this.currentRow = { name: '', resp: '', email: '', phone: '', obs: '' };
+    this.currentRow = { name: '', resp: '', email: '', phone: '', obs: '', areas: [] };
     this.isRowModalOpen = true;
   }
 
@@ -101,6 +104,36 @@ export class MapaResponsables implements OnInit {
     this.isRowModalOpen = false;
     this.showProcessDropdown = false;
     this.processSearch = '';
+    this.customRespMode = false;
+  }
+
+  toggleArea(areaName: string, checked: boolean) {
+    if (!this.currentRow.areas) this.currentRow.areas = [];
+    if (checked) {
+      if (!this.currentRow.areas.includes(areaName)) {
+        this.currentRow.areas = [...this.currentRow.areas, areaName];
+      }
+    } else {
+      this.currentRow.areas = this.currentRow.areas.filter((a: string) => a !== areaName);
+    }
+  }
+
+  get rolsClauPersones() {
+    return this.rolsClau.filter((r: any) => r.resp && r.resp.trim() !== '');
+  }
+
+  onResponsableSelect(resp: string) {
+    if (resp === '__custom__') {
+      this.customRespMode = true;
+      this.currentRow.resp = '';
+      return;
+    }
+    this.customRespMode = false;
+    const person = this.rolsClau.find((r: any) => r.resp === resp);
+    if (person) {
+      this.currentRow.email = person.email;
+      this.currentRow.phone = person.phone;
+    }
   }
 
   // --- Processos autocomplete ---
@@ -250,53 +283,12 @@ export class MapaResponsables implements OnInit {
     this.showProcessDropdown = false;
   }
 
-  rolsClau = [
-    { name: 'Responsable de dades (Data Stewart)', resp: '', email: '', phone: '', obs: '' },
-    { name: 'Propietari de dades (Data Owner)', resp: '', email: '', phone: '', obs: '' },
-    { name: 'Referent de dades (Data Stewart)', resp: 'Gemma Àlvarez', email: 'alvarezmgm@premiadedalt.cat', phone: '936931509', obs: 'Cap de Recursos humans i de Serveis a les persones: sol·licita accés a Informàtica per un treballador nou' },
-    { name: 'Referent de dades (Data Stewart)', resp: 'Nuria Riera', email: 'rieran@premiadedalt.cat', phone: '674951891', obs: 'Serveis Socials, demana a Informàtica per afegir un treballador nou' },
-    { name: '', resp: 'Teresa Pallarés', email: 'pallarestm@premiadedalt.cat', phone: '670961003', obs: 'Tresoreria i Intervenció, mateixa dinàmica.' },
-    { name: '', resp: 'Pedro Obrero Román', email: 'obrerorp@premiadedalt.cat', phone: '607118371', obs: 'Responsable d\'Informàtica que accedeix a les peticions dels diferents departaments' }
-  ];
-
-  arees = [
-    { name: 'Recursos Humans', resp: '', email: '', phone: '', obs: '' },
-    { name: 'Serveis Socials', resp: '', email: '', phone: '', obs: '' },
-    { name: 'Tresoreria i Intervenció', resp: '', email: '', phone: '', obs: '' },
-    { name: 'Informàtica', resp: '', email: '', phone: '', obs: '' },
-    { name: 'Organigrames tècnic i funcional', resp: '', email: '', phone: '', obs: '' }
-  ];
-
-  processos = [
-    { name: 'Contractes menors', resp: 'Cada departament', email: '', phone: '', obs: 'Contractació' },
-    { name: 'Subvencions', resp: 'Cada departament', email: '', phone: '', obs: 'Cada departament gestiona les seves' },
-    { name: 'Licitacions', resp: 'Secretaria', email: 'botemmr@premiadedalt.cat', phone: '936931511', obs: '' },
-    { name: 'Llicències d\'obres', resp: 'Urbanisme (Lluís Garcia)', email: 'garciajll@premiadedalt.cat', phone: '', obs: '' },
-    { name: 'Inscripcions a les Escoles', resp: 'Educació (Eli Gumma)', email: '', phone: '', obs: '' },
-    { name: 'Denúncies / Infraccions', resp: 'Policia (Carlos Matallan)', email: '', phone: '', obs: '' },
-    { name: 'Altes i baixes de personal', resp: 'Recursos Humans', email: '', phone: '', obs: '' },
-    { name: 'Pagament de Nòmines', resp: 'Recursos Humans', email: '', phone: '', obs: '' },
-    { name: 'Pagament a Proveïdors', resp: 'Tresoreria', email: '', phone: '', obs: '' }
-  ];
-
-  projectes = [
-    { name: 'El Pla de Govern 2023 - 2027', resp: '', email: '', phone: '', obs: '' }
-  ];
-
-  altres = [
-    { name: 'Responsable de Tecnologia', resp: '', email: '', phone: '', obs: '' },
-    { name: 'Responsable de Seguretat', resp: '', email: '', phone: '', obs: '' }
-  ];
-
-  orgData = [
-    { id: '1', parentId: '', name: 'Direcció', position: 'Alta Direcció' },
-    { id: '2', parentId: '1', name: 'Sense Assignar', position: 'Responsable de Dades (Data Stewart)' },
-    { id: '3', parentId: '1', name: 'Sense Assignar', position: 'Propietari de Dades (Data Owner)' },
-    { id: '4', parentId: '2', name: 'Gemma Àlvarez', position: 'Referent de Dades (Recursos Humans)' },
-    { id: '5', parentId: '2', name: 'Nuria Riera', position: 'Referent de Dades (Serveis Socials)' },
-    { id: '6', parentId: '2', name: 'Teresa Pallarés', position: 'Referent de Dades (Tresoreria i Intervenció)' },
-    { id: '7', parentId: '1', name: 'Pedro Obrero Román', position: 'Responsable d\'Informàtica' }
-  ];
+  rolsClau: any[] = [];
+  arees: any[] = [];
+  processos: any[] = [];
+  projectes: any[] = [];
+  altres: any[] = [];
+  orgData: any[] = [];
 
   setViewMode(mode: 'tabla' | 'organigrama') {
     this.viewMode = mode;
@@ -449,8 +441,8 @@ export class MapaResponsables implements OnInit {
         .nodeContent((d: any) => {
           const nodeId = d.data.id;
           const isHighlighted = this.highlightedNodeIds.includes(nodeId);
-          const bgColor = isHighlighted ? '#e0f2fe' : '#ffffff'; // light blue 100 or white
-          const borderColor = isHighlighted ? '#38bdf8' : '#e5e7eb'; // light blue 400 or gray 200
+          const bgColor = isHighlighted ? '#e0f2fe' : '#f5f3ff'; // light blue or violet-50
+          const borderColor = isHighlighted ? '#38bdf8' : '#c4b5fd'; // light blue 400 or violet-300
           
           return `
             <div onclick="window.triggerOrgNodeSelect('${nodeId}')" style="font-family: 'Inter', sans-serif; background-color: ${bgColor}; border: 2px solid ${borderColor}; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); width: 260px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 12px; box-sizing: border-box; position: relative; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#4338ca'; this.style.boxShadow='0 10px 15px -3px rgba(67, 56, 202, 0.2)';" onmouseout="this.style.borderColor='${borderColor}'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)';">

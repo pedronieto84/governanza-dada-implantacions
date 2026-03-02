@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { retry } from 'rxjs/operators';
 
-const API_BASE = 'http://localhost:3005';
+import { API_BASE } from '../../../api.config';
 
 const EMPTY_SISTEMA = () => ({
   nomCurt: '', extern: 'No', descripcio: '', tipus: '', proveidor: '',
@@ -22,78 +23,12 @@ export class Sistemas implements OnInit {
   editIndex = -1;
   currentItem: any = EMPTY_SISTEMA();
 
-  sistemas = [
-    {
-      nomCurt: 'Servidor POSSE',
-      extern: 'No',
-      descripcio: '',
-      tipus: 'Servidor amb un programa que es diu SIGEP instal·lat al servidor',
-      proveidor: 'AITOS és l\'empresa que va instal·lar i manté el programa...',
-      adminSis: 'Departament d\'Informàtica',
-      adminEmail: 'obrermpm@premiadedalt.cat',
-      adminUnitat: 'Polítiques Digitals',
-      arqDada: 'AITOS',
-      arqEmail: 'AITOS',
-      arqUnitat: 'AITOS'
-    },
-    {
-      nomCurt: 'Gestor d\'expedients',
-      extern: 'Sí',
-      descripcio: 'Gestor d\'expedients',
-      tipus: 'Gestor d\'expedients',
-      proveidor: 'Audifilm',
-      adminSis: 'Secretaria i Polítiques Digitals',
-      adminEmail: '',
-      adminUnitat: '',
-      arqDada: 'Audifilm',
-      arqEmail: 'Audifilm',
-      arqUnitat: 'Audifilm'
-    },
-    {
-      nomCurt: 'Comptabilitat Diputació',
-      extern: 'Sí',
-      descripcio: 'Comptabilitat',
-      tipus: 'Comptabilitat',
-      proveidor: 'Diputació Barcelona (Berger Levraux)',
-      adminSis: 'Polítiques Digitals / Intervenció',
-      adminEmail: 'Intervenció dona permisos',
-      adminUnitat: '',
-      arqDada: 'Informàtica / Intervenció',
-      arqEmail: '',
-      arqUnitat: ''
-    },
-    {
-      nomCurt: 'Factures',
-      extern: 'Sí',
-      descripcio: 'Factures',
-      tipus: 'Factures',
-      proveidor: 'Diputació Barcelona (Berger Levraux)',
-      adminSis: 'Polítiques Digitals / Intervenció',
-      adminEmail: 'Intervenció dona permisos',
-      adminUnitat: '',
-      arqDada: 'Informàtica / Intervenció',
-      arqEmail: '',
-      arqUnitat: ''
-    },
-    {
-      nomCurt: 'Tràmits',
-      extern: 'Sí',
-      descripcio: 'Portal de tràmits',
-      tipus: 'Portal de tràmits',
-      proveidor: 'Diputació Barcelona',
-      adminSis: 'Polítiques Digitals / OAC',
-      adminEmail: 'OAC',
-      adminUnitat: '',
-      arqDada: 'Informàtica / Intervenció',
-      arqEmail: '',
-      arqUnitat: ''
-    }
-  ];
+  sistemas: any[] = [];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get<any>(`${API_BASE}/api/data/sistemas`).subscribe({
+    this.http.get<any>(`${API_BASE}/api/data/sistemas`).pipe(retry({ count: 5, delay: 2000 })).subscribe({
       next: (data) => {
         if (data.sistemas) this.sistemas = data.sistemas;
       },
