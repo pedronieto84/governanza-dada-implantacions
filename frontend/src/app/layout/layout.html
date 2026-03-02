@@ -1,12 +1,17 @@
-<div class="drawer lg:drawer-open">
+<div class="drawer" [class.lg:drawer-open]="isSidebarOpen">
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col">
-    <!-- Navbar para móviles -->
-    <div class="navbar bg-base-100 w-full lg:hidden">
+    <!-- Navbar -->
+    <div class="navbar bg-base-100 w-full sticky top-0 z-30 shadow-sm" [class.lg:hidden]="isSidebarOpen">
       <div class="flex-none">
-        <label for="my-drawer-2" class="btn btn-square btn-ghost">
+        <!-- Móvil (abre overlay native drawer) -->
+        <label for="my-drawer-2" class="btn btn-square btn-ghost lg:hidden">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </label>
+        <!-- Desktop (restaura fixed sidebar) -->
+        <button class="btn btn-square btn-ghost hidden lg:flex" (click)="toggleSidebar()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
       </div>
       <div class="flex-1 px-2 mx-2 text-xl font-bold">Gobernanza de Datos</div>
     </div>
@@ -24,9 +29,14 @@
     <label for="my-drawer-2" class="drawer-overlay"></label>
     <div class="menu w-80 min-h-full bg-base-100 text-base-content p-4">
       <!-- Título Sidebar -->
-      <div class="mb-5 px-4">
-        <h2 class="text-2xl font-bold text-primary">Gobernanza</h2>
-        <p class="text-xs text-base-content/60">Dashboard Principal</p>
+      <div class="mb-5 px-4 flex justify-between items-start">
+        <div>
+          <h2 class="text-2xl font-bold text-primary">Gobernanza</h2>
+          <p class="text-xs text-base-content/60">Dashboard Principal</p>
+        </div>
+        <button class="btn btn-ghost btn-sm btn-square hidden lg:flex" (click)="toggleSidebar()" title="Colapsar menú">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+        </button>
       </div>
       <ul class="menu">
         <!-- Pestaña 1 -->
