@@ -16,6 +16,9 @@ export class MapaResponsables {
   @ViewChild('chartContainer') chartContainer!: ElementRef;
   chart: any;
 
+  selectedNodeId: string | null = null;
+  highlightedNodeIds: string[] = [];
+
   isModalOpen = false;
   isEditing = false;
   currentEmployee: any = { id: '', parentId: '', name: '', position: '' };
@@ -25,6 +28,7 @@ export class MapaResponsables {
     (window as any).triggerOrgNodeEdit = (nodeId: string) => this.openEditModal(nodeId);
     (window as any).triggerOrgNodeAdd = (parentId: string) => this.openAddModalWithParent(parentId);
     (window as any).triggerOrgNodeDelete = (nodeId: string) => this.deleteEmployeeById(nodeId);
+    (window as any).triggerOrgNodeSelect = (nodeId: string) => this.selectNode(nodeId);
   }
 
   rolsClau = [
@@ -173,6 +177,39 @@ export class MapaResponsables {
     }
   }
 
+  getDescendants(nodeId: string): string[] {
+    const descendants: string[] = [];
+    const children = this.orgData.filter(e => e.parentId === nodeId);
+    children.forEach(child => {
+      descendants.push(child.id);
+      descendants.push(...this.getDescendants(child.id));
+    });
+    return descendants;
+  }
+
+  selectNode(nodeId: string) {
+    if (this.selectedNodeId === nodeId) {
+      // Toggle off
+      this.selectedNodeId = null;
+      this.highlightedNodeIds = [];
+    } else {
+      this.selectedNodeId = nodeId;
+      this.highlightedNodeIds = this.getDescendants(nodeId);
+      this.highlightedNodeIds.push(nodeId);
+      
+      if (this.chart) {
+        // Expand the selected node and all its descendants
+        this.highlightedNodeIds.forEach(id => {
+          this.chart.setExpanded(id);
+        });
+      }
+    }
+    
+    if (this.chart) {
+      this.chart.render();
+    }
+  }
+
   renderChart() {
     if (!this.chartContainer) return;
 
@@ -186,25 +223,29 @@ export class MapaResponsables {
         .compactMarginBetween((d: any) => 15)
         .compactMarginPair((d: any) => 80)
         .onNodeClick((d: any) => {
-           // We will rely on explicit button clicks rather than node click now
+           // Relying on explicit clicks via triggerOrgNodeSelect in nodeContent
         })
         .nodeContent((d: any) => {
           const nodeId = d.data.id;
+          const isHighlighted = this.highlightedNodeIds.includes(nodeId);
+          const bgColor = isHighlighted ? '#e0f2fe' : '#ffffff'; // light blue 100 or white
+          const borderColor = isHighlighted ? '#38bdf8' : '#e5e7eb'; // light blue 400 or gray 200
+          
           return `
-            <div style="font-family: 'Inter', sans-serif; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); width: 260px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 12px; box-sizing: border-box; position: relative;" onmouseover="this.style.borderColor='#4338ca'; this.style.boxShadow='0 10px 15px -3px rgba(67, 56, 202, 0.2)';" onmouseout="this.style.borderColor='#e5e7eb'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)';">
+            <div onclick="window.triggerOrgNodeSelect('${nodeId}')" style="font-family: 'Inter', sans-serif; background-color: ${bgColor}; border: 2px solid ${borderColor}; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); width: 260px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 12px; box-sizing: border-box; position: relative; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#4338ca'; this.style.boxShadow='0 10px 15px -3px rgba(67, 56, 202, 0.2)';" onmouseout="this.style.borderColor='${borderColor}'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)';">
               <div style="font-size: 15px; font-weight: 600; color: #111827; text-align: center; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;">${d.data.name}</div>
               <div style="font-size: 12px; color: #4338ca; font-weight: 500; text-align: center; background-color: #e0e7ff; padding: 4px 10px; border-radius: 9999px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;">${d.data.position}</div>
               
               <!-- Hover actions overlay -->
               <div style="position: absolute; top: 0; right: 0; padding: 4px; display: flex; gap: 4px;">
-                <button onclick="window.triggerOrgNodeEdit('${nodeId}')" title="Editar" style="background: none; border: none; cursor: pointer; color: #6b7280; padding: 2px;">
+                <button onclick="event.stopPropagation(); window.triggerOrgNodeEdit('${nodeId}')" title="Editar" style="background: none; border: none; cursor: pointer; color: #6b7280; padding: 2px;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                 </button>
-                <button onclick="window.triggerOrgNodeAdd('${nodeId}')" title="Afegir subaltern" style="background: none; border: none; cursor: pointer; color: #6b7280; padding: 2px;">
+                <button onclick="event.stopPropagation(); window.triggerOrgNodeAdd('${nodeId}')" title="Afegir subaltern" style="background: none; border: none; cursor: pointer; color: #6b7280; padding: 2px;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                 </button>
                 ${d.data.parentId !== '' ? `
-                <button onclick="if(confirm('N\\\\\\'estàs segur d\\\\\\'eliminar aquest node i associar els fills al pare?')) window.triggerOrgNodeDelete('${nodeId}')" title="Eliminar" style="background: none; border: none; cursor: pointer; color: #ef4444; padding: 2px;">
+                <button onclick="event.stopPropagation(); if(confirm('N\\'estàs segur d\\'eliminar aquest node i associar els fills al pare?')) window.triggerOrgNodeDelete('${nodeId}')" title="Eliminar" style="background: none; border: none; cursor: pointer; color: #ef4444; padding: 2px;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                 </button>
                 ` : ''}
