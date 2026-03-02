@@ -99,6 +99,155 @@ export class MapaResponsables implements OnInit {
 
   closeRowModal() {
     this.isRowModalOpen = false;
+    this.showProcessDropdown = false;
+    this.processSearch = '';
+  }
+
+  // --- Processos autocomplete ---
+  showProcessDropdown = false;
+  processSearch = '';
+
+  // Comprehensive list of processes and procedures for a Barcelona province municipality (<20k inhabitants)
+  allProcessosSuggestions: string[] = [
+    // Urbanisme i habitatge
+    'Llicència d\'obres majors',
+    'Llicència d\'obres menors',
+    'Llicència d\'activitat econòmica',
+    'Comunicació prèvia d\'activitat',
+    'Cèdula d\'habitabilitat',
+    'Llicència de primera ocupació',
+    'Parcel·lació i segregació de finques',
+    'Modificació del planejament urbanístic',
+    'Disciplina urbanística / Denúncia infracció urbanística',
+    'Inspecció tècnica d\'edificis (ITE)',
+    'Gestió d\'habitatge de protecció oficial',
+    // Tributs i finances
+    'Liquidació de l\'Impost de Béns Immobles (IBI)',
+    'Liquidació de l\'Impost d\'Activitats Econòmiques (IAE)',
+    'Liquidació de l\'Impost sobre Vehicles de Tracció Mecànica (IVTM)',
+    'Liquidació de la plusvàlua (IIVTNU)',
+    'Liquidació de l\'Impost sobre Construccions, Instal·lacions i Obres (ICIO)',
+    'Liquidació de taxes de residus',
+    'Liquidació de taxes d\'escoles bressol',
+    'Liquidació de taxes d\'activitats esportives i culturals',
+    'Fraccionament i ajornament de deutes tributaris',
+    'Reclamació i recursos tributaris',
+    // Padró municipal i registre civil
+    'Alta al padró municipal d\'habitants',
+    'Baixa al padró municipal d\'habitants',
+    'Canvi de domicili al padró',
+    'Renovació d\'inscripció padronal (estrangers)',
+    'Certificat de convivència',
+    'Certificat d\'empadronament',
+    'Volant de residència',
+    // Serveis socials
+    'Atenció social bàsica',
+    'Sol·licitud d\'ajudes d\'urgència social',
+    'Gestió de la Renda Garantida de Ciutadania (RGC)',
+    'Servei d\'Ajuda a Domicili (SAD)',
+    'Teleassistència domiciliària',
+    'Gestió de places en residències de gent gran',
+    'Servei de menjador social',
+    'Targeta acreditativa de discapacitat',
+    'Gestió de centres de dia',
+    'Atenció a la infància i adolescència (CSMIJ)',
+    // Contractació i proveïdors
+    'Contractes menors de béns i serveis',
+    'Licitació per procediment obert simplificat',
+    'Licitació per procediment obert ordinari',
+    'Contracte de concessió de serveis',
+    'Subministraments de material d\'oficina',
+    'Contractació d\'obres d\'infraestructura',
+    // Subvencions i ajudes
+    'Convocatòria de subvencions a entitats',
+    'Subvencions a activitats culturals i esportives',
+    'Subvencions per a obres d\'accessibilitat',
+    'Ajudes a l\'agricultura i ramaderia',
+    'Ajudes a l\'habitatge (rehabilitació, lloguer)',
+    // Recursos Humans
+    'Altes i baixes de personal',
+    'Pagament de nòmines',
+    'Concursos i oposicions',
+    'Avaluació de l\'acompliment del personal',
+    'Gestió de permisos i llicències de personal',
+    'Prevenció de riscos laborals',
+    // Medi ambient i espai públic
+    'Recollida de residus sòlids urbans',
+    'Gestió del punt verd municipal',
+    'Neteja viària i espai públic',
+    'Manteniment de parcs i jardins',
+    'Gestió d\'aigües residuals (EDAR)',
+    'Llicències d\'abocaments',
+    'Denúncia d\'abocament il·legal',
+    'Control de plagues i desinfecció',
+    'Inspeccions de salut pública',
+    // Seguretat i emergències
+    'Denúncies de la policia local',
+    'Infraccions de trànsit',
+    'Atenció a accidents i emergències',
+    'Grua i dipòsit de vehicles',
+    'Autoritzacions de tall de via pública',
+    'Gestió de sistemes de videovigilància',
+    // Educació i joventut
+    'Inscripcions a l\'escola bressol municipal',
+    'Inscripcions a activitats extraescolars',
+    'Ajudes de menjador escolar',
+    'Beques i ajudes a l\'estudi',
+    'Programes de joventut i informació juvenil',
+    'Carnets jove i documentació',
+    // Cultura, esports i festes
+    'Inscripcions a activitats esportives municipals',
+    'Reserva d\'instal·lacions esportives',
+    'Gestió de la biblioteca municipal',
+    'Permisos i autoritzacions per a festes majors',
+    'Permisos d\'espectacles i activitats lúdiques',
+    'Gestió del casal municipal de cultura',
+    // Comerç i mercats
+    'Llicències de venda no sedentària (mercats i fires)',
+    'Autoritzacions de terrasses i veladors',
+    'Inspecció d\'establiments comercials',
+    // Turisme
+    'Informació turística i oficina de turisme',
+    'Autorització d\'habitatges d\'ús turístic (HUT)',
+    // Transparència i participació
+    'Accés a la informació pública (transparència)',
+    'Queixes i suggeriments ciutadans',
+    'Peticions de participació ciutadana',
+    'Publicació al Tauler d\'Edictes / BOP',
+    // Registre i notificació
+    'Registre d\'entrada i sortida de documents',
+    'Notificació electrònica de resolucions',
+    'Certificació de documents municipals',
+  ];
+
+  get processosFiltered(): string[] {
+    if (!this.processSearch.trim()) return this.allProcessosSuggestions;
+    const q = this.processSearch.toLowerCase();
+    return this.allProcessosSuggestions.filter(p => p.toLowerCase().includes(q));
+  }
+
+  onProcessSearchInput(value: string) {
+    this.processSearch = value;
+    this.currentRow.name = value;
+    this.showProcessDropdown = true;
+  }
+
+  selectProcesso(name: string) {
+    this.currentRow.name = name;
+    this.processSearch = name;
+    this.showProcessDropdown = false;
+  }
+
+  openRowModalProcessos(tableKey: string, index: number) {
+    this.openRowModal(tableKey, index);
+    this.processSearch = this.currentRow.name || '';
+    this.showProcessDropdown = false;
+  }
+
+  addRowProcessos(tableKey: string) {
+    this.addRow(tableKey);
+    this.processSearch = '';
+    this.showProcessDropdown = false;
   }
 
   rolsClau = [

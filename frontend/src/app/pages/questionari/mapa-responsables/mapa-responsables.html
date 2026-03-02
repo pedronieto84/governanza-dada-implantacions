@@ -109,7 +109,7 @@
                 <td>{{item.phone}}</td>
                 <td class="text-xs max-w-sm whitespace-normal">{{item.obs}}</td>
                 <td class="flex gap-2 items-center">
-                  <button class="btn btn-xs btn-ghost text-blue-500" (click)="openRowModal('processos', $index)">
+                  <button class="btn btn-xs btn-ghost text-blue-500" (click)="openRowModalProcessos('processos', $index)">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                   </button>
                   <button class="btn btn-xs btn-ghost text-red-500" (click)="deleteRow('processos', $index)">
@@ -122,7 +122,7 @@
         </table>
       </div>
       <div class="p-3 border-t border-base-200">
-        <button class="btn btn-sm btn-outline btn-primary gap-1" (click)="addRow('processos')">
+        <button class="btn btn-sm btn-outline btn-primary gap-1" (click)="addRowProcessos('processos')">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
           Afegir fila
         </button>
@@ -280,10 +280,44 @@
   <div class="modal-box w-11/12 max-w-2xl">
     <h3 class="font-bold text-lg">{{ currentRowIndex === -1 ? 'Afegir Fila' : 'Editar Fila' }}</h3>
     <div class="py-4 grid grid-cols-2 gap-4">
-      <label class="form-control w-full col-span-2">
+      <div class="form-control w-full col-span-2">
         <div class="label"><span class="label-text">Nom / Àmbit</span></div>
-        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentRow.name" />
-      </label>
+        @if (currentTableKey === 'processos') {
+          <!-- Searchable autocomplete for Processos -->
+          <div class="relative">
+            <input
+              type="text"
+              class="input input-bordered w-full"
+              [value]="processSearch"
+              (input)="onProcessSearchInput($any($event.target).value)"
+              (focus)="showProcessDropdown = true"
+              placeholder="Escriu o cerca un procés..."
+            />
+            @if (showProcessDropdown) {
+              <div class="absolute z-50 w-full mt-1 bg-base-100 border border-base-300 rounded-box shadow-xl max-h-64 overflow-y-auto">
+                @if (processosFiltered.length === 0) {
+                  <div class="p-3 text-sm text-base-content/60 italic">
+                    Cap coincidència. El text que has escrit s'usarà tal com és.
+                  </div>
+                }
+                @for (option of processosFiltered; track option) {
+                  <div
+                    class="px-4 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-content transition-colors"
+                    (mousedown)="selectProcesso(option)"
+                  >
+                    {{option}}
+                  </div>
+                }
+              </div>
+            }
+          </div>
+          <p class="text-xs text-base-content/50 mt-1">
+            💡 Si el teu procés no apareix a la llista, escriu-lo manualment i quedarà desat igualment.
+          </p>
+        } @else {
+          <input type="text" class="input input-bordered w-full" [(ngModel)]="currentRow.name" />
+        }
+      </div>
       <label class="form-control w-full">
         <div class="label"><span class="label-text">Responsable</span></div>
         <input type="text" class="input input-bordered w-full" [(ngModel)]="currentRow.resp" />
