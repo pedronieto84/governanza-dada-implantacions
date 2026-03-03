@@ -2,7 +2,7 @@
   "rolsClau": [
     {
       "name": "Responsable de dades (Data Stewart)",
-      "resp": "",
+      "resp": "Gemma Álvarez",
       "email": "",
       "phone": "",
       "obs": ""
@@ -118,7 +118,7 @@
   "processos": [
     {
       "name": "Contractes menors",
-      "resp": "Cada departament",
+      "resp": "Gemma Álvarez",
       "email": "",
       "phone": "",
       "obs": "Contractació",
@@ -126,7 +126,7 @@
     },
     {
       "name": "Subvencions",
-      "resp": "Cada departament",
+      "resp": "Lluís Garcia",
       "email": "",
       "phone": "",
       "obs": "Cada departament gestiona les seves",
@@ -134,7 +134,7 @@
     },
     {
       "name": "Licitacions",
-      "resp": "Secretaria",
+      "resp": "Gemma Álvarez",
       "email": "botemmr@premiadedalt.cat",
       "phone": "936931511",
       "obs": "",
@@ -877,15 +877,8 @@
   ],
   "projectes": [
     {
-      "name": "El Pla de Govern 2023 - 2027",
-      "resp": "",
-      "email": "",
-      "phone": "",
-      "obs": ""
-    },
-    {
       "name": "Pla d’Actuació Municipal (PAM) 2023-2027",
-      "resp": "",
+      "resp": "Gemma Álvarez",
       "email": "",
       "phone": "",
       "obs": "",
@@ -893,7 +886,7 @@
     },
     {
       "name": "Pla d’Actuació Municipal (PAM) 2023-2027",
-      "resp": "",
+      "resp": "Lluís Garcia",
       "email": "",
       "phone": "",
       "obs": "",
@@ -1041,409 +1034,723 @@
       "id": "1",
       "parentId": "",
       "name": "Equip de Govern",
-      "position": "Govern Municipal"
+      "position": "Govern Municipal",
+      "_pagingStep": 2000,
+      "_directSubordinatesPaging": 3,
+      "_directSubordinates": 3,
+      "_totalSubordinates": 67
     },
     {
       "id": "10",
       "parentId": "1",
       "name": "Serveis Generals",
-      "position": ""
+      "position": "",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 8,
+      "_directSubordinates": 8,
+      "_totalSubordinates": 22
     },
     {
       "id": "20",
       "parentId": "1",
       "name": "Serveis Territorials",
-      "position": ""
+      "position": "",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 13,
+      "_expanded": true
     },
     {
       "id": "30",
       "parentId": "1",
       "name": "Serveis a les Persones",
-      "position": ""
+      "position": "",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 29
     },
     {
       "id": "11",
       "parentId": "10",
       "name": "Mònica Farré",
-      "position": "Gabinet de Comunicació"
+      "position": "Gabinet de Comunicació",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 2,
+      "_directSubordinates": 2,
+      "_totalSubordinates": 2
     },
     {
       "id": "12",
       "parentId": "10",
       "name": "Antonio López",
-      "position": "Secretari Accidental"
+      "position": "Secretari Accidental",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 2,
+      "_directSubordinates": 2,
+      "_totalSubordinates": 2
     },
     {
       "id": "13",
       "parentId": "10",
       "name": "Teresa Pallarés",
-      "position": "Interventora Accidental"
+      "position": "Interventora Accidental",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 3,
+      "_directSubordinates": 3,
+      "_totalSubordinates": 3
     },
     {
       "id": "14",
       "parentId": "10",
       "name": "Montse López",
-      "position": "Tresorera"
+      "position": "Tresorera",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "15",
       "parentId": "10",
       "name": "Gemma Álvarez",
-      "position": "Cap RRHH"
+      "position": "Cap RRHH",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 2,
+      "_directSubordinates": 2,
+      "_totalSubordinates": 2
     },
     {
       "id": "16",
       "parentId": "10",
       "name": "Polítiques Digitals",
-      "position": ""
+      "position": "",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
     },
     {
       "id": "17",
       "parentId": "10",
       "name": "Esther Ávila",
-      "position": "Cap OAC"
+      "position": "Cap OAC",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
     },
     {
       "id": "18",
       "parentId": "10",
       "name": "Sergent",
-      "position": "Policia Local"
+      "position": "Policia Local",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 3,
+      "_directSubordinates": 3,
+      "_totalSubordinates": 3
     },
     {
       "id": "111",
       "parentId": "11",
       "name": "Eva Roig",
-      "position": "Tècnica auxiliar"
+      "position": "Tècnica auxiliar",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "112",
       "parentId": "11",
       "name": "Isabel Xarrié",
-      "position": "Directora Premià de Dalt Ràdio"
+      "position": "Directora Premià de Dalt Ràdio",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "121",
       "parentId": "12",
       "name": "Eulàlia Ribera",
-      "position": "Arxivera"
+      "position": "Arxivera",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "122",
       "parentId": "12",
       "name": "2 Auxiliars Administratives",
-      "position": "Secretaria"
+      "position": "Secretaria",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "131",
       "parentId": "13",
       "name": "Teresa Pallarés",
-      "position": "Interventora Accidental"
+      "position": "Interventora Accidental",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "132",
       "parentId": "13",
       "name": "Carme Hernando",
-      "position": "Tècnica auxiliar"
+      "position": "Tècnica auxiliar",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "133",
       "parentId": "13",
       "name": "Administratiu",
-      "position": ""
+      "position": "",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "151",
       "parentId": "15",
       "name": "Tècnica mitjana",
-      "position": "RRHH"
+      "position": "RRHH",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "152",
       "parentId": "15",
       "name": "Auxiliar Administrativa",
-      "position": "RRHH"
+      "position": "RRHH",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "161",
       "parentId": "16",
       "name": "Salvador Mataró / Vicens Ferran / Pedro Obrero",
-      "position": "3 Tècnics aux. Informàtica"
+      "position": "3 Tècnics aux. Informàtica",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "171",
       "parentId": "17",
       "name": "2 Auxiliars Administratives",
-      "position": "OAC"
+      "position": "OAC",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "181",
       "parentId": "18",
       "name": "4 Caporals",
-      "position": "Policia Local"
+      "position": "Policia Local",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "182",
       "parentId": "18",
       "name": "14 Agents",
-      "position": "Policia Local"
+      "position": "Policia Local",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "183",
       "parentId": "18",
       "name": "Administrativa",
-      "position": "Policia Local"
+      "position": "Policia Local",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "21",
       "parentId": "20",
       "name": "Lluís Garcia",
-      "position": "Gerent Serveis Territorials"
+      "position": "Gerent Serveis Territorials",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 8,
+      "_directSubordinates": 8,
+      "_totalSubordinates": 12,
+      "_expanded": true
     },
     {
       "id": "211",
       "parentId": "21",
       "name": "Lluís Garcia",
-      "position": "Arquitecte"
+      "position": "Arquitecte",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "212",
       "parentId": "21",
       "name": "Àlex Ramírez",
-      "position": "Arquitecte tècnic"
+      "position": "Arquitecte tècnic",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "213",
       "parentId": "21",
       "name": "Josep Meca",
-      "position": "Arquitecte tècnic d'edificis"
+      "position": "Arquitecte tècnic d'edificis",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1,
+      "_expanded": true
     },
     {
       "id": "214",
       "parentId": "21",
       "name": "Jordi Miquel",
-      "position": "Arquitecte tècnic brigada"
+      "position": "Arquitecte tècnic brigada",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 3,
+      "_expanded": true
     },
     {
       "id": "215",
       "parentId": "21",
       "name": "Joan Riera",
-      "position": "Enginyer"
+      "position": "Enginyer",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "216",
       "parentId": "21",
       "name": "Oriol Arderiu",
-      "position": "Tècnic Medi Ambient"
+      "position": "Tècnic Medi Ambient",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "217",
       "parentId": "21",
       "name": "Teresa Fraile",
-      "position": "Delineant"
+      "position": "Delineant",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "218",
       "parentId": "21",
       "name": "2 Administratives 1 Aux.",
-      "position": "Administració Territorial"
+      "position": "Administració Territorial",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "2131",
       "parentId": "213",
       "name": "4 Conserges",
-      "position": "Edificis municipals"
+      "position": "Edificis municipals",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "2141",
       "parentId": "214",
       "name": "Encarregat Brigada",
-      "position": ""
+      "position": "",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 2,
+      "_expanded": true
     },
     {
       "id": "2142",
       "parentId": "2141",
       "name": "4 Oficials 1a",
-      "position": "Brigada"
+      "position": "Brigada",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1,
+      "_expanded": true
     },
     {
       "id": "2143",
       "parentId": "2142",
       "name": "7 Peons",
-      "position": "Brigada"
+      "position": "Brigada",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "31",
       "parentId": "30",
       "name": "Gemma Álvarez",
-      "position": "Cap Serveis a les Persones"
+      "position": "Cap Serveis a les Persones",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 8,
+      "_directSubordinates": 8,
+      "_totalSubordinates": 28
     },
     {
       "id": "311",
       "parentId": "31",
       "name": "Núria Riera",
-      "position": "Coordinadora Acció Social"
+      "position": "Coordinadora Acció Social",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 4,
+      "_directSubordinates": 4,
+      "_totalSubordinates": 5
     },
     {
       "id": "312",
       "parentId": "31",
       "name": "Virgínia Merlos",
-      "position": "Tècnica Sup. Empresa"
+      "position": "Tècnica Sup. Empresa",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 2,
+      "_directSubordinates": 2,
+      "_totalSubordinates": 2
     },
     {
       "id": "313",
       "parentId": "31",
       "name": "Elisenda Gummà",
-      "position": "Coordinadora Educació"
+      "position": "Coordinadora Educació",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 3,
+      "_directSubordinates": 3,
+      "_totalSubordinates": 7
     },
     {
       "id": "314",
       "parentId": "31",
       "name": "Enric Miralles",
-      "position": "Tècnic Cultura"
+      "position": "Tècnic Cultura",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 2
     },
     {
       "id": "315",
       "parentId": "31",
       "name": "Gemma Planas",
-      "position": "Directora Biblioteca"
+      "position": "Directora Biblioteca",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
     },
     {
       "id": "316",
       "parentId": "31",
       "name": "Carme Cristóbal",
-      "position": "Tècnica Joventut"
+      "position": "Tècnica Joventut",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
     },
     {
       "id": "317",
       "parentId": "31",
       "name": "José Ángel Salido",
-      "position": "Monitor d'Esports"
+      "position": "Monitor d'Esports",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
     },
     {
       "id": "318",
       "parentId": "31",
       "name": "Administrativa",
-      "position": "Serveis a les Persones"
+      "position": "Serveis a les Persones",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
     },
     {
       "id": "3111",
       "parentId": "311",
       "name": "2 Treballadors socials",
-      "position": "Acció Social"
+      "position": "Acció Social",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3112",
       "parentId": "311",
       "name": "2 Educadors socials",
-      "position": "Acció Social"
+      "position": "Acció Social",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3113",
       "parentId": "311",
       "name": "Treballadora familiar",
-      "position": "Acció Social"
+      "position": "Acció Social",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3114",
       "parentId": "311",
       "name": "Administrativa",
-      "position": "Acció Social"
+      "position": "Acció Social",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
     },
     {
       "id": "3115",
       "parentId": "3114",
       "name": "Auxiliar Administrativa",
-      "position": "Acció Social"
+      "position": "Acció Social",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3121",
       "parentId": "312",
       "name": "Tècnica Ocupació",
-      "position": ""
+      "position": "",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3122",
       "parentId": "312",
       "name": "Auxiliar Administrativa",
-      "position": ""
+      "position": "",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3131",
       "parentId": "313",
       "name": "Professora Dansa",
-      "position": ""
+      "position": "",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3132",
       "parentId": "313",
       "name": "Gemma Ferran",
-      "position": "Directora Escoles Bressol"
+      "position": "Directora Escoles Bressol",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 4
     },
     {
       "id": "3133",
       "parentId": "313",
       "name": "Núria Yagüe",
-      "position": "Professora Aula d'Adults"
+      "position": "Professora Aula d'Adults",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3132a",
       "parentId": "3132",
       "name": "2 Coordinadors",
-      "position": "Escoles Bressol"
+      "position": "Escoles Bressol",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 3,
+      "_directSubordinates": 3,
+      "_totalSubordinates": 3
     },
     {
       "id": "3132b",
       "parentId": "3132a",
       "name": "3 Mestres",
-      "position": "Escoles Bressol"
+      "position": "Escoles Bressol",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3132c",
       "parentId": "3132a",
       "name": "8 Educadores",
-      "position": "Escoles Bressol"
+      "position": "Escoles Bressol",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3132d",
       "parentId": "3132a",
       "name": "2 Ajudants de cuina",
-      "position": "Escoles Bressol"
+      "position": "Escoles Bressol",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3141",
       "parentId": "314",
       "name": "Sergi Bello",
-      "position": "Director Escola Música"
+      "position": "Director Escola Música",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
     },
     {
       "id": "3142",
       "parentId": "3141",
       "name": "4 Professors/es",
-      "position": "Escola Música"
+      "position": "Escola Música",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3151",
       "parentId": "315",
       "name": "2 Tècniques Aux.",
-      "position": "Biblioteca"
+      "position": "Biblioteca",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3161",
       "parentId": "316",
       "name": "2 Auxiliars Ludoteca",
-      "position": "Joventut"
+      "position": "Joventut",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3171",
       "parentId": "317",
       "name": "3 Peons manteniment",
-      "position": "Esports"
+      "position": "Esports",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     },
     {
       "id": "3181",
       "parentId": "318",
       "name": "Auxiliar Administrativa",
-      "position": "Serveis a les Persones"
+      "position": "Serveis a les Persones",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
     }
   ]
 }

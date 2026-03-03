@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { retry } from 'rxjs/operators';
@@ -25,12 +25,15 @@ export class Sistemas implements OnInit {
 
   sistemas: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.http.get<any>(`${API_BASE}/api/data/sistemas`).pipe(retry({ count: 5, delay: 2000 })).subscribe({
       next: (data) => {
-        if (data.sistemas) this.sistemas = data.sistemas;
+        if (data.sistemas) {
+          this.sistemas = data.sistemas;
+          this.cdr.detectChanges();
+        }
       },
       error: () => console.warn('No saved Sistemas data found, using defaults.')
     });

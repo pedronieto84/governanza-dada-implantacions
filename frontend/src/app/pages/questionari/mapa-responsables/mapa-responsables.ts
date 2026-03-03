@@ -40,6 +40,9 @@ export class MapaResponsables implements OnInit {
         this.chart.setExpanded(nodeId).render();
       }
     };
+    (window as any).triggerOrgNodeInfo = (nodeId: string) => {
+      this.openInfoModal(nodeId);
+    };
   }
 
   isLoading = true;
@@ -138,8 +141,69 @@ export class MapaResponsables implements OnInit {
     this.isRowModalOpen = false;
     this.showProcessDropdown = false;
     this.processSearch = '';
+    this.processSearch = '';
     this.customRespMode = false;
     this.customProjecteMode = false;
+  }
+
+  // --- Info Modal ---
+  isInfoModalOpen = false;
+  infoNode: any = null;
+  infoRoles: any[] = [];
+  infoProcessos: any[] = [];
+  infoProjectes: any[] = [];
+  infoArees: any[] = [];
+
+  openInfoModal(nodeId: string) {
+    const node = this.orgData.find(n => n.id === nodeId);
+    if (!node) return;
+    this.infoNode = node;
+    const name = node.name;
+    this.infoRoles = this.rolsClau.filter((r: any) => r.resp === name);
+    this.infoProcessos = this.processos.filter((r: any) => r.resp === name);
+    this.infoProjectes = this.projectes.filter((r: any) => r.resp === name);
+    this.infoArees = this.arees.filter((r: any) => r.resp === name);
+    this.isInfoModalOpen = true;
+    this.cdr.detectChanges();
+  }
+
+  closeInfoModal() {
+    this.isInfoModalOpen = false;
+  }
+
+  removeInfoItem(type: 'rolsClau'|'processos'|'projectes'|'arees', item: any) {
+    const globalList = (this as any)[type];
+    const infoList = type === 'rolsClau' ? this.infoRoles : type === 'processos' ? this.infoProcessos : type === 'projectes' ? this.infoProjectes : this.infoArees;
+    
+    const idxG = globalList.indexOf(item);
+    if (idxG > -1) globalList.splice(idxG, 1);
+    
+    const idxI = infoList.indexOf(item);
+    if (idxI > -1) infoList.splice(idxI, 1);
+    
+    this.saveData();
+    if (this.chart) this.chart.render(); // update icons
+  }
+
+  editInfoItem(type: 'rolsClau'|'processos'|'projectes'|'arees', item: any) {
+    const globalList = (this as any)[type];
+    const idx = globalList.indexOf(item);
+    if (idx > -1) {
+      if (type === 'processos') {
+        this.openRowModalProcessos(type, idx);
+      } else {
+        this.openRowModal(type, idx);
+      }
+    }
+  }
+
+  addInfoItem(type: 'rolsClau'|'processos'|'projectes'|'arees') {
+    if (type === 'processos') {
+      this.addRowProcessos(type);
+    } else {
+      this.addRow(type);
+    }
+    this.currentRow.resp = this.infoNode.name; // pre-fill their name
   }
 
   populateTable(tableKey: string) {
@@ -588,34 +652,54 @@ export class MapaResponsables implements OnInit {
             hoverBorder = '#16a34a'; // green-600
           }
           
+          const rolesCount = this.rolsClau.filter((r: any) => r.resp === d.data.name).length;
+          const processosCount = this.processos.filter((r: any) => r.resp === d.data.name).length;
+          const projectesCount = this.projectes.filter((r: any) => r.resp === d.data.name).length;
+
+          const infoIconsHtml = `
+            <div style="position: absolute; bottom: 8px; left: 0; width: 100%; display: flex; justify-content: center; gap: 16px; z-index: 10; box-sizing: border-box;">
+              ${rolesCount > 0 ? `<div onclick="event.stopPropagation(); window.triggerOrgNodeInfo('${nodeId}')" title="Rols" style="background: #4f46e5; color: white; border: 1px solid #4338ca; border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.15) rotateY(360deg)';" onmouseout="this.style.transform='scale(1) rotateY(0deg)';">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 14s-1 0-1-1 1-4 5-4v1c-1.8 0-3.3.9-4 2.3v.7H3zm3-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg> ${rolesCount}
+              </div>` : ''}
+              ${processosCount > 0 ? `<div onclick="event.stopPropagation(); window.triggerOrgNodeInfo('${nodeId}')" title="Processos" style="background: #4f46e5; color: white; border: 1px solid #4338ca; border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.15) rotateY(360deg)';" onmouseout="this.style.transform='scale(1) rotateY(0deg)';">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M11 2a3 3 0 0 1 2.99 2.5H16v1h-2.01A3 3 0 0 1 11 8c-1.46 0-2.68-.86-3.13-2H0V5h7.87A3 3 0 0 1 11 2zm0 1a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-6 7a3 3 0 0 1 2.99 2.5H16v1H7.99A3 3 0 0 1 5 14c-1.46 0-2.68-.86-3.13-2H0v-1h1.87A3 3 0 0 1 5 10zm0 1a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg> ${processosCount}
+              </div>` : ''}
+              ${projectesCount > 0 ? `<div onclick="event.stopPropagation(); window.triggerOrgNodeInfo('${nodeId}')" title="Projectes" style="background: #4f46e5; color: white; border: 1px solid #4338ca; border-radius: 9999px; padding: 2px 8px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.15) rotateY(360deg)';" onmouseout="this.style.transform='scale(1) rotateY(0deg)';">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/></svg> ${projectesCount}
+              </div>` : ''}
+            </div>
+          `;
+
           return `
             <div class="${blinkClass} org-node-container" ondblclick="window.triggerOrgNodeCollapse('${nodeId}'); event.stopPropagation();" onclick="window.triggerOrgNodeSelect('${nodeId}')" style="font-family: 'Inter', sans-serif; background-color: ${bgColor}; border: 2px solid ${borderColor}; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); width: 260px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 12px; box-sizing: border-box; position: relative; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='${hoverBorder}'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.borderColor='${borderColor}'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)';">
               <div class="org-node-name" style="font-size: 15px; font-weight: 600; color: ${nameColor}; text-align: center; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none; transition: font-size 0.2s ease;">${d.data.name}</div>
               <div class="org-node-pos" style="font-size: 12px; color: ${posTextColor}; font-weight: 500; text-align: center; background-color: ${posBgColor}; padding: 4px 10px; border-radius: 9999px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none; transition: font-size 0.2s ease;">${d.data.position}</div>
               
               <!-- Hover actions overlay -->
-              <!-- Edit: Top Left -->
-              <div style="position: absolute; top: 0; left: 0; padding: 4px;">
-                <button onclick="event.stopPropagation(); window.triggerOrgNodeEdit('${nodeId}')" title="Editar" style="background: white; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.2); border: none; cursor: pointer; color: #6b7280; padding: 4px; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                </button>
-              </div>
-              
-              <!-- Delete: Top Right (only if not root) -->
+              <!-- Delete: Top Left (only if not root) -->
               ${d.data.parentId !== '' ? `
-              <div style="position: absolute; top: 0; right: 0; padding: 4px;">
-                <button onclick="event.stopPropagation(); if(confirm('N\\'estàs segur d\\'eliminar aquest node i associar els fills al pare?')) window.triggerOrgNodeDelete('${nodeId}')" title="Eliminar" style="background: white; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.2); border: none; cursor: pointer; color: #ef4444; padding: 4px; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
+              <div style="position: absolute; top: 6px; left: 6px; padding: 0; z-index: 20;">
+                <button onclick="event.stopPropagation(); if(confirm('N\\'estàs segur d\\'eliminar aquest node i associar els fills al pare?')) window.triggerOrgNodeDelete('${nodeId}')" title="Eliminar" style="background: white; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.25); border: 1px solid #fee2e2; cursor: pointer; color: #ef4444; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.15) rotateY(360deg)';" onmouseout="this.style.transform='scale(1) rotateY(0deg)';">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                 </button>
               </div>
               ` : ''}
+              
+              <!-- Edit: Top Center -->
+              <div style="position: absolute; top: 6px; left: 50%; transform: translateX(-50%); padding: 0; z-index: 20;">
+                <button onclick="event.stopPropagation(); window.triggerOrgNodeEdit('${nodeId}')" title="Editar" style="background: white; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.25); border: 1px solid #e5e7eb; cursor: pointer; color: #6b7280; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.15) rotateY(360deg)';" onmouseout="this.style.transform='scale(1) rotateY(0deg)';">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                </button>
+              </div>
 
-              <!-- Add: Bottom Left -->
-              <div style="position: absolute; bottom: 0; left: 0; padding: 4px;">
-                <button onclick="event.stopPropagation(); window.triggerOrgNodeAdd('${nodeId}')" title="Afegir subaltern" style="background: white; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.2); border: none; cursor: pointer; color: #10b981; padding: 4px; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
+              <!-- Add: Top Right -->
+              <div style="position: absolute; top: 6px; right: 6px; padding: 0; z-index: 20;">
+                <button onclick="event.stopPropagation(); window.triggerOrgNodeAdd('${nodeId}')" title="Afegir subaltern" style="background: white; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.25); border: 1px solid #d1fae5; cursor: pointer; color: #10b981; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.15) rotateY(360deg)';" onmouseout="this.style.transform='scale(1) rotateY(0deg)';">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                 </button>
               </div>
+              
+              ${infoIconsHtml}
             </div>
           `;
         })
