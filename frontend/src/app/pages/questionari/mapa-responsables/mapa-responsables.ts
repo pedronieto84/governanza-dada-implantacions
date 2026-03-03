@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@an
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { retry } from 'rxjs/operators';
+import * as d3 from 'd3';
 // @ts-ignore
 import { OrgChart } from 'd3-org-chart';
 
@@ -34,7 +35,14 @@ export class MapaResponsables implements OnInit {
     (window as any).triggerOrgNodeAdd = (parentId: string) => this.openAddModalWithParent(parentId);
     (window as any).triggerOrgNodeDelete = (nodeId: string) => this.deleteEmployeeById(nodeId);
     (window as any).triggerOrgNodeSelect = (nodeId: string) => this.selectNode(nodeId);
+    (window as any).triggerOrgNodeCollapse = (nodeId: string) => {
+      if (this.chart) {
+        this.chart.setExpanded(nodeId).render();
+      }
+    };
   }
+
+  isLoading = true;
 
   ngOnInit() {
     this.http.get<any>(`${API_BASE}/api/data/mapa-responsables`).pipe(retry({ count: 5, delay: 2000 })).subscribe({
@@ -45,8 +53,14 @@ export class MapaResponsables implements OnInit {
         if (data.projectes) this.projectes = data.projectes;
         if (data.altres) this.altres = data.altres;
         if (data.orgData) this.orgData = data.orgData;
+        this.isLoading = false;
+        this.cdr.detectChanges();
       },
-      error: () => console.warn('No saved data found, using defaults.')
+      error: () => {
+        console.warn('No saved data found, using defaults.');
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -70,6 +84,26 @@ export class MapaResponsables implements OnInit {
   currentRowIndex: number = -1;
   currentRow: any = {};
   customRespMode = false;
+  customProjecteMode = false;
+
+  projectesSuggestions: string[] = [
+    "Pla d’Actuació Municipal (PAM) 2023-2027",
+    "Plan de Vivienda Pública",
+    "Proyecto 'Vila Educadora'",
+    "Plan de Transformación Digital del Ayuntamiento",
+    "Programa de Salud Comunitaria con los CAP",
+    "Plan de Prevención de Abusos Sexuales en Entidades",
+    "Estrategia de Seguridad, Civismo y Convivencia",
+    "Plan de Choque contra el Cambio Climático (Municipio Verde)",
+    "Plan de Promoción de la Lengua Catalana",
+    "Estrategia de Feminismos e Igualdad",
+    "Programa de Control de Salubridad y Plagas",
+    "Plan de Formación en Seguridad Alimentaria",
+    "Ciclo de Charlas de Alimentación Saludable",
+    "Plan de Apoyo a Deportistas Individuales",
+    "Estrategia de Atracción de Inversiones",
+    "Plan de Bienestar Animal"
+  ];
 
   openRowModal(tableKey: string, index: number) {
     this.currentTableKey = tableKey;
@@ -105,6 +139,45 @@ export class MapaResponsables implements OnInit {
     this.showProcessDropdown = false;
     this.processSearch = '';
     this.customRespMode = false;
+    this.customProjecteMode = false;
+  }
+
+  populateTable(tableKey: string) {
+    let suggestions: string[] = [];
+    if (tableKey === 'rolsClau') {
+      suggestions = [
+        'Responsable de dades (Data Stewart)', 
+        'Propietari de dades (Data Owner)', 
+        'Referent de dades (Data Stewart)'
+      ];
+    } else if (tableKey === 'processos') {
+      suggestions = this.allProcessosSuggestions;
+    } else if (tableKey === 'projectes') {
+      suggestions = this.projectesSuggestions;
+    }
+
+    if (suggestions.length === 0) return;
+
+    const currentList = (this as any)[tableKey];
+    const existingNames = currentList.map((item: any) => item.name);
+
+    for (const suggestion of suggestions) {
+      if (!existingNames.includes(suggestion)) {
+        currentList.push({ name: suggestion, resp: '', email: '', phone: '', obs: '', areas: [] });
+      }
+    }
+    this.saveData();
+  }
+
+  isDuplicate(tableKey: string, name: string): boolean {
+    if (!name) return false;
+    const list = (this as any)[tableKey] || [];
+    let count = 0;
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].name === name) count++;
+      if (count > 1) return true;
+    }
+    return false;
   }
 
   toggleArea(areaName: string, checked: boolean) {
@@ -120,6 +193,15 @@ export class MapaResponsables implements OnInit {
 
   get rolsClauPersones() {
     return this.rolsClau.filter((r: any) => r.resp && r.resp.trim() !== '');
+  }
+
+  onProjecteSelect(name: string) {
+    if (name === '__custom_projecte__') {
+      this.customProjecteMode = true;
+      this.currentRow.name = '';
+    } else {
+      this.customProjecteMode = false;
+    }
   }
 
   onResponsableSelect(resp: string) {
@@ -423,6 +505,21 @@ export class MapaResponsables implements OnInit {
     }
   }
 
+  getDepth(nodeId: string): number {
+    let depth = 0;
+    let currentId = nodeId;
+    while (currentId) {
+      const node = this.orgData.find(n => n.id === currentId);
+      if (node && node.parentId) {
+        depth++;
+        currentId = node.parentId;
+      } else {
+        break;
+      }
+    }
+    return depth;
+  }
+
   renderChart() {
     if (!this.chartContainer) return;
 
@@ -433,42 +530,98 @@ export class MapaResponsables implements OnInit {
         .nodeWidth((d: any) => 260)
         .nodeHeight((d: any) => 100)
         .childrenMargin((d: any) => 40)
-        .compactMarginBetween((d: any) => 15)
-        .compactMarginPair((d: any) => 80)
+        .compactMarginBetween((d: any) => 25)
+        .compactMarginPair((d: any) => 60)
+        .layout('top') // Top-down layout
+        .linkUpdate(function (this: any, d: any, i: any, arr: any) {
+          d3.select(this)
+            .attr('stroke', '#94a3b8') // slate-400 slightly darker line
+            .attr('stroke-width', 3);  // thicker link lines
+        })
         .onNodeClick((d: any) => {
            // Relying on explicit clicks via triggerOrgNodeSelect in nodeContent
         })
         .nodeContent((d: any) => {
           const nodeId = d.data.id;
-          const isHighlighted = this.highlightedNodeIds.includes(nodeId);
-          const bgColor = isHighlighted ? '#e0f2fe' : '#f5f3ff'; // light blue or violet-50
-          const borderColor = isHighlighted ? '#38bdf8' : '#c4b5fd'; // light blue 400 or violet-300
+          const depth = this.getDepth(nodeId);
+          const isSelected = this.selectedNodeId === nodeId;
+          const isHighlighted = this.highlightedNodeIds.includes(nodeId) && !isSelected;
+          
+          let bgColor, borderColor, nameColor, posBgColor, posTextColor, hoverBorder;
+
+          // Default styling based on depth level
+          if (depth === 0) {
+            // Level 0: Top Management (Amber/Gold) - More Intense
+            bgColor = '#fef3c7'; borderColor = '#f59e0b'; nameColor = '#78350f'; 
+            posBgColor = '#fde68a'; posTextColor = '#b45309'; hoverBorder = '#d97706';
+          } else if (depth === 1) {
+            // Level 1: Departments (Blue) - More Intense
+            bgColor = '#dbeafe'; borderColor = '#3b82f6'; nameColor = '#1e3a8a'; 
+            posBgColor = '#bfdbfe'; posTextColor = '#1d4ed8'; hoverBorder = '#2563eb';
+          } else if (depth === 2) {
+            // Level 2: Teams (Purple/Violet) - More Intense
+            bgColor = '#ede9fe'; borderColor = '#8b5cf6'; nameColor = '#4c1d95'; 
+            posBgColor = '#ddd6fe'; posTextColor = '#6d28d9'; hoverBorder = '#7c3aed';
+          } else {
+            // Level 3+: Employees (Slate/Gray) - More Intense
+            bgColor = '#f1f5f9'; borderColor = '#94a3b8'; nameColor = '#0f172a'; 
+            posBgColor = '#e2e8f0'; posTextColor = '#334155'; hoverBorder = '#64748b';
+          }
+
+          let blinkClass = '';
+
+          // Override if selected or highlighted
+          if (isSelected) {
+            blinkClass = 'blink-selected';
+            bgColor = '#22c55e'; // green-500 (intense)
+            borderColor = '#16a34a'; // green-600
+            nameColor = '#ffffff'; // white
+            posBgColor = '#15803d'; // green-700
+            posTextColor = '#ffffff'; // white
+            hoverBorder = '#14532d'; // green-900
+          } else if (isHighlighted) {
+            bgColor = '#bbf7d0'; // green-200 (less intense)
+            borderColor = '#4ade80'; // green-400
+            nameColor = '#111827'; // gray-900
+            posBgColor = '#86efac'; // green-300
+            posTextColor = '#166534'; // green-800
+            hoverBorder = '#16a34a'; // green-600
+          }
           
           return `
-            <div onclick="window.triggerOrgNodeSelect('${nodeId}')" style="font-family: 'Inter', sans-serif; background-color: ${bgColor}; border: 2px solid ${borderColor}; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); width: 260px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 12px; box-sizing: border-box; position: relative; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#4338ca'; this.style.boxShadow='0 10px 15px -3px rgba(67, 56, 202, 0.2)';" onmouseout="this.style.borderColor='${borderColor}'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)';">
-              <div style="font-size: 15px; font-weight: 600; color: #111827; text-align: center; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;">${d.data.name}</div>
-              <div style="font-size: 12px; color: #4338ca; font-weight: 500; text-align: center; background-color: #e0e7ff; padding: 4px 10px; border-radius: 9999px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;">${d.data.position}</div>
+            <div class="${blinkClass} org-node-container" ondblclick="window.triggerOrgNodeCollapse('${nodeId}'); event.stopPropagation();" onclick="window.triggerOrgNodeSelect('${nodeId}')" style="font-family: 'Inter', sans-serif; background-color: ${bgColor}; border: 2px solid ${borderColor}; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); width: 260px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 12px; box-sizing: border-box; position: relative; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='${hoverBorder}'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.borderColor='${borderColor}'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)';">
+              <div class="org-node-name" style="font-size: 15px; font-weight: 600; color: ${nameColor}; text-align: center; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none; transition: font-size 0.2s ease;">${d.data.name}</div>
+              <div class="org-node-pos" style="font-size: 12px; color: ${posTextColor}; font-weight: 500; text-align: center; background-color: ${posBgColor}; padding: 4px 10px; border-radius: 9999px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none; transition: font-size 0.2s ease;">${d.data.position}</div>
               
               <!-- Hover actions overlay -->
-              <div style="position: absolute; top: 0; right: 0; padding: 4px; display: flex; gap: 4px;">
-                <button onclick="event.stopPropagation(); window.triggerOrgNodeEdit('${nodeId}')" title="Editar" style="background: none; border: none; cursor: pointer; color: #6b7280; padding: 2px;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+              <!-- Edit: Top Left -->
+              <div style="position: absolute; top: 0; left: 0; padding: 4px;">
+                <button onclick="event.stopPropagation(); window.triggerOrgNodeEdit('${nodeId}')" title="Editar" style="background: white; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.2); border: none; cursor: pointer; color: #6b7280; padding: 4px; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                 </button>
-                <button onclick="event.stopPropagation(); window.triggerOrgNodeAdd('${nodeId}')" title="Afegir subaltern" style="background: none; border: none; cursor: pointer; color: #6b7280; padding: 2px;">
+              </div>
+              
+              <!-- Delete: Top Right (only if not root) -->
+              ${d.data.parentId !== '' ? `
+              <div style="position: absolute; top: 0; right: 0; padding: 4px;">
+                <button onclick="event.stopPropagation(); if(confirm('N\\'estàs segur d\\'eliminar aquest node i associar els fills al pare?')) window.triggerOrgNodeDelete('${nodeId}')" title="Eliminar" style="background: white; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.2); border: none; cursor: pointer; color: #ef4444; padding: 4px; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                </button>
+              </div>
+              ` : ''}
+
+              <!-- Add: Bottom Left -->
+              <div style="position: absolute; bottom: 0; left: 0; padding: 4px;">
+                <button onclick="event.stopPropagation(); window.triggerOrgNodeAdd('${nodeId}')" title="Afegir subaltern" style="background: white; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.2); border: none; cursor: pointer; color: #10b981; padding: 4px; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                 </button>
-                ${d.data.parentId !== '' ? `
-                <button onclick="event.stopPropagation(); if(confirm('N\\'estàs segur d\\'eliminar aquest node i associar els fills al pare?')) window.triggerOrgNodeDelete('${nodeId}')" title="Eliminar" style="background: none; border: none; cursor: pointer; color: #ef4444; padding: 2px;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                </button>
-                ` : ''}
               </div>
             </div>
           `;
         })
         .render();
     } else {
-      this.chart.data(this.orgData).render();
+      this.chart.container(this.chartContainer.nativeElement).data(this.orgData).render();
     }
   }
 }

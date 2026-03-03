@@ -30,9 +30,56 @@
     <div class="menu w-80 min-h-full bg-base-100 text-base-content p-4">
       <!-- Título Sidebar -->
       <div class="mb-5 px-4 flex justify-between items-start">
-        <div>
+        <div class="flex-1">
           <h2 class="text-2xl font-bold text-primary">Gobernanza</h2>
           <p class="text-xs text-base-content/60">Dashboard Principal</p>
+
+          <!-- Chip selector de municipi -->
+          <div class="relative mt-3">
+            <button
+              class="btn btn-sm gap-1 rounded-full px-3"
+              [class.btn-primary]="municipiSeleccionat"
+              [class.btn-outline]="!municipiSeleccionat"
+              (click)="showMunicipiDropdown = !showMunicipiDropdown">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span class="text-xs font-medium max-w-[140px] truncate">
+                {{ municipiSeleccionat || 'Selecciona Municipi' }}
+              </span>
+            </button>
+
+            @if (showMunicipiDropdown) {
+              <div class="absolute z-50 top-full left-0 mt-1 w-64 bg-base-100 border border-base-300 rounded-box shadow-xl">
+                <div class="p-2 border-b border-base-200">
+                  <input
+                    type="text"
+                    class="input input-sm input-bordered w-full"
+                    placeholder="Cerca municipi..."
+                    [(ngModel)]="municipiSearch"
+                    (click)="$event.stopPropagation()"
+                    autofocus />
+                </div>
+                <div class="max-h-56 overflow-y-auto">
+                  @if (municipisFiltered.length === 0) {
+                    <div class="p-3 text-sm text-base-content/50 italic">Cap resultat</div>
+                  }
+                  @for (m of municipisFiltered; track m) {
+                    <div
+                      class="px-4 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-content transition-colors"
+                      [class.bg-primary]="m === municipiSeleccionat"
+                      [class.text-primary-content]="m === municipiSeleccionat"
+                      (click)="selectMunicipi(m)">
+                      {{m}}
+                    </div>
+                  }
+                </div>
+              </div>
+              <!-- backdrop -->
+              <div class="fixed inset-0 z-40" (click)="showMunicipiDropdown = false; municipiSearch = ''"></div>
+            }
+          </div>
         </div>
         <button class="btn btn-ghost btn-sm btn-square hidden lg:flex" (click)="toggleSidebar()" title="Colapsar menú">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>

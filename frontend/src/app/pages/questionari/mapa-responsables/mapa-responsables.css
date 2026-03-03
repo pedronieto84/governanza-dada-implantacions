@@ -1,0 +1,34 @@
+@keyframes blink-selected {
+  0% { 
+    box-shadow: 0 0 0px 0px rgba(34, 197, 94, 0); 
+    filter: brightness(1); 
+  }
+  50% { 
+    box-shadow: 0 0 20px 8px rgba(34, 197, 94, 0.7); 
+    filter: brightness(1.2); 
+  }
+  100% { 
+    box-shadow: 0 0 0px 0px rgba(34, 197, 94, 0); 
+    filter: brightness(1); 
+  }
+}
+
+.blink-selected { 
+  animation: blink-selected 1.5s infinite ease-in-out; 
+  z-index: 20; 
+}
+
+.org-node-container {
+  /* No additional base properties needed here, inline styles are okay */
+}
+
+/* On hover of container, scale up text content */
+.org-node-container:hover .org-node-name {
+  font-size: 30px !important;
+  white-space: normal !important; /* Allow wrapping if needed when huge */
+}
+
+.org-node-container:hover .org-node-pos {
+  font-size: 24px !important;
+  white-space: normal !important;
+}

@@ -7,10 +7,31 @@
 
   @if (viewMode === 'tabla') {
 
+  @if (isLoading) {
+    <div class="flex flex-col gap-8">
+      @for (label of ['Rols Clau', 'Àrees / Dominis', 'Processos clau', 'Projectes estratègics', 'Altres actors']; track label) {
+        <div class="card bg-base-100 shadow-xl border border-base-200">
+          <div class="card-body p-0">
+            <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl">{{label}}</h2>
+            <div class="flex justify-center items-center py-10">
+              <span class="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+
   <!-- Rols Clau -->
   <div class="card bg-base-100 shadow-xl border border-base-200">
     <div class="card-body p-0">
-      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl">Rols Clau</h2>
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center">
+        <span>Rols Clau</span>
+        <button class="btn btn-sm text-primary bg-base-100 hover:bg-base-200 border-none shadow-sm" (click)="populateTable('rolsClau')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          Poblar
+        </button>
+      </h2>
       <div class="overflow-x-auto">
         <table class="table table-zebra w-full">
           <thead>
@@ -20,7 +41,7 @@
           </thead>
           <tbody>
             @for (item of rolsClau; track $index) {
-              <tr>
+              <tr [style.backgroundColor]="isDuplicate('rolsClau', item.name) ? '#ffedd5' : ''">
                 <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
                 <td>{{item.resp}}</td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
@@ -61,7 +82,7 @@
           </thead>
           <tbody>
             @for (item of arees; track $index) {
-              <tr>
+              <tr [style.backgroundColor]="isDuplicate('arees', item.name) ? '#ffedd5' : ''">
                 <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
                 <td>{{item.resp}}</td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
@@ -92,7 +113,13 @@
   <!-- Processos clau -->
   <div class="card bg-base-100 shadow-xl border border-base-200">
     <div class="card-body p-0">
-      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl">Processos clau</h2>
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center">
+        <span>Processos clau</span>
+        <button class="btn btn-sm text-primary bg-base-100 hover:bg-base-200 border-none shadow-sm" (click)="populateTable('processos')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          Poblar
+        </button>
+      </h2>
       <div class="overflow-x-auto">
         <table class="table table-zebra w-full">
           <thead>
@@ -102,7 +129,7 @@
           </thead>
           <tbody>
             @for (item of processos; track $index) {
-              <tr>
+              <tr [style.backgroundColor]="isDuplicate('processos', item.name) ? '#ffedd5' : ''">
                 <td class="font-medium max-w-xs whitespace-normal">
                   <span>{{item.name}}</span>
                   @if (item.areas && item.areas.length > 0) {
@@ -140,7 +167,13 @@
   <!-- Projectes estratègics -->
   <div class="card bg-base-100 shadow-xl border border-base-200">
     <div class="card-body p-0">
-      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl">Projectes estratègics (p.e. PAM, Dades obertes etc.)</h2>
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center">
+        <span>Projectes estratègics (p.e. PAM, Dades obertes etc.)</span>
+        <button class="btn btn-sm text-primary bg-base-100 hover:bg-base-200 border-none shadow-sm" (click)="populateTable('projectes')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          Poblar
+        </button>
+      </h2>
       <div class="overflow-x-auto">
         <table class="table table-zebra w-full">
           <thead>
@@ -150,7 +183,7 @@
           </thead>
           <tbody>
             @for (item of projectes; track $index) {
-              <tr>
+              <tr [style.backgroundColor]="isDuplicate('projectes', item.name) ? '#ffedd5' : ''">
                 <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
                 <td>{{item.resp}}</td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
@@ -191,7 +224,7 @@
           </thead>
           <tbody>
             @for (item of altres; track $index) {
-              <tr>
+              <tr [style.backgroundColor]="isDuplicate('altres', item.name) ? '#ffedd5' : ''">
                 <td class="font-medium max-w-xs whitespace-normal">{{item.name}}</td>
                 <td>{{item.resp}}</td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
@@ -219,6 +252,8 @@
     </div>
   </div>
 
+  } <!-- end isLoading @else -->
+
   } @else {
     <!-- Organigrama Container (Fullscreen Modal or Normal Card) -->
     <div [class]="isFullscreen ? 'fixed inset-0 z-50 bg-base-100 flex flex-col p-4' : 'card bg-base-100 shadow-xl border border-base-200 w-full overflow-hidden h-[600px]'">
@@ -236,7 +271,7 @@
             </button>
           </div>
         </h2>
-        <div class="w-full flex-1 min-h-[500px] bg-slate-100" #chartContainer></div>
+        <div class="w-full flex-1 min-h-[500px] bg-slate-800 overflow-hidden" #chartContainer></div>
       </div>
     </div>
   }
@@ -328,6 +363,18 @@
             <option value="Propietari de dades (Data Owner)">Propietari de dades (Data Owner)</option>
             <option value="Referent de dades (Data Stewart)">Referent de dades (Data Stewart)</option>
           </select>
+        } @else if (currentTableKey === 'projectes') {
+          <select class="select select-bordered w-full" [(ngModel)]="currentRow.name" (ngModelChange)="onProjecteSelect($event)">
+            <option value="">-- Selecciona un projecte --</option>
+            @for (p of projectesSuggestions; track p) {
+              <option [value]="p">{{p}}</option>
+            }
+            <option value="__custom_projecte__">✏️ Escriu una altre...</option>
+          </select>
+          @if (customProjecteMode) {
+            <input type="text" class="input input-bordered w-full mt-2" [(ngModel)]="currentRow.name"
+              placeholder="Escriu el nom del projecte..." />
+          }
         } @else {
           <input type="text" class="input input-bordered w-full" [(ngModel)]="currentRow.name" />
         }
