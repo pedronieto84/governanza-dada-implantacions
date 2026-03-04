@@ -271,6 +271,114 @@
             </button>
           </div>
         </h2>
+        <!-- Filter toolbar -->
+        <div class="bg-base-200 border-b border-base-300 px-4 py-2 flex flex-col gap-2">
+          <div class="flex flex-wrap gap-2 items-center">
+            <!-- Rols Clau -->
+            <div class="relative">
+              <button class="btn btn-sm gap-1" [class.btn-primary]="filterRols.length > 0" [class.btn-outline]="filterRols.length === 0" (click)="toggleFilterDropdown('rols'); $event.stopPropagation()">
+                👤 Rols Clau
+                @if (filterRols.length > 0) { <span class="badge badge-sm badge-secondary">{{filterRols.length}}</span> }
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              @if (activeFilterDropdown === 'rols') {
+                <div class="absolute left-0 top-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-xl z-50 min-w-[220px] max-h-60 overflow-y-auto">
+                  @for (opt of rolsOptions; track opt) {
+                    <label class="flex items-center gap-2 px-3 py-2 hover:bg-base-200 cursor-pointer text-sm">
+                      <input type="checkbox" class="checkbox checkbox-sm checkbox-primary" [checked]="isFilterActive('rols', opt)" (change)="toggleFilter('rols', opt)">
+                      <span class="flex-1">{{opt}}</span>
+                    </label>
+                  }
+                  @if (rolsOptions.length === 0) { <div class="px-3 py-2 text-sm opacity-50">Cap opció disponible</div> }
+                </div>
+              }
+            </div>
+            <!-- Àrees / Dominis -->
+            <div class="relative">
+              <button class="btn btn-sm gap-1" [class.btn-primary]="filterArees.length > 0" [class.btn-outline]="filterArees.length === 0" (click)="toggleFilterDropdown('arees'); $event.stopPropagation()">
+                🗂 Àrees / Dominis
+                @if (filterArees.length > 0) { <span class="badge badge-sm badge-secondary">{{filterArees.length}}</span> }
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              @if (activeFilterDropdown === 'arees') {
+                <div class="absolute left-0 top-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-xl z-50 min-w-[220px] max-h-60 overflow-y-auto">
+                  @for (opt of areesOptions; track opt) {
+                    <label class="flex items-center gap-2 px-3 py-2 hover:bg-base-200 cursor-pointer text-sm">
+                      <input type="checkbox" class="checkbox checkbox-sm checkbox-primary" [checked]="isFilterActive('arees', opt)" (change)="toggleFilter('arees', opt)">
+                      <span class="flex-1">{{opt}}</span>
+                    </label>
+                  }
+                  @if (areesOptions.length === 0) { <div class="px-3 py-2 text-sm opacity-50">Cap opció disponible</div> }
+                </div>
+              }
+            </div>
+            <!-- Processos Clau -->
+            <div class="relative">
+              <button class="btn btn-sm gap-1" [class.btn-primary]="filterProcessos.length > 0" [class.btn-outline]="filterProcessos.length === 0" (click)="toggleFilterDropdown('processos'); $event.stopPropagation()">
+                ⚙️ Processos Clau
+                @if (filterProcessos.length > 0) { <span class="badge badge-sm badge-secondary">{{filterProcessos.length}}</span> }
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              @if (activeFilterDropdown === 'processos') {
+                <div class="absolute left-0 top-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-xl z-50 min-w-[240px] max-h-60 overflow-y-auto">
+                  @for (opt of processosOptions; track opt) {
+                    <label class="flex items-center gap-2 px-3 py-2 hover:bg-base-200 cursor-pointer text-sm">
+                      <input type="checkbox" class="checkbox checkbox-sm checkbox-primary" [checked]="isFilterActive('processos', opt)" (change)="toggleFilter('processos', opt)">
+                      <span class="flex-1">{{opt}}</span>
+                    </label>
+                  }
+                  @if (processosOptions.length === 0) { <div class="px-3 py-2 text-sm opacity-50">Cap opció disponible</div> }
+                </div>
+              }
+            </div>
+            <!-- Projectes Estratègics -->
+            <div class="relative">
+              <button class="btn btn-sm gap-1" [class.btn-primary]="filterProjectes.length > 0" [class.btn-outline]="filterProjectes.length === 0" (click)="toggleFilterDropdown('projectes'); $event.stopPropagation()">
+                🚀 Projectes
+                @if (filterProjectes.length > 0) { <span class="badge badge-sm badge-secondary">{{filterProjectes.length}}</span> }
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              @if (activeFilterDropdown === 'projectes') {
+                <div class="absolute left-0 top-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-xl z-50 min-w-[240px] max-h-60 overflow-y-auto">
+                  @for (opt of projectesOptions; track opt) {
+                    <label class="flex items-center gap-2 px-3 py-2 hover:bg-base-200 cursor-pointer text-sm">
+                      <input type="checkbox" class="checkbox checkbox-sm checkbox-primary" [checked]="isFilterActive('projectes', opt)" (change)="toggleFilter('projectes', opt)">
+                      <span class="flex-1">{{opt}}</span>
+                    </label>
+                  }
+                  @if (projectesOptions.length === 0) { <div class="px-3 py-2 text-sm opacity-50">Cap opció disponible</div> }
+                </div>
+              }
+            </div>
+            @if (hasActiveFilters) {
+              <button class="btn btn-sm btn-ghost text-error gap-1" (click)="clearFilters()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                Esborrar filtres
+              </button>
+            }
+          </div>
+          <!-- Active chips -->
+          @if (hasActiveFilters) {
+            <div class="flex flex-wrap gap-1">
+              @for (f of filterRols; track f) {
+                <span class="badge badge-primary gap-1 cursor-pointer select-none" (click)="toggleFilter('rols', f)">👤 {{f}} ✕</span>
+              }
+              @for (f of filterArees; track f) {
+                <span class="badge badge-accent gap-1 cursor-pointer select-none" (click)="toggleFilter('arees', f)">🗂 {{f}} ✕</span>
+              }
+              @for (f of filterProcessos; track f) {
+                <span class="badge badge-secondary gap-1 cursor-pointer select-none" (click)="toggleFilter('processos', f)">⚙️ {{f}} ✕</span>
+              }
+              @for (f of filterProjectes; track f) {
+                <span class="badge badge-warning gap-1 cursor-pointer select-none" (click)="toggleFilter('projectes', f)">🚀 {{f}} ✕</span>
+              }
+            </div>
+          }
+        </div>
+        <!-- Backdrop to close dropdown on outside click -->
+        @if (activeFilterDropdown) {
+          <div class="fixed inset-0 z-40" (click)="activeFilterDropdown = null"></div>
+        }
         <div class="w-full flex-1 min-h-[500px] bg-slate-800 overflow-hidden" #chartContainer></div>
       </div>
     </div>

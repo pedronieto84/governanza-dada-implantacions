@@ -47,6 +47,82 @@ export class MapaResponsables implements OnInit {
 
   isLoading = true;
 
+  // --- Filters ---
+  filterRols: string[] = [];
+  filterArees: string[] = [];
+  filterProcessos: string[] = [];
+  filterProjectes: string[] = [];
+  activeFilterDropdown: string | null = null;
+
+  get hasActiveFilters(): boolean {
+    return this.filterRols.length > 0 || this.filterArees.length > 0 ||
+           this.filterProcessos.length > 0 || this.filterProjectes.length > 0;
+  }
+
+  get rolsOptions(): string[] {
+    return [...new Set(this.rolsClau.map((r: any) => r.name).filter(Boolean))] as string[];
+  }
+  get areesOptions(): string[] {
+    return [...new Set(this.arees.map((a: any) => a.name).filter(Boolean))] as string[];
+  }
+  get processosOptions(): string[] {
+    return [...new Set(this.processos.map((p: any) => p.name).filter(Boolean))] as string[];
+  }
+  get projectesOptions(): string[] {
+    return [...new Set(this.projectes.map((p: any) => p.name).filter(Boolean))] as string[];
+  }
+
+  toggleFilterDropdown(cat: string) {
+    this.activeFilterDropdown = this.activeFilterDropdown === cat ? null : cat;
+  }
+
+  toggleFilter(cat: string, value: string) {
+    let arr: string[];
+    if (cat === 'rols') arr = this.filterRols;
+    else if (cat === 'arees') arr = this.filterArees;
+    else if (cat === 'processos') arr = this.filterProcessos;
+    else if (cat === 'projectes') arr = this.filterProjectes;
+    else return;
+    const idx = arr.indexOf(value);
+    if (idx >= 0) arr.splice(idx, 1);
+    else arr.push(value);
+    this.rerenderChart();
+  }
+
+  isFilterActive(cat: string, value: string): boolean {
+    if (cat === 'rols') return this.filterRols.includes(value);
+    if (cat === 'arees') return this.filterArees.includes(value);
+    if (cat === 'processos') return this.filterProcessos.includes(value);
+    if (cat === 'projectes') return this.filterProjectes.includes(value);
+    return false;
+  }
+
+  clearFilters() {
+    this.filterRols = [];
+    this.filterArees = [];
+    this.filterProcessos = [];
+    this.filterProjectes = [];
+    this.rerenderChart();
+  }
+
+  isNodeFilterHighlighted(nodeName: string): boolean {
+    if (!this.hasActiveFilters) return false;
+    if (this.filterRols.length > 0 &&
+        this.rolsClau.some((r: any) => r.resp === nodeName && this.filterRols.includes(r.name))) return true;
+    if (this.filterArees.length > 0 &&
+        this.arees.some((a: any) => a.resp === nodeName && this.filterArees.includes(a.name))) return true;
+    if (this.filterProcessos.length > 0 &&
+        this.processos.some((p: any) => p.resp === nodeName && this.filterProcessos.includes(p.name))) return true;
+    if (this.filterProjectes.length > 0 &&
+        this.projectes.some((p: any) => p.resp === nodeName && this.filterProjectes.includes(p.name))) return true;
+    return false;
+  }
+
+  rerenderChart() {
+    if (this.chart) this.chart.data(this.orgData).render();
+    this.cdr.detectChanges();
+  }
+
   ngOnInit() {
     this.http.get<any>(`${API_BASE}/api/data/mapa-responsables`).pipe(retry({ count: 5, delay: 2000 })).subscribe({
       next: (data) => {
@@ -650,6 +726,9 @@ export class MapaResponsables implements OnInit {
             posBgColor = '#86efac'; // green-300
             posTextColor = '#166534'; // green-800
             hoverBorder = '#16a34a'; // green-600
+          } else if (this.isNodeFilterHighlighted(d.data.name)) {
+            bgColor = '#ccfbf1'; borderColor = '#14b8a6'; nameColor = '#134e4a';
+            posBgColor = '#99f6e4'; posTextColor = '#0f766e'; hoverBorder = '#0d9488';
           }
           
           const rolesCount = this.rolsClau.filter((r: any) => r.resp === d.data.name).length;

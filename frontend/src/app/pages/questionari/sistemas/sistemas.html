@@ -81,7 +81,20 @@
     <div class="py-4 grid grid-cols-2 gap-4">
       <label class="form-control w-full">
         <div class="label"><span class="label-text">Nom curt</span></div>
-        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.nomCurt" />
+        <select class="select select-bordered w-full"
+                [value]="nomCurtCustom ? '__otros__' : currentItem.nomCurt"
+                (change)="onNomCurtChange($any($event.target).value)">
+          <option value="" disabled>Selecciona un programa...</option>
+          @for (opt of nomCurtOptions; track opt) {
+            <option [value]="opt" [selected]="!nomCurtCustom && currentItem.nomCurt === opt">{{opt}}</option>
+          }
+          <option value="__otros__" [selected]="nomCurtCustom">Otros (escriu manualment)</option>
+        </select>
+        @if (nomCurtCustom) {
+          <input type="text" class="input input-bordered w-full mt-2"
+                 placeholder="Nom curt del sistema..."
+                 [(ngModel)]="currentItem.nomCurt" />
+        }
       </label>
       <label class="form-control w-full">
         <div class="label"><span class="label-text">És extern?</span></div>
@@ -96,11 +109,37 @@
       </label>
       <label class="form-control w-full col-span-2">
         <div class="label"><span class="label-text">Tipus</span></div>
-        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.tipus" />
+        <select class="select select-bordered w-full"
+                [value]="tipusCustom ? '__otros__' : currentItem.tipus"
+                (change)="onTipusChange($any($event.target).value)">
+          <option value="" disabled>Selecciona un tipus...</option>
+          @for (opt of tipusOptions; track opt) {
+            <option [value]="opt" [selected]="!tipusCustom && currentItem.tipus === opt">{{opt}}</option>
+          }
+          <option value="__otros__" [selected]="tipusCustom">Otros (escriu manualment)</option>
+        </select>
+        @if (tipusCustom) {
+          <input type="text" class="input input-bordered w-full mt-2"
+                 placeholder="Tipus de programari..."
+                 [(ngModel)]="currentItem.tipus" />
+        }
       </label>
       <label class="form-control w-full col-span-2">
         <div class="label"><span class="label-text">Proveïdor</span></div>
-        <input type="text" class="input input-bordered w-full" [(ngModel)]="currentItem.proveidor" />
+        <select class="select select-bordered w-full"
+                [ngModel]="proveidorCustom ? '__otros__' : currentItem.proveidor"
+                (ngModelChange)="onProveidorChange($event)">
+          <option value="" disabled>Selecciona un proveïdor...</option>
+          @for (opt of proveidorOptions; track opt) {
+            <option [value]="opt">{{opt}}</option>
+          }
+          <option value="__otros__">Otros (escriu manualment)</option>
+        </select>
+        @if (proveidorCustom) {
+          <input type="text" class="input input-bordered w-full mt-2"
+                 placeholder="Nom del proveïdor..."
+                 [(ngModel)]="currentItem.proveidor" />
+        }
       </label>
       <label class="form-control w-full">
         <div class="label"><span class="label-text">Admin de sistemes</span></div>
