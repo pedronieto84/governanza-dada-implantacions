@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { Layout } from './layout/layout';
+import { Home } from './pages/home/home';
 // Level 1
 import { Questionari } from './pages/questionari/questionari';
 import { Inventari } from './pages/inventari/inventari';
@@ -25,6 +26,7 @@ export const routes: Routes = [
     path: '',
     component: Layout,
     children: [
+      { path: 'home', component: Home },
       { 
         path: 'questionari', 
         component: Questionari,
@@ -58,7 +60,7 @@ export const routes: Routes = [
           { path: '', redirectTo: 'taula', pathMatch: 'full' }
         ]
       },
-      { path: '', redirectTo: 'questionari', pathMatch: 'full' }
+      { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
   { path: '**', redirectTo: '' }

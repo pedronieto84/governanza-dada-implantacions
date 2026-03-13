@@ -7,5 +7,20 @@ import { Component } from '@angular/core';
   styleUrl: './relacion-glossari.css',
 })
 export class RelacionGlossari {
-
+  relacions = [
+    {
+      termeOrigen: 'Interessat',
+      termeRelacionat: 'b',
+      tipusRelacio: 'Correspondència (Terme similar que pot tenir variacions en diferents departaments o sistemes)'
+    },
+    { termeOrigen: '', termeRelacionat: '', tipusRelacio: '' },
+    { termeOrigen: '', termeRelacionat: '', tipusRelacio: '' },
+    { termeOrigen: '', termeRelacionat: '', tipusRelacio: '' },
+    { termeOrigen: '', termeRelacionat: '', tipusRelacio: '' },
+    { termeOrigen: '', termeRelacionat: '', tipusRelacio: '' },
+    { termeOrigen: '', termeRelacionat: '', tipusRelacio: '' },
+    { termeOrigen: '', termeRelacionat: '', tipusRelacio: '' },
+    { termeOrigen: '', termeRelacionat: '', tipusRelacio: '' },
+    { termeOrigen: '', termeRelacionat: '', tipusRelacio: '' },
+  ];
 }

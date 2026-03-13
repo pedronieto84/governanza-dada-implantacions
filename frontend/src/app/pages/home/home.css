@@ -1,0 +1,179 @@
+.home-wrapper {
+  padding: 0;
+}
+
+/* Scroll container for the big table */
+.table-scroll-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: calc(100vh - 280px);
+  border: 1px solid oklch(var(--bc) / 0.15);
+  border-radius: var(--rounded-box, 0.5rem);
+}
+
+/* Main table */
+.implantacions-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: max-content;
+  min-width: 100%;
+  font-size: 0.75rem;
+}
+
+/* Sticky first column */
+.sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background-color: oklch(var(--b1));
+  border-right: 2px solid oklch(var(--bc) / 0.15);
+}
+
+/* Group header row */
+.group-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+}
+
+.group-header-row .sticky-col {
+  z-index: 5;
+  background-color: oklch(var(--b2));
+}
+
+.group-th {
+  background-color: oklch(var(--b2));
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-bottom: 1px solid oklch(var(--bc) / 0.1);
+  border-right: 2px solid oklch(var(--bc) / 0.2);
+  letter-spacing: 0.02em;
+  color: oklch(var(--p));
+  white-space: nowrap;
+}
+
+.group-th:last-child {
+  border-right: none;
+}
+
+/* Column header row */
+.col-header-row {
+  position: sticky;
+  top: 31px; /* height of group header row */
+  z-index: 4;
+}
+
+.col-header-row .sticky-col {
+  z-index: 5;
+  background-color: oklch(var(--b3, var(--b2)));
+}
+
+.name-col {
+  min-width: 180px;
+  max-width: 180px;
+  width: 180px;
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 6px 12px;
+}
+
+.col-th {
+  background-color: oklch(var(--b3, var(--b2)));
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.68rem;
+  padding: 6px 8px;
+  white-space: nowrap;
+  min-width: 110px;
+  border-bottom: 2px solid oklch(var(--bc) / 0.15);
+  border-right: 1px solid oklch(var(--bc) / 0.08);
+  color: oklch(var(--bc) / 0.8);
+}
+
+/* Group borders on col headers */
+.col-th:nth-child(4),
+.col-th:nth-child(7) {
+  border-left: 2px solid oklch(var(--bc) / 0.2);
+}
+
+/* Data rows */
+.data-row:hover .name-cell {
+  background-color: oklch(var(--p) / 0.08);
+}
+
+.data-row:nth-child(even) .sticky-col {
+  background-color: oklch(var(--b1) / 0.97);
+}
+
+.name-cell {
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: oklch(var(--bc) / 0.85);
+  font-weight: 500;
+  border-bottom: 1px solid oklch(var(--bc) / 0.06);
+}
+
+/* Data cells */
+.data-cell {
+  text-align: center;
+  padding: 4px 6px;
+  cursor: pointer;
+  transition: filter 0.1s, transform 0.1s;
+  border-bottom: 1px solid oklch(var(--bc) / 0.06);
+  border-right: 1px solid oklch(var(--bc) / 0.06);
+  min-width: 110px;
+}
+
+.data-cell:hover {
+  filter: brightness(0.88);
+  transform: scale(1.04);
+  z-index: 1;
+  position: relative;
+}
+
+/* Group borders on data cells */
+.data-cell:nth-child(5),
+.data-cell:nth-child(8) {
+  border-left: 2px solid oklch(var(--bc) / 0.12);
+}
+
+/* Cell states */
+.cell-done {
+  background-color: oklch(var(--su) / 0.75);
+  color: oklch(var(--suc));
+}
+
+.cell-partial {
+  background-color: oklch(var(--wa) / 0.30);
+  color: oklch(var(--bc));
+}
+
+.cell-empty {
+  background-color: oklch(var(--b2));
+  color: oklch(var(--bc) / 0.35);
+}
+
+.cell-count {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.cell-dash {
+  font-size: 0.85rem;
+}
+
+/* Legend swatches */
+span.cell-done {
+  background-color: oklch(var(--su) / 0.75);
+}
+span.cell-partial {
+  background-color: oklch(var(--wa) / 0.30);
+}
+span.cell-empty {
+  background-color: oklch(var(--b2));
+}

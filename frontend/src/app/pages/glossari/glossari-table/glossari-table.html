@@ -1,1 +1,163 @@
-<p>glossari-table works!</p>
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <!-- Title bar -->
+    <div class="flex items-center justify-between px-6 py-3 bg-base-200 rounded-t-2xl border-b border-base-300">
+      <h2 class="text-2xl font-bold text-primary">Glossari</h2>
+      <span class="text-sm font-semibold text-base-content/60 italic">Diputació de Barcelona</span>
+    </div>
+
+    <!-- Tabs -->
+    <div role="tablist" class="tabs tabs-bordered px-4 pt-2">
+      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'mestres'" (click)="activeTab = 'mestres'">Dades Mestres</button>
+      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'referencia'" (click)="activeTab = 'referencia'">Dades de Referència</button>
+      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'negoci'" (click)="activeTab = 'negoci'">Dades de Negoci</button>
+    </div>
+
+    <!-- DADES MESTRES -->
+    @if (activeTab === 'mestres') {
+      <div class="overflow-x-auto w-full">
+        <table class="table table-sm w-full min-w-[2200px] text-xs border-collapse">
+          <thead>
+            <tr>
+              <td colspan="14" class="bg-red-100 text-red-800 font-bold uppercase text-xs py-1 px-3 border border-base-300">DADES MESTRES</td>
+            </tr>
+            <tr class="bg-primary text-primary-content text-center">
+              <th class="border border-base-300 w-44">Terme de glossari</th>
+              <th class="border border-base-300 w-48">Descripció</th>
+              <th class="border border-base-300 w-36">Domini funcional principal</th>
+              <th class="border border-base-300 w-28">Tipus</th>
+              <th class="border border-base-300 w-44">Descripció de format</th>
+              <th class="border border-base-300 w-44">Fórmula de càlcul (mètrica)</th>
+              <th class="border border-base-300 w-44">Comentaris</th>
+              <th class="border border-base-300 w-48">Noms d'àlies</th>
+              <th class="border border-base-300 w-32">Referent de Govern</th>
+              <th class="border border-base-300 w-48">Correu electrònic del Referent de Govern</th>
+              <th class="border border-base-300 w-36">Unitat Orgànica Referent de Govern</th>
+              <th class="border border-base-300 w-32">Responsable Funcional</th>
+              <th class="border border-base-300 w-48">Correu electrònic del Responsable Funcional</th>
+              <th class="border border-base-300 w-36">Unitat orgànica Responsable Funcional</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of dadesMestres; track $index) {
+              <tr class="hover">
+                <td class="font-bold border border-base-300 bg-base-200/50">{{ row.terme }}</td>
+                <td class="border border-base-300">{{ row.descripcio }}</td>
+                <td class="border border-base-300">{{ row.dominiFuncional }}</td>
+                <td class="border border-base-300 text-center">{{ row.tipus }}</td>
+                <td class="border border-base-300">{{ row.descFormat }}</td>
+                <td class="border border-base-300">{{ row.formula }}</td>
+                <td class="border border-base-300">{{ row.comentaris }}</td>
+                <td class="border border-base-300 italic">{{ row.alies }}</td>
+                <td class="border border-base-300 text-center">{{ row.refGovern }}</td>
+                <td class="border border-base-300 text-center text-primary">{{ row.emailRefGov }}</td>
+                <td class="border border-base-300 text-center">{{ row.unitatRefGov }}</td>
+                <td class="border border-base-300 text-center">{{ row.respFuncional }}</td>
+                <td class="border border-base-300 text-center text-primary">{{ row.emailRespFunc }}</td>
+                <td class="border border-base-300 text-center">{{ row.unitatRespFunc }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    <!-- DADES DE REFERÈNCIA -->
+    @if (activeTab === 'referencia') {
+      <div class="overflow-x-auto w-full">
+        <table class="table table-sm w-full min-w-[2200px] text-xs border-collapse">
+          <thead>
+            <tr>
+              <td colspan="14" class="bg-red-100 text-red-800 font-bold uppercase text-xs py-1 px-3 border border-base-300">DADES DE REFERÈNCIA</td>
+            </tr>
+            <tr class="bg-primary text-primary-content text-center">
+              <th class="border border-base-300 w-44">Terme de glossari</th>
+              <th class="border border-base-300 w-48">Descripció</th>
+              <th class="border border-base-300 w-36">Domini funcional principal</th>
+              <th class="border border-base-300 w-28">Tipus</th>
+              <th class="border border-base-300 w-44">Descripció de format</th>
+              <th class="border border-base-300 w-44">Fórmula de càlcul (mètrica)</th>
+              <th class="border border-base-300 w-44">Comentaris</th>
+              <th class="border border-base-300 w-48">Noms d'àlies</th>
+              <th class="border border-base-300 w-32">Referent de Govern</th>
+              <th class="border border-base-300 w-48">Correu electrònic del Referent de Govern</th>
+              <th class="border border-base-300 w-36">Unitat Orgànica Referent de Govern</th>
+              <th class="border border-base-300 w-32">Responsable Funcional</th>
+              <th class="border border-base-300 w-48">Correu electrònic del Responsable Funcional</th>
+              <th class="border border-base-300 w-36">Unitat orgànica Responsable Funcional</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of dadesReferencia; track $index) {
+              <tr class="hover">
+                <td class="font-bold border border-base-300 bg-base-200/50">{{ row.terme }}</td>
+                <td class="border border-base-300">{{ row.descripcio }}</td>
+                <td class="border border-base-300">{{ row.dominiFuncional }}</td>
+                <td class="border border-base-300 text-center">{{ row.tipus }}</td>
+                <td class="border border-base-300">{{ row.descFormat }}</td>
+                <td class="border border-base-300">{{ row.formula }}</td>
+                <td class="border border-base-300">{{ row.comentaris }}</td>
+                <td class="border border-base-300 italic">{{ row.alies }}</td>
+                <td class="border border-base-300 text-center">{{ row.refGovern }}</td>
+                <td class="border border-base-300 text-center text-primary">{{ row.emailRefGov }}</td>
+                <td class="border border-base-300 text-center">{{ row.unitatRefGov }}</td>
+                <td class="border border-base-300 text-center">{{ row.respFuncional }}</td>
+                <td class="border border-base-300 text-center text-primary">{{ row.emailRespFunc }}</td>
+                <td class="border border-base-300 text-center">{{ row.unitatRespFunc }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    <!-- DADES DE NEGOCI -->
+    @if (activeTab === 'negoci') {
+      <div class="overflow-x-auto w-full">
+        <table class="table table-sm w-full min-w-[2200px] text-xs border-collapse">
+          <thead>
+            <tr>
+              <td colspan="14" class="bg-red-100 text-red-800 font-bold uppercase text-xs py-1 px-3 border border-base-300">DADES DE NEGOCI</td>
+            </tr>
+            <tr class="bg-primary text-primary-content text-center">
+              <th class="border border-base-300 w-44">Terme de glossari</th>
+              <th class="border border-base-300 w-48">Descripció</th>
+              <th class="border border-base-300 w-36">Domini funcional principal</th>
+              <th class="border border-base-300 w-28">Tipus</th>
+              <th class="border border-base-300 w-44">Descripció de format</th>
+              <th class="border border-base-300 w-44">Fórmula de càlcul (mètrica)</th>
+              <th class="border border-base-300 w-44">Comentaris</th>
+              <th class="border border-base-300 w-48">Noms d'àlies</th>
+              <th class="border border-base-300 w-32">Referent de Govern</th>
+              <th class="border border-base-300 w-48">Correu electrònic del Referent de Govern</th>
+              <th class="border border-base-300 w-36">Unitat Orgànica Referent de Govern</th>
+              <th class="border border-base-300 w-32">Responsable Funcional</th>
+              <th class="border border-base-300 w-48">Correu electrònic del Responsable Funcional</th>
+              <th class="border border-base-300 w-36">Unitat orgànica Responsable Funcional</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of dadesNegoci; track $index) {
+              <tr class="hover">
+                <td class="font-bold border border-base-300 bg-base-200/50">{{ row.terme }}</td>
+                <td class="border border-base-300">{{ row.descripcio }}</td>
+                <td class="border border-base-300">{{ row.dominiFuncional }}</td>
+                <td class="border border-base-300 text-center">{{ row.tipus }}</td>
+                <td class="border border-base-300">{{ row.descFormat }}</td>
+                <td class="border border-base-300">{{ row.formula }}</td>
+                <td class="border border-base-300">{{ row.comentaris }}</td>
+                <td class="border border-base-300 italic">{{ row.alies }}</td>
+                <td class="border border-base-300 text-center">{{ row.refGovern }}</td>
+                <td class="border border-base-300 text-center text-primary">{{ row.emailRefGov }}</td>
+                <td class="border border-base-300 text-center">{{ row.unitatRefGov }}</td>
+                <td class="border border-base-300 text-center">{{ row.respFuncional }}</td>
+                <td class="border border-base-300 text-center text-primary">{{ row.emailRespFunc }}</td>
+                <td class="border border-base-300 text-center">{{ row.unitatRespFunc }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

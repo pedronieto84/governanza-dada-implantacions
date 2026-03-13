@@ -1,1 +1,131 @@
-<p>relacion-atributs works!</p>
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 4v8m0 0l4-4m-4 4l-4-4" /></svg>
+      Relacions d'atributs a atributs
+    </h2>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-bordered table-zebra table-sm w-full min-w-[1200px] text-xs">
+        <thead class="bg-primary text-primary-content text-center">
+          <!-- Sort row -->
+          <tr>
+            <th class="border-r border-base-300 w-24 cursor-pointer select-none" (click)="sort('atributOrigen')">
+              <div class="flex items-center justify-center gap-1">Atribut d'origen
+                @if (sortColumn === 'atributOrigen' && sortDirection === 'asc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                } @else if (sortColumn === 'atributOrigen' && sortDirection === 'desc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                } @else {
+                  <svg class="h-3 w-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 4v8m0 0l4-4m-4 4l-4-4"/></svg>
+                }
+              </div>
+            </th>
+            <th class="border-r border-base-300 w-24 cursor-pointer select-none" (click)="sort('atributDesti')">
+              <div class="flex items-center justify-center gap-1">Atribut de destinació
+                @if (sortColumn === 'atributDesti' && sortDirection === 'asc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                } @else if (sortColumn === 'atributDesti' && sortDirection === 'desc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                } @else {
+                  <svg class="h-3 w-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 4v8m0 0l4-4m-4 4l-4-4"/></svg>
+                }
+              </div>
+            </th>
+            <th class="border-r border-base-300 w-48 cursor-pointer select-none" (click)="sort('tipusRelacio')">
+              <div class="flex items-center justify-center gap-1">Tipus de relació
+                @if (sortColumn === 'tipusRelacio' && sortDirection === 'asc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                } @else if (sortColumn === 'tipusRelacio' && sortDirection === 'desc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                } @else {
+                  <svg class="h-3 w-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 4v8m0 0l4-4m-4 4l-4-4"/></svg>
+                }
+              </div>
+            </th>
+            <th class="border-r border-base-300 w-32 cursor-pointer select-none" (click)="sort('entitatOrigen')">
+              <div class="flex items-center justify-center gap-1">Entitat d'origen
+                @if (sortColumn === 'entitatOrigen' && sortDirection === 'asc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                } @else if (sortColumn === 'entitatOrigen' && sortDirection === 'desc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                } @else {
+                  <svg class="h-3 w-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 4v8m0 0l4-4m-4 4l-4-4"/></svg>
+                }
+              </div>
+            </th>
+            <th class="border-r border-base-300 w-24 cursor-pointer select-none" (click)="sort('sistemaOrigen')">
+              <div class="flex items-center justify-center gap-1">Sistema d'origen
+                @if (sortColumn === 'sistemaOrigen' && sortDirection === 'asc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                } @else if (sortColumn === 'sistemaOrigen' && sortDirection === 'desc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                } @else {
+                  <svg class="h-3 w-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 4v8m0 0l4-4m-4 4l-4-4"/></svg>
+                }
+              </div>
+            </th>
+            <th class="border-r border-base-300 w-32 cursor-pointer select-none" (click)="sort('entitatDesti')">
+              <div class="flex items-center justify-center gap-1">Entitat de destinació
+                @if (sortColumn === 'entitatDesti' && sortDirection === 'asc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                } @else if (sortColumn === 'entitatDesti' && sortDirection === 'desc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                } @else {
+                  <svg class="h-3 w-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 4v8m0 0l4-4m-4 4l-4-4"/></svg>
+                }
+              </div>
+            </th>
+            <th class="w-24 cursor-pointer select-none" (click)="sort('sistemaDesti')">
+              <div class="flex items-center justify-center gap-1">Sistema de destinació
+                @if (sortColumn === 'sistemaDesti' && sortDirection === 'asc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                } @else if (sortColumn === 'sistemaDesti' && sortDirection === 'desc') {
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                } @else {
+                  <svg class="h-3 w-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 4v8m0 0l4-4m-4 4l-4-4"/></svg>
+                }
+              </div>
+            </th>
+          </tr>
+          <!-- Filter row -->
+          <tr>
+            <th class="border-r border-base-300 p-1">
+              <input type="text" [(ngModel)]="filters['atributOrigen']" placeholder="Filtrar..." class="input input-xs w-full text-base-content bg-base-100 border border-base-300 rounded font-normal" />
+            </th>
+            <th class="border-r border-base-300 p-1">
+              <input type="text" [(ngModel)]="filters['atributDesti']" placeholder="Filtrar..." class="input input-xs w-full text-base-content bg-base-100 border border-base-300 rounded font-normal" />
+            </th>
+            <th class="border-r border-base-300 p-1">
+              <input type="text" [(ngModel)]="filters['tipusRelacio']" placeholder="Filtrar..." class="input input-xs w-full text-base-content bg-base-100 border border-base-300 rounded font-normal" />
+            </th>
+            <th class="border-r border-base-300 p-1">
+              <input type="text" [(ngModel)]="filters['entitatOrigen']" placeholder="Filtrar..." class="input input-xs w-full text-base-content bg-base-100 border border-base-300 rounded font-normal" />
+            </th>
+            <th class="border-r border-base-300 p-1">
+              <input type="text" [(ngModel)]="filters['sistemaOrigen']" placeholder="Filtrar..." class="input input-xs w-full text-base-content bg-base-100 border border-base-300 rounded font-normal" />
+            </th>
+            <th class="border-r border-base-300 p-1">
+              <input type="text" [(ngModel)]="filters['entitatDesti']" placeholder="Filtrar..." class="input input-xs w-full text-base-content bg-base-100 border border-base-300 rounded font-normal" />
+            </th>
+            <th class="p-1">
+              <input type="text" [(ngModel)]="filters['sistemaDesti']" placeholder="Filtrar..." class="input input-xs w-full text-base-content bg-base-100 border border-base-300 rounded font-normal" />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of filteredDades; track $index) {
+            <tr class="hover whitespace-normal">
+              <td class="font-bold border-r border-base-300 text-center">{{item.atributOrigen}}</td>
+              <td class="border-r border-base-300 text-center">{{item.atributDesti}}</td>
+              <td class="border-r border-base-300">{{item.tipusRelacio}}</td>
+              <td class="border-r border-base-300">{{item.entitatOrigen}}</td>
+              <td class="border-r border-base-300 text-center">{{item.sistemaOrigen}}</td>
+              <td class="border-r border-base-300">{{item.entitatDesti}}</td>
+              <td class="text-center">{{item.sistemaDesti}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

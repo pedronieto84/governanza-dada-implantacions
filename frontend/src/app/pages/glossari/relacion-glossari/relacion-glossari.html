@@ -1,1 +1,28 @@
-<p>relacion-glossari works!</p>
+<div class="card bg-base-100 shadow-xl border border-base-200">
+  <div class="card-body p-0">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" /></svg>
+      Relacions no Jeràrquiques del Glossari
+    </h2>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-bordered table-zebra table-sm w-full text-xs">
+        <thead class="bg-primary text-primary-content text-center">
+          <tr>
+            <th class="border-r border-base-300">Terme d'origen</th>
+            <th class="border-r border-base-300">Terme relacionat</th>
+            <th>Tipus de relació</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (rel of relacions; track $index) {
+            <tr class="hover whitespace-normal">
+              <td class="border-r border-base-300 font-bold bg-base-200/50">{{rel.termeOrigen}}</td>
+              <td class="border-r border-base-300">{{rel.termeRelacionat}}</td>
+              <td>{{rel.tipusRelacio}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

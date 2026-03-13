@@ -1,45 +1,67 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { MunicipiService } from '../services/municipi.service';
+import { Router } from '@angular/router';
+import { MunicipiService } from '../../services/municipi.service';
+
+interface Column {
+  label: string;
+  route: string;
+  group: number;
+}
+
+interface CellData {
+  rows: number;
+  done: boolean;
+}
 
 @Component({
-  selector: 'app-layout',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule],
-  templateUrl: './layout.html',
-  styleUrl: './layout.css',
+  selector: 'app-home',
+  templateUrl: './home.html',
+  styleUrl: './home.css',
+  standalone: true,
+  imports: [FormsModule],
 })
-export class Layout implements OnInit, OnDestroy {
-  isSidebarOpen = true;
-  municipiSeleccionat = '';
-  showMunicipiDropdown = false;
-  municipiSearch = '';
-  private _sub!: Subscription;
+export class Home {
+  readonly columns: Column[] = [
+    { label: '1. Mapa Responsables', route: '/questionari/mapa-responsables', group: 1 },
+    { label: '1. Sistemas',           route: '/questionari/sistemas',           group: 1 },
+    { label: '1. Questionari',        route: '/questionari/form',               group: 1 },
+    { label: '2. Entitats',           route: '/inventari/entitats',             group: 2 },
+    { label: '2. Atributs',           route: '/inventari/atributs',             group: 2 },
+    { label: '2. Rel. Atributs',      route: '/inventari/relacion',             group: 2 },
+    { label: '3. Glossari',           route: '/glossari/taula',                 group: 3 },
+    { label: '3. Rel. Glossari',      route: '/glossari/relacion',              group: 3 },
+  ];
 
-  municipis: string[] = [
+  readonly groups = [
+    { label: '1. Qüestionari',    span: 3 },
+    { label: '2. Inventari',      span: 3 },
+    { label: '3. Glossari Corp.', span: 2 },
+  ];
+
+  readonly municipis: string[] = [
     'Abrera', 'Aguilar de Segarra', 'Aiguafreda', 'Alella', 'Alpens',
     'Arenys de Mar', 'Arenys de Munt', 'Argençola', 'Argentona', 'Artés',
     'Avià', 'Avinyó', 'Avinyonet del Penedès', 'Bagà', 'Balenyà',
     'Balsareny', 'Begues', 'Bellprat', 'Berga', 'Bigues i Riells',
-    'Borredà', 'Bruc, El', 'Brull, El', 'Cabanyes, Les', 'Cabrera d\'Anoia',
-    'Cabrera de Mar', 'Cabrils', 'Calaf', 'Calders', 'Caldes d\'Estrac',
+    'Borredà', 'Bruc, El', 'Brull, El', 'Cabanyes, Les', "Cabrera d'Anoia",
+    'Cabrera de Mar', 'Cabrils', 'Calaf', 'Calders', "Caldes d'Estrac",
     'Caldes de Montbui', 'Calldetenes', 'Callús', 'Calonge de Segarra',
     'Campins', 'Canet de Mar', 'Canovelles', 'Cànoves i Samalús',
     'Canyamars', 'Capellades', 'Capolat', 'Cardedeu', 'Cardona',
-    'Carme', 'Casserres', 'Castell de l\'Areny', 'Castellbell i el Vilar',
+    'Carme', 'Casserres', "Castell de l'Areny", 'Castellbell i el Vilar',
     'Castellcir', 'Castelldefels', 'Castellet i la Gornal', 'Castellfollit de Riubregós',
     'Castellfollit del Boix', 'Castellgalí', 'Castellnou de Bages', 'Castellolí',
     'Castellterçol', 'Castellví de la Marca', 'Castellví de Rosanes', 'Centelles',
     'Cercs', 'Cervelló', 'Collbató', 'Collsuspina', 'Copons', 'Corbera de Llobregat',
     'Cornellà de Llobregat', 'Dosrius', 'Esparreguera', 'Esplugues de Llobregat',
-    'Espunyola, L\'', 'Estany, L\'', 'Figaró-Montmany', 'Fígols', 'Fogars de la Selva',
+    "Espunyola, L'", "Estany, L'", 'Figaró-Montmany', 'Fígols', 'Fogars de la Selva',
     'Fogars de Montclús', 'Folgueroles', 'Fonollosa', 'Font-rubí',
     'Franqueses del Vallès, Les', 'Gaià', 'Gallifa', 'Gavà',
     'Gelida', 'Gironella', 'Gisclareny', 'Granada, La', 'Granera',
     'Granollers', 'Gualba', 'Guardiola de Berguedà', 'Gurb',
-    'Hospitalet de Llobregat, L\'', 'Igualada', 'Jorba', 'Llacuna, La',
-    'Llagosta, La', 'Lliçà d\'Amunt', 'Lliçà de Vall', 'Llinars del Vallès',
+    "Hospitalet de Llobregat, L'", 'Igualada', 'Jorba', 'Llacuna, La',
+    'Llagosta, La', "Lliçà d'Amunt", 'Lliçà de Vall', 'Llinars del Vallès',
     'Lluçà', 'Malgrat de Mar', 'Malla', 'Manlleu', 'Manresa',
     'Marganell', 'Martorelles', 'Martorell', 'Masies de Roda, Les',
     'Masies de Voltregà, Les', 'Masnou, El', 'Masquefa', 'Matadepera',
@@ -66,13 +88,13 @@ export class Layout implements OnInit, OnDestroy {
     'Sant Feliu Sasserra', 'Sant Font', 'Sant Fruitós de Bages',
     'Sant Hipòlit de Voltregà', 'Sant Iscle de Vallalta', 'Sant Jaume de Frontanyà',
     'Sant Joan de Vilatorrada', 'Sant Joan Despí', 'Sant Julià de Cerdanyola',
-    'Sant Julià de Vilatorta', 'Sant Just Desvern', 'Sant Llorenç d\'Hortons',
-    'Sant Llorenç Savall', 'Sant Martí d\'Albars', 'Sant Martí de Centelles',
+    'Sant Julià de Vilatorta', 'Sant Just Desvern', "Sant Llorenç d'Hortons",
+    'Sant Llorenç Savall', "Sant Martí d'Albars", 'Sant Martí de Centelles',
     'Sant Martí de Tous', 'Sant Martí Sarroca', 'Sant Martí Sesgueioles',
     'Sant Mateu de Bages', 'Sant Pere de Ribes', 'Sant Pere de Riudebitlles',
     'Sant Pere de Torelló', 'Sant Pere de Vilamajor', 'Sant Pere Sallavinera',
     'Sant Pol de Mar', 'Sant Quintí de Mediona', 'Sant Quirze del Vallès',
-    'Sant Quirze de Besora', 'Sant Sadurní d\'Anoia', 'Sant Salvador de Guardiola',
+    'Sant Quirze de Besora', "Sant Sadurní d'Anoia", 'Sant Salvador de Guardiola',
     'Sant Vicenç de Castellet', 'Sant Vicenç de Montalt', 'Sant Vicenç de Torelló',
     'Sant Vicenç dels Horts', 'Santa Cecília de Voltregà', 'Santa Coloma de Cervelló',
     'Santa Coloma de Gramenet', 'Santa Eulàlia de Riuprimer', 'Santa Eulàlia de Ronçana',
@@ -84,38 +106,50 @@ export class Layout implements OnInit, OnDestroy {
     'Tagamanent', 'Talamanca', 'Taradell', 'Tavèrnoles', 'Tavertet',
     'Teià', 'Terrassa', 'Tiana', 'Tona', 'Torelló', 'Torre de Claramunt, La',
     'Torrelavit', 'Torrelles de Foix', 'Torrelles de Llobregat', 'Ullastrell',
-    'Vacarisses', 'Vallbona d\'Anoia', 'Vallcebre', 'Vallgorguina',
+    'Vacarisses', "Vallbona d'Anoia", 'Vallcebre', 'Vallgorguina',
     'Vallirana', 'Vallromanes', 'Vic', 'Viladecans', 'Viladecavalls',
     'Vilafranca del Penedès', 'Vilalba Sasserra', 'Vilanova del Camí',
     'Vilanova del Vallès', 'Vilanova i la Geltrú', 'Vilassar de Dalt',
-    'Vilassar de Mar', 'Vilobí del Penedès', 'Viver i Serrateix'
+    'Vilassar de Mar', 'Vilobí del Penedès', 'Viver i Serrateix',
   ];
 
-  get municipisFiltered() {
-    const q = this.municipiSearch.toLowerCase().trim();
-    if (!q) return this.municipis;
-    return this.municipis.filter(m => m.toLowerCase().includes(q));
+  filterText = '';
+
+  get municipisFiltered(): { name: string; idx: number }[] {
+    const q = this.filterText.toLowerCase().trim();
+    return this.municipis
+      .map((name, idx) => ({ name, idx }))
+      .filter(m => !q || m.name.toLowerCase().includes(q));
   }
 
-  constructor(private municipiService: MunicipiService) {}
-
-  ngOnInit() {
-    this._sub = this.municipiService.municipiSeleccionat$.subscribe(m => {
-      this.municipiSeleccionat = m;
-    });
+  get totalCells(): number {
+    return this.municipis.length * this.columns.length;
   }
 
-  ngOnDestroy() {
-    this._sub?.unsubscribe();
+  get doneCells(): number {
+    let count = 0;
+    for (let mi = 0; mi < this.municipis.length; mi++) {
+      for (let ci = 0; ci < this.columns.length; ci++) {
+        if (this.getMock(mi, ci).done) count++;
+      }
+    }
+    return count;
   }
 
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
+  constructor(
+    private municipiService: MunicipiService,
+    private router: Router,
+  ) {}
+
+  getMock(mIdx: number, cIdx: number): CellData {
+    const h = ((mIdx + 1) * 13 + (cIdx + 1) * 7) % 97;
+    if (h < 18) return { rows: 0, done: false };
+    const rows = ((mIdx * 3 + cIdx * 11) % 9) + 1;
+    return { rows, done: h > 52 };
   }
 
-  selectMunicipi(m: string) {
-    this.municipiService.selectMunicipi(m);
-    this.showMunicipiDropdown = false;
-    this.municipiSearch = '';
+  navigateToCell(municipiIdx: number, col: Column): void {
+    this.municipiService.selectMunicipi(this.municipis[municipiIdx]);
+    this.router.navigate([col.route]);
   }
 }

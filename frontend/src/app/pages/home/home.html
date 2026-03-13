@@ -1,0 +1,103 @@
+<div class="home-wrapper">
+
+  <!-- Header / Stats -->
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-primary mb-1">Vista General d'Implantacions</h1>
+    <p class="text-base-content/60 text-sm mb-4">Progrés de totes les implantacions municipals</p>
+
+    <div class="stats shadow mb-4">
+      <div class="stat">
+        <div class="stat-title">Municipis</div>
+        <div class="stat-value text-primary">{{ municipis.length }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Taules completades</div>
+        <div class="stat-value text-success">{{ doneCells }}</div>
+        <div class="stat-desc">de {{ totalCells }} cel·les totals</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Completat</div>
+        <div class="stat-value">{{ (doneCells / totalCells * 100).toFixed(1) }}%</div>
+        <div class="stat-desc">
+          <progress class="progress progress-success w-24" [value]="doneCells" [max]="totalCells"></progress>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-base-content/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+      <input
+        type="text"
+        class="input input-bordered input-sm w-64"
+        placeholder="Filtrar municipi..."
+        [(ngModel)]="filterText" />
+      @if (filterText) {
+        <button class="btn btn-ghost btn-xs" (click)="filterText = ''">✕</button>
+      }
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="flex gap-3 mb-3 text-xs items-center flex-wrap">
+    <span class="font-semibold text-base-content/60 mr-1">Llegenda:</span>
+    <span class="flex items-center gap-1"><span class="cell-done inline-block w-5 h-5 rounded border border-success/40"></span> Finalitzat</span>
+    <span class="flex items-center gap-1"><span class="cell-partial inline-block w-5 h-5 rounded border border-warning/40"></span> En progrés</span>
+    <span class="flex items-center gap-1"><span class="cell-empty inline-block w-5 h-5 rounded border border-base-300"></span> Sense dades</span>
+  </div>
+
+  <!-- Table container -->
+  <div class="table-scroll-container">
+    <table class="implantacions-table">
+      <!-- Group header -->
+      <thead>
+        <tr class="group-header-row">
+          <th class="sticky-col name-col"></th>
+          @for (g of groups; track g.label) {
+            <th [attr.colspan]="g.span" class="group-th">{{ g.label }}</th>
+          }
+        </tr>
+        <!-- Column header -->
+        <tr class="col-header-row">
+          <th class="sticky-col name-col">Municipi</th>
+          @for (col of columns; track col.route) {
+            <th class="col-th">{{ col.label }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (m of municipisFiltered; track m.idx) {
+          <tr class="data-row">
+            <td class="sticky-col name-cell">{{ m.name }}</td>
+            @for (col of columns; track col.route; let ci = $index) {
+              @let cell = getMock(m.idx, ci);
+              <td
+                class="data-cell"
+                [class.cell-done]="cell.done"
+                [class.cell-partial]="!cell.done && cell.rows > 0"
+                [class.cell-empty]="cell.rows === 0"
+                (click)="navigateToCell(m.idx, col)"
+                [title]="m.name + ' › ' + col.label">
+                @if (cell.rows > 0) {
+                  <span class="cell-count">{{ cell.rows }}</span>
+                } @else {
+                  <span class="cell-dash">—</span>
+                }
+              </td>
+            }
+          </tr>
+        }
+        @if (municipisFiltered.length === 0) {
+          <tr>
+            <td [attr.colspan]="columns.length + 1" class="text-center py-8 text-base-content/40 italic">
+              Cap municipi coincideix amb el filtre
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>
