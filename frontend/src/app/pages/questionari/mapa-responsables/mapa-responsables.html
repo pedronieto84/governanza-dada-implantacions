@@ -111,6 +111,11 @@
   </div>
 
   <!-- Processos clau -->
+  <div class="flex items-center gap-3 px-1">
+    <input type="checkbox" class="toggle toggle-primary" [checked]="showProcessos" (change)="showProcessos = !showProcessos" id="toggle-processos" />
+    <label for="toggle-processos" class="text-sm font-medium cursor-pointer select-none">Mostrar Processos clau</label>
+  </div>
+  @if (showProcessos) {
   <div class="card bg-base-100 shadow-xl border border-base-200">
     <div class="card-body p-0">
       <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center">
@@ -163,6 +168,7 @@
       </div>
     </div>
   </div>
+  }
 
   <!-- Projectes estratègics -->
   <div class="card bg-base-100 shadow-xl border border-base-200">

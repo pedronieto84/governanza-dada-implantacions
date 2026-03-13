@@ -47,6 +47,9 @@ export class MapaResponsables implements OnInit {
 
   isLoading = true;
 
+  // --- Visibility toggles ---
+  showProcessos = false;
+
   // --- Filters ---
   filterRols: string[] = [];
   filterArees: string[] = [];
@@ -351,11 +354,21 @@ export class MapaResponsables implements OnInit {
       return;
     }
     this.customRespMode = false;
-    const person = this.rolsClau.find((r: any) => r.resp === resp);
-    if (person) {
-      this.currentRow.email = person.email;
-      this.currentRow.phone = person.phone;
+    // Search across all tables for the person's contact info
+    let email = '';
+    let phone = '';
+    for (const table of [this.rolsClau, this.arees, this.processos, this.projectes, this.altres]) {
+      for (const entry of table) {
+        if (entry.resp === resp) {
+          if (!email && entry.email) email = entry.email;
+          if (!phone && entry.phone) phone = entry.phone;
+          if (email && phone) break;
+        }
+      }
+      if (email && phone) break;
     }
+    this.currentRow.email = email;
+    this.currentRow.phone = phone;
   }
 
   // --- Processos autocomplete ---

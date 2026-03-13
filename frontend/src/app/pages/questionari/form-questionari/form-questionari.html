@@ -1,1 +1,49 @@
-<p>form-questionari works!</p>
+<div class="flex flex-col gap-6">
+  @for (seccio of seccions; track seccio.ambit) {
+    <div>
+      <h2 class="text-2xl font-bold text-primary mb-3">{{ seccio.ambit }}</h2>
+      <div class="overflow-x-auto rounded-xl border border-base-200 shadow">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr class="bg-primary text-primary-content">
+              <th class="w-20">Id.</th>
+              <th>Qüestió</th>
+              <th class="w-72">Resposta</th>
+              <th class="w-48">Observacions</th>
+              <th class="w-48">Evidències i documentació</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (proc of seccio.processos; track proc.proces) {
+              <tr class="bg-base-200">
+                <td colspan="5" class="font-semibold text-sm py-2 px-4">
+                  {{ proc.proces }}
+                </td>
+              </tr>
+              @for (pregunta of proc.preguntes; track pregunta.id) {
+                <tr>
+                  <td class="font-bold text-primary align-top pt-3">{{ pregunta.id }}</td>
+                  <td class="whitespace-pre-line text-sm align-top pt-3">{{ pregunta.text }}</td>
+                  <td class="align-top pt-2">
+                    <select class="select select-bordered select-sm w-full text-xs" [(ngModel)]="answers[pregunta.id]">
+                      <option value="">-- Selecciona --</option>
+                      @for (r of pregunta.respostes; track $index) {
+                        <option [value]="($index + 1).toString()">{{ $index + 1 }}. {{ r }}</option>
+                      }
+                    </select>
+                  </td>
+                  <td class="align-top pt-2">
+                    <textarea class="textarea textarea-bordered textarea-sm w-full text-xs" rows="2" [(ngModel)]="observacions[pregunta.id]" placeholder="Observacions..."></textarea>
+                  </td>
+                  <td class="align-top pt-2">
+                    <textarea class="textarea textarea-bordered textarea-sm w-full text-xs" rows="2" [(ngModel)]="evidencies[pregunta.id]" placeholder="Evidències i documentació..."></textarea>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>
