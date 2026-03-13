@@ -1,9 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { retry } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { API_BASE } from '../../../api.config';
+import { MunicipiService } from '../../../services/municipi.service';
+import { toSlug } from '../../../utils/slug';
 import {
   SOFTWARE_CATALOG,
   NOM_CURT_OPTIONS,
@@ -24,7 +27,9 @@ const EMPTY_SISTEMA = () => ({
   standalone: true,
   imports: [FormsModule]
 })
-export class Sistemas implements OnInit {
+export class Sistemas implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  private municipiActual = '';
   isModalOpen = false;
   editIndex = -1;
   currentItem: any = EMPTY_SISTEMA();
@@ -41,22 +46,45 @@ export class Sistemas implements OnInit {
   tipusCustom      = false;
   proveidorCustom  = false;
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private municipiService: MunicipiService,
+  ) {}
 
   ngOnInit() {
-    this.http.get<any>(`${API_BASE}/api/data/sistemas`).pipe(retry({ count: 5, delay: 2000 })).subscribe({
-      next: (data) => {
-        if (data.sistemas) {
-          this.sistemas = data.sistemas;
+    this.municipiService.municipiSeleccionat$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((municipi) => {
+          this.municipiActual = municipi;
+          this.sistemas = [];
+          const slug = toSlug(municipi);
+          return this.http.get<any>(`${API_BASE}/api/data/municipis/${slug}/sistemas`);
+        }),
+      )
+      .subscribe({
+        next: (data) => {
+          if (data.sistemas) {
+            this.sistemas = data.sistemas;
+            this.cdr.detectChanges();
+          }
+        },
+        error: () => {
+          this.sistemas = [];
           this.cdr.detectChanges();
-        }
-      },
-      error: () => console.warn('No saved Sistemas data found, using defaults.')
-    });
+        },
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   saveData() {
-    this.http.post(`${API_BASE}/api/data/sistemas`, { sistemas: this.sistemas }).subscribe({
+    const slug = toSlug(this.municipiActual);
+    this.http.post(`${API_BASE}/api/data/municipis/${slug}/sistemas`, { sistemas: this.sistemas }).subscribe({
       error: (err) => console.error('Error saving Sistemas data', err)
     });
   }

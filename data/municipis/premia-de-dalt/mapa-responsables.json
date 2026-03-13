@@ -1,0 +1,1748 @@
+{
+  "rolsClau": [
+    {
+      "name": "Responsable de dades (Data Stewart)",
+      "resp": "Gemma Álvarez",
+      "email": "",
+      "phone": "",
+      "obs": ""
+    },
+    {
+      "name": "Propietari de dades (Data Owner)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": ""
+    },
+    {
+      "name": "Referent de dades (Data Stewart)",
+      "resp": "Gemma Àlvarez",
+      "email": "alvarezmgm@premiadedalt.cat",
+      "phone": "936931509",
+      "obs": "Cap de Recursos humans i de Serveis a les persones: sol·licita accés a Informàtica per un treballador nou"
+    },
+    {
+      "name": "Referent de dades (Data Stewart)",
+      "resp": "Nuria Riera",
+      "email": "rieran@premiadedalt.cat",
+      "phone": "674951891",
+      "obs": "Serveis Socials, demana a Informàtica per afegir un treballador nou"
+    },
+    {
+      "name": "",
+      "resp": "Teresa Pallarés",
+      "email": "pallarestm@premiadedalt.cat",
+      "phone": "670961003",
+      "obs": "Tresoreria i Intervenció, mateixa dinàmica."
+    },
+    {
+      "name": "",
+      "resp": "Pedro Obrero Román",
+      "email": "obrerorp@premiadedalt.cat",
+      "phone": "607118371",
+      "obs": "Responsable d'Informàtica que accedeix a les peticions dels diferents departaments"
+    },
+    {
+      "name": "",
+      "resp": "Lluis García",
+      "email": "garciajll@premiadedalt.cat",
+      "phone": "666530168",
+      "obs": "Urbanisme o territori, mateixa dinàmica que abans."
+    },
+    {
+      "name": "",
+      "resp": "Virginia Merlos",
+      "email": "merloscv@premiadedalt.cat",
+      "phone": "637755094",
+      "obs": "Promoció econòmica, mateixa dinàmica."
+    },
+    {
+      "name": "",
+      "resp": "Eli Gummà",
+      "email": "gummabe@premiadedalt.cat",
+      "phone": "667470681",
+      "obs": "Educació i joventut, mateixa dinàmica."
+    },
+    {
+      "name": "",
+      "resp": "Carlos Matallan",
+      "email": "prmd.pl1335@premiadedalt.cat",
+      "phone": "936931500",
+      "obs": "Policia, sargent cap."
+    },
+    {
+      "name": "",
+      "resp": "Mireia Boté",
+      "email": "botemmr@premiadedalt.cat",
+      "phone": "936931511",
+      "obs": "Secretaria"
+    }
+  ],
+  "arees": [
+    {
+      "name": "Recursos Humans",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": ""
+    },
+    {
+      "name": "Serveis Socials",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": ""
+    },
+    {
+      "name": "Tresoreria i Intervenció",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": ""
+    },
+    {
+      "name": "Informàtica",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": ""
+    },
+    {
+      "name": "Organigrames tècnic i funcional",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": ""
+    }
+  ],
+  "processos": [
+    {
+      "name": "Contractes menors",
+      "resp": "Gemma Álvarez",
+      "email": "",
+      "phone": "",
+      "obs": "Contractació",
+      "areas": []
+    },
+    {
+      "name": "Subvencions",
+      "resp": "Lluís Garcia",
+      "email": "",
+      "phone": "",
+      "obs": "Cada departament gestiona les seves",
+      "areas": []
+    },
+    {
+      "name": "Licitacions",
+      "resp": "Gemma Álvarez",
+      "email": "botemmr@premiadedalt.cat",
+      "phone": "936931511",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Llicències d'obres",
+      "resp": "Urbanisme (Lluís Garcia)",
+      "email": "garciajll@premiadedalt.cat",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Inscripcions a les Escoles",
+      "resp": "Educació (Eli Gumma)",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Denúncies / Infraccions",
+      "resp": "Policia (Carlos Matallan)",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Altes i baixes de personal",
+      "resp": "Recursos Humans",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": [
+        "Recursos Humans"
+      ]
+    },
+    {
+      "name": "Pagament de Nòmines",
+      "resp": "Recursos Humans",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": [
+        "Recursos Humans"
+      ]
+    },
+    {
+      "name": "Pagament a Proveïdors",
+      "resp": "Tresoreria",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": [
+        "Tresoreria i Intervenció"
+      ]
+    },
+    {
+      "name": "Llicència d'obres majors",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Llicència d'obres menors",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Llicència d'activitat econòmica",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Cèdula d'habitabilitat",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Llicència de primera ocupació",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Parcel·lació i segregació de finques",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Modificació del planejament urbanístic",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Disciplina urbanística / Denúncia infracció urbanística",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Inspecció tècnica d'edificis (ITE)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Gestió d'habitatge de protecció oficial",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Liquidació de l'Impost de Béns Immobles (IBI)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Liquidació de l'Impost d'Activitats Econòmiques (IAE)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Liquidació de l'Impost sobre Vehicles de Tracció Mecànica (IVTM)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Liquidació de la plusvàlua (IIVTNU)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Liquidació de l'Impost sobre Construccions, Instal·lacions i Obres (ICIO)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Liquidació de taxes de residus",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Certificat de convivència",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Certificat d'empadronament",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Volant de residència",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Atenció social bàsica",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Sol·licitud d'ajudes d'urgència social",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Gestió de la Renda Garantida de Ciutadania (RGC)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Servei d'Ajuda a Domicili (SAD)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Teleassistència domiciliària",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Gestió de places en residències de gent gran",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Servei de menjador social",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Targeta acreditativa de discapacitat",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Gestió de centres de dia",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Atenció a la infància i adolescència (CSMIJ)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Contractes menors de béns i serveis",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Licitació per procediment obert simplificat",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Licitació per procediment obert ordinari",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Contracte de concessió de serveis",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Subministraments de material d'oficina",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Contractació d'obres d'infraestructura",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Convocatòria de subvencions a entitats",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Subvencions a activitats culturals i esportives",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Subvencions per a obres d'accessibilitat",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Ajudes a l'agricultura i ramaderia",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Ajudes a l'habitatge (rehabilitació, lloguer)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Pagament de nòmines",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Concursos i oposicions",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Avaluació de l'acompliment del personal",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Gestió de permisos i llicències de personal",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Prevenció de riscos laborals",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Recollida de residus sòlids urbans",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Gestió del punt verd municipal",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Neteja viària i espai públic",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Manteniment de parcs i jardins",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Gestió d'aigües residuals (EDAR)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Llicències d'abocaments",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Denúncia d'abocament il·legal",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Control de plagues i desinfecció",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Inspeccions de salut pública",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Denúncies de la policia local",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Infraccions de trànsit",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Atenció a accidents i emergències",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Grua i dipòsit de vehicles",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Autoritzacions de tall de via pública",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Gestió de sistemes de videovigilància",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Inscripcions a l'escola bressol municipal",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Inscripcions a activitats extraescolars",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Ajudes de menjador escolar",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Beques i ajudes a l'estudi",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Programes de joventut i informació juvenil",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Carnets jove i documentació",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Inscripcions a activitats esportives municipals",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Reserva d'instal·lacions esportives",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Gestió de la biblioteca municipal",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Permisos i autoritzacions per a festes majors",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Permisos d'espectacles i activitats lúdiques",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Gestió del casal municipal de cultura",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Llicències de venda no sedentària (mercats i fires)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Autoritzacions de terrasses i veladors",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Inspecció d'establiments comercials",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Informació turística i oficina de turisme",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Autorització d'habitatges d'ús turístic (HUT)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Accés a la informació pública (transparència)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Queixes i suggeriments ciutadans",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Peticions de participació ciutadana",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Publicació al Tauler d'Edictes / BOP",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Registre d'entrada i sortida de documents",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Certificació de documents municipals",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Comunicació prèvia d'activitat",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    }
+  ],
+  "projectes": [
+    {
+      "name": "Pla d’Actuació Municipal (PAM) 2023-2027",
+      "resp": "Gemma Álvarez",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Pla d’Actuació Municipal (PAM) 2023-2027",
+      "resp": "Lluís Garcia",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Plan de Vivienda Pública",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Proyecto 'Vila Educadora'",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Plan de Transformación Digital del Ayuntamiento",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Programa de Salud Comunitaria con los CAP",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Plan de Prevención de Abusos Sexuales en Entidades",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Estrategia de Seguridad, Civismo y Convivencia",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Plan de Choque contra el Cambio Climático (Municipio Verde)",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Plan de Promoción de la Lengua Catalana",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Estrategia de Feminismos e Igualdad",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Programa de Control de Salubridad y Plagas",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Plan de Formación en Seguridad Alimentaria",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Ciclo de Charlas de Alimentación Saludable",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Plan de Apoyo a Deportistas Individuales",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Estrategia de Atracción de Inversiones",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    },
+    {
+      "name": "Plan de Bienestar Animal",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": "",
+      "areas": []
+    }
+  ],
+  "altres": [
+    {
+      "name": "Responsable de Tecnologia",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": ""
+    },
+    {
+      "name": "Responsable de Seguretat",
+      "resp": "",
+      "email": "",
+      "phone": "",
+      "obs": ""
+    }
+  ],
+  "orgData": [
+    {
+      "id": "1",
+      "parentId": "",
+      "name": "Equip de Govern",
+      "position": "Govern Municipal",
+      "_pagingStep": 2000,
+      "_directSubordinatesPaging": 3,
+      "_directSubordinates": 3,
+      "_totalSubordinates": 67
+    },
+    {
+      "id": "10",
+      "parentId": "1",
+      "name": "Serveis Generals",
+      "position": "",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 8,
+      "_directSubordinates": 8,
+      "_totalSubordinates": 22
+    },
+    {
+      "id": "20",
+      "parentId": "1",
+      "name": "Serveis Territorials",
+      "position": "",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 13,
+      "_expanded": true
+    },
+    {
+      "id": "30",
+      "parentId": "1",
+      "name": "Serveis a les Persones",
+      "position": "",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 29
+    },
+    {
+      "id": "11",
+      "parentId": "10",
+      "name": "Mònica Farré",
+      "position": "Gabinet de Comunicació",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 2,
+      "_directSubordinates": 2,
+      "_totalSubordinates": 2
+    },
+    {
+      "id": "12",
+      "parentId": "10",
+      "name": "Antonio López",
+      "position": "Secretari Accidental",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 2,
+      "_directSubordinates": 2,
+      "_totalSubordinates": 2
+    },
+    {
+      "id": "13",
+      "parentId": "10",
+      "name": "Teresa Pallarés",
+      "position": "Interventora Accidental",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 3,
+      "_directSubordinates": 3,
+      "_totalSubordinates": 3
+    },
+    {
+      "id": "14",
+      "parentId": "10",
+      "name": "Montse López",
+      "position": "Tresorera",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "15",
+      "parentId": "10",
+      "name": "Gemma Álvarez",
+      "position": "Cap RRHH",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 2,
+      "_directSubordinates": 2,
+      "_totalSubordinates": 2
+    },
+    {
+      "id": "16",
+      "parentId": "10",
+      "name": "Polítiques Digitals",
+      "position": "",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
+    },
+    {
+      "id": "17",
+      "parentId": "10",
+      "name": "Esther Ávila",
+      "position": "Cap OAC",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
+    },
+    {
+      "id": "18",
+      "parentId": "10",
+      "name": "Sergent",
+      "position": "Policia Local",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 3,
+      "_directSubordinates": 3,
+      "_totalSubordinates": 3
+    },
+    {
+      "id": "111",
+      "parentId": "11",
+      "name": "Eva Roig",
+      "position": "Tècnica auxiliar",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "112",
+      "parentId": "11",
+      "name": "Isabel Xarrié",
+      "position": "Directora Premià de Dalt Ràdio",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "121",
+      "parentId": "12",
+      "name": "Eulàlia Ribera",
+      "position": "Arxivera",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "122",
+      "parentId": "12",
+      "name": "2 Auxiliars Administratives",
+      "position": "Secretaria",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "131",
+      "parentId": "13",
+      "name": "Teresa Pallarés",
+      "position": "Interventora Accidental",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "132",
+      "parentId": "13",
+      "name": "Carme Hernando",
+      "position": "Tècnica auxiliar",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "133",
+      "parentId": "13",
+      "name": "Administratiu",
+      "position": "",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "151",
+      "parentId": "15",
+      "name": "Tècnica mitjana",
+      "position": "RRHH",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "152",
+      "parentId": "15",
+      "name": "Auxiliar Administrativa",
+      "position": "RRHH",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "161",
+      "parentId": "16",
+      "name": "Salvador Mataró / Vicens Ferran / Pedro Obrero",
+      "position": "3 Tècnics aux. Informàtica",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "171",
+      "parentId": "17",
+      "name": "2 Auxiliars Administratives",
+      "position": "OAC",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "181",
+      "parentId": "18",
+      "name": "4 Caporals",
+      "position": "Policia Local",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "182",
+      "parentId": "18",
+      "name": "14 Agents",
+      "position": "Policia Local",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "183",
+      "parentId": "18",
+      "name": "Administrativa",
+      "position": "Policia Local",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "21",
+      "parentId": "20",
+      "name": "Lluís Garcia",
+      "position": "Gerent Serveis Territorials",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 8,
+      "_directSubordinates": 8,
+      "_totalSubordinates": 12,
+      "_expanded": true
+    },
+    {
+      "id": "211",
+      "parentId": "21",
+      "name": "Lluís Garcia",
+      "position": "Arquitecte",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
+    },
+    {
+      "id": "212",
+      "parentId": "21",
+      "name": "Àlex Ramírez",
+      "position": "Arquitecte tècnic",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
+    },
+    {
+      "id": "213",
+      "parentId": "21",
+      "name": "Josep Meca",
+      "position": "Arquitecte tècnic d'edificis",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1,
+      "_expanded": true
+    },
+    {
+      "id": "214",
+      "parentId": "21",
+      "name": "Jordi Miquel",
+      "position": "Arquitecte tècnic brigada",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 3,
+      "_expanded": true
+    },
+    {
+      "id": "215",
+      "parentId": "21",
+      "name": "Joan Riera",
+      "position": "Enginyer",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
+    },
+    {
+      "id": "216",
+      "parentId": "21",
+      "name": "Oriol Arderiu",
+      "position": "Tècnic Medi Ambient",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
+    },
+    {
+      "id": "217",
+      "parentId": "21",
+      "name": "Teresa Fraile",
+      "position": "Delineant",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
+    },
+    {
+      "id": "218",
+      "parentId": "21",
+      "name": "2 Administratives 1 Aux.",
+      "position": "Administració Territorial",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
+    },
+    {
+      "id": "2131",
+      "parentId": "213",
+      "name": "4 Conserges",
+      "position": "Edificis municipals",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
+    },
+    {
+      "id": "2141",
+      "parentId": "214",
+      "name": "Encarregat Brigada",
+      "position": "",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 2,
+      "_expanded": true
+    },
+    {
+      "id": "2142",
+      "parentId": "2141",
+      "name": "4 Oficials 1a",
+      "position": "Brigada",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1,
+      "_expanded": true
+    },
+    {
+      "id": "2143",
+      "parentId": "2142",
+      "name": "7 Peons",
+      "position": "Brigada",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0,
+      "_expanded": true
+    },
+    {
+      "id": "31",
+      "parentId": "30",
+      "name": "Gemma Álvarez",
+      "position": "Cap Serveis a les Persones",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 8,
+      "_directSubordinates": 8,
+      "_totalSubordinates": 28
+    },
+    {
+      "id": "311",
+      "parentId": "31",
+      "name": "Núria Riera",
+      "position": "Coordinadora Acció Social",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 4,
+      "_directSubordinates": 4,
+      "_totalSubordinates": 5
+    },
+    {
+      "id": "312",
+      "parentId": "31",
+      "name": "Virgínia Merlos",
+      "position": "Tècnica Sup. Empresa",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 2,
+      "_directSubordinates": 2,
+      "_totalSubordinates": 2
+    },
+    {
+      "id": "313",
+      "parentId": "31",
+      "name": "Elisenda Gummà",
+      "position": "Coordinadora Educació",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 3,
+      "_directSubordinates": 3,
+      "_totalSubordinates": 7
+    },
+    {
+      "id": "314",
+      "parentId": "31",
+      "name": "Enric Miralles",
+      "position": "Tècnic Cultura",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 2
+    },
+    {
+      "id": "315",
+      "parentId": "31",
+      "name": "Gemma Planas",
+      "position": "Directora Biblioteca",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
+    },
+    {
+      "id": "316",
+      "parentId": "31",
+      "name": "Carme Cristóbal",
+      "position": "Tècnica Joventut",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
+    },
+    {
+      "id": "317",
+      "parentId": "31",
+      "name": "José Ángel Salido",
+      "position": "Monitor d'Esports",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
+    },
+    {
+      "id": "318",
+      "parentId": "31",
+      "name": "Administrativa",
+      "position": "Serveis a les Persones",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
+    },
+    {
+      "id": "3111",
+      "parentId": "311",
+      "name": "2 Treballadors socials",
+      "position": "Acció Social",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3112",
+      "parentId": "311",
+      "name": "2 Educadors socials",
+      "position": "Acció Social",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3113",
+      "parentId": "311",
+      "name": "Treballadora familiar",
+      "position": "Acció Social",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3114",
+      "parentId": "311",
+      "name": "Administrativa",
+      "position": "Acció Social",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
+    },
+    {
+      "id": "3115",
+      "parentId": "3114",
+      "name": "Auxiliar Administrativa",
+      "position": "Acció Social",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3121",
+      "parentId": "312",
+      "name": "Tècnica Ocupació",
+      "position": "",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3122",
+      "parentId": "312",
+      "name": "Auxiliar Administrativa",
+      "position": "",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3131",
+      "parentId": "313",
+      "name": "Professora Dansa",
+      "position": "",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3132",
+      "parentId": "313",
+      "name": "Gemma Ferran",
+      "position": "Directora Escoles Bressol",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 4
+    },
+    {
+      "id": "3133",
+      "parentId": "313",
+      "name": "Núria Yagüe",
+      "position": "Professora Aula d'Adults",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3132a",
+      "parentId": "3132",
+      "name": "2 Coordinadors",
+      "position": "Escoles Bressol",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 3,
+      "_directSubordinates": 3,
+      "_totalSubordinates": 3
+    },
+    {
+      "id": "3132b",
+      "parentId": "3132a",
+      "name": "3 Mestres",
+      "position": "Escoles Bressol",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3132c",
+      "parentId": "3132a",
+      "name": "8 Educadores",
+      "position": "Escoles Bressol",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3132d",
+      "parentId": "3132a",
+      "name": "2 Ajudants de cuina",
+      "position": "Escoles Bressol",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3141",
+      "parentId": "314",
+      "name": "Sergi Bello",
+      "position": "Director Escola Música",
+      "_pagingStep": 2000,
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 1,
+      "_directSubordinates": 1,
+      "_totalSubordinates": 1
+    },
+    {
+      "id": "3142",
+      "parentId": "3141",
+      "name": "4 Professors/es",
+      "position": "Escola Música",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3151",
+      "parentId": "315",
+      "name": "2 Tècniques Aux.",
+      "position": "Biblioteca",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3161",
+      "parentId": "316",
+      "name": "2 Auxiliars Ludoteca",
+      "position": "Joventut",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3171",
+      "parentId": "317",
+      "name": "3 Peons manteniment",
+      "position": "Esports",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    },
+    {
+      "id": "3181",
+      "parentId": "318",
+      "name": "Auxiliar Administrativa",
+      "position": "Serveis a les Persones",
+      "_pagingButton": false,
+      "_directSubordinatesPaging": 0,
+      "_directSubordinates": 0,
+      "_totalSubordinates": 0
+    }
+  ]
+}

@@ -1,8 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { retry } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { API_BASE } from '../../../api.config';
+import { MunicipiService } from '../../../services/municipi.service';
+import { toSlug } from '../../../utils/slug';
 
 const EMPTY_ENTITAT = () => ({
   nom: '', descripcio: '', sistema: '', termesGlossari: '', tipus: '',
@@ -123,7 +126,10 @@ const MOCK_ENTITATS = [
   styleUrl: './entitats.css',
   standalone: true,
 })
-export class Entitats implements OnInit {
+export class Entitats implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  private municipiActual = '';
+
   isLoading = true;
   isModalOpen = false;
   editIndex = -1;
@@ -146,21 +152,41 @@ export class Entitats implements OnInit {
   ];
   siNoOptions = ['', 'SI', 'NO'];
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private municipiService: MunicipiService,
+  ) {}
 
   ngOnInit() {
-    this.http.get<any>(`${API_BASE}/api/data/entitats`).pipe(retry({ count: 5, delay: 2000 })).subscribe({
-      next: (data) => {
-        this.entitats = data.entitats?.length ? data.entitats : [...MOCK_ENTITATS];
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      },
-      error: () => {
-        this.entitats = [...MOCK_ENTITATS];
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      }
-    });
+    this.municipiService.municipiSeleccionat$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((municipi) => {
+          this.municipiActual = municipi;
+          this.entitats = [];
+          this.isLoading = true;
+          const slug = toSlug(municipi);
+          return this.http.get<any>(`${API_BASE}/api/data/municipis/${slug}/entitats`);
+        }),
+      )
+      .subscribe({
+        next: (data) => {
+          this.entitats = data.entitats?.length ? data.entitats : [];
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          this.entitats = [];
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   get displayEntitats() {
@@ -191,7 +217,8 @@ export class Entitats implements OnInit {
   }
 
   saveData() {
-    this.http.post(`${API_BASE}/api/data/entitats`, { entitats: this.entitats }).subscribe({
+    const slug = toSlug(this.municipiActual);
+    this.http.post(`${API_BASE}/api/data/municipis/${slug}/entitats`, { entitats: this.entitats }).subscribe({
       error: (err) => console.error('Error saving entitats', err)
     });
   }

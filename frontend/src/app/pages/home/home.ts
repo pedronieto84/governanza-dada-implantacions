@@ -1,17 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MunicipiService } from '../../services/municipi.service';
+import { API_BASE } from '../../api.config';
+import { toSlug } from '../../utils/slug';
 
 interface Column {
   label: string;
   route: string;
   group: number;
+  dataKey?: string; // matches the JSON file name in data/municipis/{slug}/{dataKey}.json
 }
 
 interface CellData {
   rows: number;
   done: boolean;
+  isMock: boolean;
 }
 
 @Component({
@@ -21,10 +26,12 @@ interface CellData {
   standalone: true,
   imports: [FormsModule],
 })
-export class Home {
+export class Home implements OnInit {
+  /** Index of real data: { [slug]: { [dataKey]: rowCount } } */
+  private realIndex: Record<string, Record<string, number>> = {};
   readonly columns: Column[] = [
-    { label: '1. Mapa Responsables', route: '/questionari/mapa-responsables', group: 1 },
-    { label: '1. Sistemas',           route: '/questionari/sistemas',           group: 1 },
+    { label: '1. Mapa Responsables', route: '/questionari/mapa-responsables', group: 1, dataKey: 'mapa-responsables' },
+    { label: '1. Sistemas',           route: '/questionari/sistemas',           group: 1, dataKey: 'sistemas' },
     { label: '1. Questionari',        route: '/questionari/form',               group: 1 },
     { label: '2. Entitats',           route: '/inventari/entitats',             group: 2 },
     { label: '2. Atributs',           route: '/inventari/atributs',             group: 2 },
@@ -38,6 +45,21 @@ export class Home {
     { label: '2. Inventari',      span: 3 },
     { label: '3. Glossari Corp.', span: 2 },
   ];
+
+  readonly tableOptions: string[] = [
+    '1. Mapa Responsables',
+    '2. Sistemas',
+    '3. Questionari',
+    '4. Entitats',
+    '5. Atributs',
+    '6. Rel. Atributs',
+    '7. Glossari',
+    '8. Rel. Glossari',
+  ];
+
+  activeTab: 'vista-general' | 'analisis' = 'vista-general';
+  selectedTable = 0;
+  selectedMunicipiAnalisi = 'Todos';
 
   readonly municipis: string[] = [
     'Abrera', 'Aguilar de Segarra', 'Aiguafreda', 'Alella', 'Alpens',
@@ -114,12 +136,41 @@ export class Home {
   ];
 
   filterText = '';
+  sortCol: number | 'name' | null = null;
+  sortDir: 'asc' | 'desc' = 'asc';
+
+  sortBy(col: number | 'name'): void {
+    if (this.sortCol === col) {
+      this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortCol = col;
+      this.sortDir = 'asc';
+    }
+  }
 
   get municipisFiltered(): { name: string; idx: number }[] {
     const q = this.filterText.toLowerCase().trim();
-    return this.municipis
+    let list = this.municipis
       .map((name, idx) => ({ name, idx }))
       .filter(m => !q || m.name.toLowerCase().includes(q));
+
+    if (this.sortCol !== null) {
+      const dir = this.sortDir === 'asc' ? 1 : -1;
+      if (this.sortCol === 'name') {
+        list = [...list].sort((a, b) => a.name.localeCompare(b.name, 'ca') * dir);
+      } else {
+        const ci = this.sortCol as number;
+        list = [...list].sort((a, b) => {
+          const ca = this.getMock(a.idx, ci);
+          const cb = this.getMock(b.idx, ci);
+          const stateA = ca.done ? 2 : ca.rows > 0 ? 1 : 0;
+          const stateB = cb.done ? 2 : cb.rows > 0 ? 1 : 0;
+          if (stateA !== stateB) return (stateA - stateB) * dir;
+          return (ca.rows - cb.rows) * dir;
+        });
+      }
+    }
+    return list;
   }
 
   get totalCells(): number {
@@ -136,16 +187,67 @@ export class Home {
     return count;
   }
 
+  get analisisRows(): { municipiName: string; rows: number; done: boolean }[] {
+    const cIdx = this.selectedTable;
+    let list = this.municipis.map((name, idx) => ({ name, idx }));
+    if (this.selectedMunicipiAnalisi !== 'Todos') {
+      list = list.filter(m => m.name === this.selectedMunicipiAnalisi);
+    }
+    return list.map(m => {
+      const cell = this.getMock(m.idx, cIdx);
+      return { municipiName: m.name, rows: cell.rows, done: cell.done };
+    });
+  }
+
+  get analisisStats(): { total: number; done: number; partial: number; empty: number } {
+    const cIdx = this.selectedTable;
+    let done = 0, partial = 0;
+    for (let mi = 0; mi < this.municipis.length; mi++) {
+      const cell = this.getMock(mi, cIdx);
+      if (cell.done) done++;
+      else if (cell.rows > 0) partial++;
+    }
+    const total = this.municipis.length;
+    return { total, done, partial, empty: total - done - partial };
+  }
+
   constructor(
     private municipiService: MunicipiService,
     private router: Router,
+    private http: HttpClient,
   ) {}
 
+  ngOnInit() {
+    this.http.get<Record<string, Record<string, number>>>(`${API_BASE}/api/data/municipis`).subscribe({
+      next: (data) => { this.realIndex = data; },
+      error: () => {},
+    });
+  }
+
+  private getProgress(mIdx: number): { done: number; hasPartial: boolean } {
+    // Produces a sequential stage 0..(columns.length*2) per municipality
+    const h = ((mIdx * 31 + 17) * 13 + (mIdx + 1) * 7) % (this.columns.length * 2 + 1);
+    return { done: Math.floor(h / 2), hasPartial: h % 2 === 1 };
+  }
+
   getMock(mIdx: number, cIdx: number): CellData {
-    const h = ((mIdx + 1) * 13 + (cIdx + 1) * 7) % 97;
-    if (h < 18) return { rows: 0, done: false };
+    const { done, hasPartial } = this.getProgress(mIdx);
     const rows = ((mIdx * 3 + cIdx * 11) % 9) + 1;
-    return { rows, done: h > 52 };
+    if (cIdx < done) return { rows, done: true, isMock: true };
+    if (cIdx === done && hasPartial) return { rows, done: false, isMock: true };
+    return { rows: 0, done: false, isMock: true };
+  }
+
+  getCellData(mIdx: number, cIdx: number): CellData {
+    const col = this.columns[cIdx];
+    if (col.dataKey) {
+      const slug = toSlug(this.municipis[mIdx]);
+      const realRows = this.realIndex[slug]?.[col.dataKey];
+      if (realRows !== undefined) {
+        return { rows: realRows, done: false, isMock: false };
+      }
+    }
+    return this.getMock(mIdx, cIdx);
   }
 
   navigateToCell(municipiIdx: number, col: Column): void {

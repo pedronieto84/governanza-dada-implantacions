@@ -2,6 +2,24 @@
   padding: 0;
 }
 
+.analisis-wrapper {
+  padding: 0;
+}
+
+/* Tab navigation */
+.tabs.tabs-boxed {
+  background-color: oklch(var(--b2));
+  border-radius: var(--rounded-box, 0.5rem);
+  padding: 4px;
+  width: fit-content;
+}
+
+.tab-active {
+  background-color: oklch(var(--p)) !important;
+  color: oklch(var(--pc)) !important;
+  border-radius: calc(var(--rounded-box, 0.5rem) - 2px);
+}
+
 /* Scroll container for the big table */
 .table-scroll-container {
   overflow-x: auto;
@@ -127,6 +145,7 @@
   border-bottom: 1px solid oklch(var(--bc) / 0.06);
   border-right: 1px solid oklch(var(--bc) / 0.06);
   min-width: 110px;
+  position: relative; /* needed for badge positioning */
 }
 
 .data-cell:hover {
@@ -158,6 +177,34 @@
   color: oklch(var(--bc) / 0.35);
 }
 
+/* Real data cell — blue tint with left accent strip */
+.cell-real {
+  background-color: oklch(var(--in) / 0.12);
+  color: oklch(var(--bc));
+  box-shadow: inset 3px 0 0 oklch(var(--in) / 0.7);
+}
+
+/* Badges shown inside cells */
+.cell-real-badge,
+.cell-mock-badge {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  font-size: 0.5rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.cell-real-badge {
+  color: oklch(var(--in));
+  opacity: 0.9;
+}
+
+.cell-mock-badge {
+  color: oklch(var(--bc) / 0.3);
+  font-size: 0.6rem;
+}
+
 .cell-count {
   font-weight: 700;
   font-size: 0.85rem;
@@ -165,6 +212,28 @@
 
 .cell-dash {
   font-size: 0.85rem;
+}
+
+/* Sortable column headers */
+.sortable-th {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortable-th:hover {
+  background-color: oklch(var(--p) / 0.12);
+}
+
+.sort-icon {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 0.65rem;
+  opacity: 0.5;
+  vertical-align: middle;
+}
+
+.sortable-th:hover .sort-icon {
+  opacity: 0.9;
 }
 
 /* Legend swatches */
@@ -176,4 +245,21 @@ span.cell-partial {
 }
 span.cell-empty {
   background-color: oklch(var(--b2));
+}
+
+/* Legend separator and indicators */
+.legend-sep {
+  color: oklch(var(--bc) / 0.2);
+  margin: 0 4px;
+}
+
+.real-dot-legend {
+  color: oklch(var(--in));
+  font-size: 0.75rem;
+}
+
+.mock-dot-legend {
+  color: oklch(var(--bc) / 0.45);
+  font-size: 0.75rem;
+  font-weight: 700;
 }

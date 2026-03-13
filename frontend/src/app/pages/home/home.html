@@ -1,5 +1,13 @@
 <div class="home-wrapper">
 
+  <!-- Sub-tab navigation -->
+  <div role="tablist" class="tabs tabs-boxed mb-6">
+    <button role="tab" class="tab" [class.tab-active]="activeTab === 'vista-general'" (click)="activeTab = 'vista-general'">Vista General</button>
+    <button role="tab" class="tab" [class.tab-active]="activeTab === 'analisis'" (click)="activeTab = 'analisis'">Anàlisi</button>
+  </div>
+
+  @if (activeTab === 'vista-general') {
+
   <!-- Header / Stats -->
   <div class="mb-6">
     <h1 class="text-3xl font-bold text-primary mb-1">Vista General d'Implantacions</h1>
@@ -46,6 +54,13 @@
     <span class="flex items-center gap-1"><span class="cell-done inline-block w-5 h-5 rounded border border-success/40"></span> Finalitzat</span>
     <span class="flex items-center gap-1"><span class="cell-partial inline-block w-5 h-5 rounded border border-warning/40"></span> En progrés</span>
     <span class="flex items-center gap-1"><span class="cell-empty inline-block w-5 h-5 rounded border border-base-300"></span> Sense dades</span>
+    <span class="legend-sep">|</span>
+    <span class="flex items-center gap-1">
+      <span class="real-dot-legend">★</span> Dades reals
+    </span>
+    <span class="flex items-center gap-1">
+      <span class="mock-dot-legend">~</span> Dades simulades
+    </span>
   </div>
 
   <!-- Table container -->
@@ -61,9 +76,15 @@
         </tr>
         <!-- Column header -->
         <tr class="col-header-row">
-          <th class="sticky-col name-col">Municipi</th>
-          @for (col of columns; track col.route) {
-            <th class="col-th">{{ col.label }}</th>
+          <th class="sticky-col name-col sortable-th" (click)="sortBy('name')">
+            Municipi
+            <span class="sort-icon">{{ sortCol === 'name' ? (sortDir === 'asc' ? '↑' : '↓') : '↕' }}</span>
+          </th>
+          @for (col of columns; track col.route; let ci = $index) {
+            <th class="col-th sortable-th" (click)="sortBy(ci)">
+              {{ col.label }}
+              <span class="sort-icon">{{ sortCol === ci ? (sortDir === 'asc' ? '↑' : '↓') : '↕' }}</span>
+            </th>
           }
         </tr>
       </thead>
@@ -72,18 +93,24 @@
           <tr class="data-row">
             <td class="sticky-col name-cell">{{ m.name }}</td>
             @for (col of columns; track col.route; let ci = $index) {
-              @let cell = getMock(m.idx, ci);
+              @let cell = getCellData(m.idx, ci);
               <td
                 class="data-cell"
-                [class.cell-done]="cell.done"
-                [class.cell-partial]="!cell.done && cell.rows > 0"
-                [class.cell-empty]="cell.rows === 0"
+                [class.cell-done]="cell.done && cell.isMock"
+                [class.cell-partial]="!cell.done && cell.rows > 0 && cell.isMock"
+                [class.cell-empty]="cell.rows === 0 && cell.isMock"
+                [class.cell-real]="!cell.isMock"
                 (click)="navigateToCell(m.idx, col)"
-                [title]="m.name + ' › ' + col.label">
+                [title]="m.name + ' › ' + col.label + (!cell.isMock ? ' (dades reals)' : ' (simulat)')">
                 @if (cell.rows > 0) {
                   <span class="cell-count">{{ cell.rows }}</span>
                 } @else {
                   <span class="cell-dash">—</span>
+                }
+                @if (!cell.isMock) {
+                  <span class="cell-real-badge" title="Dades reals">★</span>
+                } @else {
+                  <span class="cell-mock-badge">~</span>
                 }
               </td>
             }
@@ -99,5 +126,108 @@
       </tbody>
     </table>
   </div>
+
+  } <!-- end vista-general -->
+
+  @if (activeTab === 'analisis') {
+  <div class="analisis-wrapper">
+
+    <!-- Selectors row -->
+    <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
+      <div class="flex items-center gap-3">
+        <label class="text-sm font-semibold text-base-content/70">Taula:</label>
+        <select class="select select-bordered select-sm w-60" [(ngModel)]="selectedTable">
+          @for (opt of tableOptions; track $index) {
+            <option [value]="$index">{{ opt }}</option>
+          }
+        </select>
+      </div>
+      <div class="flex items-center gap-3">
+        <label class="text-sm font-semibold text-base-content/70">Municipi:</label>
+        <select class="select select-bordered select-sm w-64" [(ngModel)]="selectedMunicipiAnalisi">
+          <option value="Todos">Tots els municipis</option>
+          @for (m of municipis; track m) {
+            <option [value]="m">{{ m }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    @if (selectedMunicipiAnalisi === 'Todos') {
+      <div class="stats shadow mb-5">
+        <div class="stat">
+          <div class="stat-title">Finalitzats</div>
+          <div class="stat-value text-success">{{ analisisStats.done }}</div>
+          <div class="stat-desc">de {{ analisisStats.total }} municipis</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">En progrés</div>
+          <div class="stat-value text-warning">{{ analisisStats.partial }}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Sense dades</div>
+          <div class="stat-value text-base-content/40">{{ analisisStats.empty }}</div>
+        </div>
+      </div>
+    }
+
+    <!-- Legend -->
+    <div class="flex gap-3 mb-3 text-xs items-center flex-wrap">
+      <span class="font-semibold text-base-content/60 mr-1">Llegenda:</span>
+      <span class="flex items-center gap-1"><span class="cell-done inline-block w-5 h-5 rounded border border-success/40"></span> Finalitzat</span>
+      <span class="flex items-center gap-1"><span class="cell-partial inline-block w-5 h-5 rounded border border-warning/40"></span> En progrés</span>
+      <span class="flex items-center gap-1"><span class="cell-empty inline-block w-5 h-5 rounded border border-base-300"></span> Sense dades</span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-scroll-container">
+      <table class="implantacions-table">
+        <thead>
+          <tr class="col-header-row">
+            <th class="sticky-col name-col">Municipi</th>
+            <th class="col-th">Registres</th>
+            <th class="col-th">Estat</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of analisisRows; track row.municipiName) {
+            <tr class="data-row">
+              <td class="sticky-col name-cell">{{ row.municipiName }}</td>
+              <td class="data-cell"
+                  [class.cell-done]="row.done"
+                  [class.cell-partial]="!row.done && row.rows > 0"
+                  [class.cell-empty]="row.rows === 0">
+                @if (row.rows > 0) {
+                  <span class="cell-count">{{ row.rows }}</span>
+                } @else {
+                  <span class="cell-dash">—</span>
+                }
+              </td>
+              <td class="data-cell"
+                  [class.cell-done]="row.done"
+                  [class.cell-partial]="!row.done && row.rows > 0"
+                  [class.cell-empty]="row.rows === 0">
+                @if (row.done) {
+                  <span>Finalitzat</span>
+                } @else if (row.rows > 0) {
+                  <span>En progrés</span>
+                } @else {
+                  <span class="cell-dash">Sense dades</span>
+                }
+              </td>
+            </tr>
+          }
+          @if (analisisRows.length === 0) {
+            <tr>
+              <td colspan="3" class="text-center py-8 text-base-content/40 italic">Cap registre trobat</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  } <!-- end analisis -->
 
 </div>

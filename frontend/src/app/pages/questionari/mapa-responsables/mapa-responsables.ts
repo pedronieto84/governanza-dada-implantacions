@@ -1,12 +1,15 @@
-import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { retry } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import * as d3 from 'd3';
 // @ts-ignore
 import { OrgChart } from 'd3-org-chart';
 
 import { API_BASE } from '../../../api.config';
+import { MunicipiService } from '../../../services/municipi.service';
+import { toSlug } from '../../../utils/slug';
 
 
 @Component({
@@ -16,7 +19,9 @@ import { API_BASE } from '../../../api.config';
   standalone: true,
   imports: [FormsModule]
 })
-export class MapaResponsables implements OnInit {
+export class MapaResponsables implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  municipiActual = '';
   viewMode: 'tabla' | 'organigrama' = 'tabla';
   isFullscreen = false;
   @ViewChild('chartContainer') chartContainer!: ElementRef;
@@ -29,7 +34,11 @@ export class MapaResponsables implements OnInit {
   isEditing = false;
   currentEmployee: any = { id: '', parentId: '', name: '', position: '' };
 
-  constructor(private cdr: ChangeDetectorRef, private http: HttpClient) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private http: HttpClient,
+    private municipiService: MunicipiService,
+  ) {
     // Expose methods to global scope for D3 node HTML string binding
     (window as any).triggerOrgNodeEdit = (nodeId: string) => this.openEditModal(nodeId);
     (window as any).triggerOrgNodeAdd = (parentId: string) => this.openAddModalWithParent(parentId);
@@ -127,26 +136,49 @@ export class MapaResponsables implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get<any>(`${API_BASE}/api/data/mapa-responsables`).pipe(retry({ count: 5, delay: 2000 })).subscribe({
-      next: (data) => {
-        if (data.rolsClau) this.rolsClau = data.rolsClau;
-        if (data.arees) this.arees = data.arees;
-        if (data.processos) this.processos = data.processos;
-        if (data.projectes) this.projectes = data.projectes;
-        if (data.altres) this.altres = data.altres;
-        if (data.orgData) this.orgData = data.orgData;
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      },
-      error: () => {
-        console.warn('No saved data found, using defaults.');
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      }
-    });
+    this.municipiService.municipiSeleccionat$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((municipi) => {
+          this.municipiActual = municipi;
+          this.isLoading = true;
+          this.cdr.detectChanges();
+          const slug = toSlug(municipi);
+          return this.http.get<any>(`${API_BASE}/api/data/municipis/${slug}/mapa-responsables`);
+        }),
+      )
+      .subscribe({
+        next: (data) => {
+          if (data.rolsClau) this.rolsClau = data.rolsClau;
+          if (data.arees) this.arees = data.arees;
+          if (data.processos) this.processos = data.processos;
+          if (data.projectes) this.projectes = data.projectes;
+          if (data.altres) this.altres = data.altres;
+          if (data.orgData) this.orgData = data.orgData;
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          // No data for this municipality yet — reset to empty
+          this.rolsClau = [];
+          this.arees = [];
+          this.processos = [];
+          this.projectes = [];
+          this.altres = [];
+          this.orgData = [];
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   saveData() {
+    const slug = toSlug(this.municipiActual);
     const payload = {
       rolsClau: this.rolsClau,
       arees: this.arees,
@@ -155,7 +187,7 @@ export class MapaResponsables implements OnInit {
       altres: this.altres,
       orgData: this.orgData
     };
-    this.http.post(`${API_BASE}/api/data/mapa-responsables`, payload).subscribe({
+    this.http.post(`${API_BASE}/api/data/municipis/${slug}/mapa-responsables`, payload).subscribe({
       error: (err) => console.error('Error saving data', err)
     });
   }

@@ -1,9 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { retry } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { API_BASE } from '../../../api.config';
+import { MunicipiService } from '../../../services/municipi.service';
+import { toSlug } from '../../../utils/slug';
 
 const EMPTY_ATRIBUT = () => ({
   id: '', nom: '', desc: '', entitat: '', clau: '', sistema: '', tipus: '',
@@ -35,7 +38,10 @@ const DEFAULT_ATRIBUTS = [
   styleUrl: './atributs.css',
   standalone: true,
 })
-export class Atributs implements OnInit {
+export class Atributs implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  private municipiActual = '';
+
   isLoading = true;
   isModalOpen = false;
   editIndex = -1;
@@ -45,25 +51,46 @@ export class Atributs implements OnInit {
   tipusOptions = ['Dada mestre', 'Dada de referència', 'Dada de negoci', 'Metadada de negoci', 'Dada operativa', 'Dada analítica'];
   siNoOptions = ['', 'SI', 'NO'];
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private municipiService: MunicipiService,
+  ) {}
 
   ngOnInit() {
-    this.http.get<any>(`${API_BASE}/api/data/atributs`).pipe(retry({ count: 5, delay: 2000 })).subscribe({
-      next: (data) => {
-        this.atributs = data.atributs ?? DEFAULT_ATRIBUTS;
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      },
-      error: () => {
-        this.atributs = [...DEFAULT_ATRIBUTS];
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      }
-    });
+    this.municipiService.municipiSeleccionat$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((municipi) => {
+          this.municipiActual = municipi;
+          this.atributs = [];
+          this.isLoading = true;
+          const slug = toSlug(municipi);
+          return this.http.get<any>(`${API_BASE}/api/data/municipis/${slug}/atributs`);
+        }),
+      )
+      .subscribe({
+        next: (data) => {
+          this.atributs = data.atributs ?? [];
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          this.atributs = [];
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   saveData() {
-    this.http.post(`${API_BASE}/api/data/atributs`, { atributs: this.atributs }).subscribe({
+    const slug = toSlug(this.municipiActual);
+    this.http.post(`${API_BASE}/api/data/municipis/${slug}/atributs`, { atributs: this.atributs }).subscribe({
       error: (err) => console.error('Error saving atributs', err)
     });
   }
