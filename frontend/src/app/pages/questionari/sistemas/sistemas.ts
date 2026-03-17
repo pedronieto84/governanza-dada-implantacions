@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
@@ -56,6 +56,7 @@ export class Sistemas implements OnInit, OnDestroy {
     this.municipiService.municipiSeleccionat$
       .pipe(
         takeUntil(this.destroy$),
+        filter((municipi): municipi is string => !!municipi),
         switchMap((municipi) => {
           this.municipiActual = municipi;
           this.sistemas = [];

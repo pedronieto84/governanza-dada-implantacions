@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, OnDestroy, ViewChild, ChangeDetectorRef 
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import * as d3 from 'd3';
 // @ts-ignore
 import { OrgChart } from 'd3-org-chart';
@@ -139,6 +139,7 @@ export class MapaResponsables implements OnInit, OnDestroy {
     this.municipiService.municipiSeleccionat$
       .pipe(
         takeUntil(this.destroy$),
+        filter((municipi): municipi is string => !!municipi),
         switchMap((municipi) => {
           this.municipiActual = municipi;
           this.isLoading = true;

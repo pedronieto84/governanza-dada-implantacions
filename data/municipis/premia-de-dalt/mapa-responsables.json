@@ -19,56 +19,56 @@
       "resp": "Gemma Àlvarez",
       "email": "alvarezmgm@premiadedalt.cat",
       "phone": "936931509",
-      "obs": "Cap de Recursos humans i de Serveis a les persones: sol·licita accés a Informàtica per un treballador nou"
+      "obs": "Cap de Recursos humans i de Serveis a les persones: sol·licita accés a Informàtica per un treballador nou.\nRESPONSABLE DE DADES DE RECURSOS HUMANS\n- Decideix sobre les dades/estructura de nòmines, de treballadors.\n-Nòmines (SIGEP) - NetTime (control horaris), Spec\n- TOts tenen accès al gestor d'Expedients. "
     },
     {
       "name": "Referent de dades (Data Stewart)",
       "resp": "Nuria Riera",
       "email": "rieran@premiadedalt.cat",
       "phone": "674951891",
-      "obs": "Serveis Socials, demana a Informàtica per afegir un treballador nou"
+      "obs": "Serveis Socials, demana a Informàtica per afegir un treballador nou.\n- Fan servir HESTIA del consell comarcal. Gestor d'expedients. Unitat compartida.\n\nNo tè capacitat de modificar estructura de les dades"
     },
     {
-      "name": "",
+      "name": "Responsable de dades (Data Stewart)",
       "resp": "Teresa Pallarés",
       "email": "pallarestm@premiadedalt.cat",
       "phone": "670961003",
-      "obs": "Tresoreria i Intervenció, mateixa dinàmica."
+      "obs": "Tresoreria i Intervenció, mateixa dinàmica. Gestor d'expedients. Tè accès a comptabilitat. "
     },
     {
       "name": "",
       "resp": "Pedro Obrero Román",
       "email": "obrerorp@premiadedalt.cat",
       "phone": "607118371",
-      "obs": "Responsable d'Informàtica que accedeix a les peticions dels diferents departaments"
+      "obs": "Responsable d'Informàtica que accedeix a les peticions dels diferents departaments.\nDona els permisos, sota indicació del responsable de cada departament. \nPer exemple: La interventora, li fa un document indicant qui ha de tenir accesos a que.\n"
     },
     {
       "name": "",
       "resp": "Lluis García",
       "email": "garciajll@premiadedalt.cat",
       "phone": "666530168",
-      "obs": "Urbanisme o territori, mateixa dinàmica que abans."
+      "obs": "Urbanisme o territori, mateixa dinàmica que abans.\n- Accès al Gestor d'Expedients.\n- Si comença algun tècnic li dona un document a Pedro Obrero indicant quins permisos ha de tenir cadascú.\n\n- Tothom tè accés a la unitat compartida. (Com tothom)\n- Geoportal (Web) on publiquen normativa del poble.\n- La resta al gestor d'expedients o a la unitat compartida.\n\nResponsable de tot lo relatiu a Serveis Territorials"
     },
     {
-      "name": "",
+      "name": "Referent de dades (Data Stewart)",
       "resp": "Virginia Merlos",
       "email": "merloscv@premiadedalt.cat",
       "phone": "637755094",
-      "obs": "Promoció econòmica, mateixa dinàmica."
+      "obs": "Promoció econòmica, mateixa dinàmica.\n- Gestor d'expedients. \n\nNo te capacitat de decissió sobre modificació d'estructura de dades, es nomès tècnica."
     },
     {
-      "name": "",
+      "name": "Responsable de dades (Data Stewart)",
       "resp": "Eli Gummà",
       "email": "gummabe@premiadedalt.cat",
       "phone": "667470681",
-      "obs": "Educació i joventut, mateixa dinàmica."
+      "obs": "Educació i joventut, mateixa dinàmica.\n-Gestor d'expedients.\n- Responsable d'educació. Tenen una aplicació de gestió d'altes i baixes dels alumnes del curs, i algo del menjador. (No sabem exactament el nom). Té poder de decissió sobre aquesta aplicació."
     },
     {
-      "name": "",
+      "name": "Propietari de dades (Data Owner)",
       "resp": "Carlos Matallan",
       "email": "prmd.pl1335@premiadedalt.cat",
       "phone": "936931500",
-      "obs": "Policia, sargent cap."
+      "obs": "Policia, sargent cap.\n- Accedeixen a l'aplicació dels Mossos.\n- Aplicació Eurocop (al estiu probablement la canviaràn per DRAG), gestió policial, grues, gestió d'atestats. Eurocop el tenen al servidor POSSE (Base de dades SQL). Al estiu ho migraran a DRAG que un SAAS.\n\n"
     },
     {
       "name": "",
@@ -76,6 +76,78 @@
       "email": "botemmr@premiadedalt.cat",
       "phone": "936931511",
       "obs": "Secretaria"
+    },
+    {
+      "name": "Responsable de dades (Data Stewart)",
+      "resp": "Monica Farré",
+      "email": "farresm@premiadedalt.cat",
+      "phone": "936931502",
+      "obs": "Gestor de dades Lectura, Te acces al gestor d'expedients permisos CRUD, dintre de la seva area.\nPorta la gestió de la pàgina web i el tema de Transparència",
+      "areas": []
+    },
+    {
+      "name": "Responsable de dades (Data Stewart)",
+      "resp": "Eva Roig",
+      "email": "prmd.alcaldia@premiadedalt.cat",
+      "phone": "",
+      "obs": "Porta la base de dades del cementiri dels ninxols. Porta el registre d'expedients, les entrades que van cap a alcaldia.",
+      "areas": []
+    },
+    {
+      "name": "Responsable de dades (Data Stewart)",
+      "resp": "Mireia Boté",
+      "email": "botmmr@premiadedalt.cat",
+      "phone": "",
+      "obs": "Secretaria (firmar informes juridics, assesorar).\nFa servir el gestor d'expedients. Tè accés. Tè poder per establir protocols. ",
+      "areas": []
+    },
+    {
+      "name": "Responsable de dades (Data Stewart)",
+      "resp": "Ricard Amaya",
+      "email": "amayaar@premiadedalt.cat",
+      "phone": "",
+      "obs": "Tresorer. Responsable de les dades de comptabilitat. Dels bancs, dels comptes corrents. Fa pagament de nòmines i factures. Fa l'autorització de pagament. Tota entrada i sortida monetaria la controla ell.",
+      "areas": []
+    },
+    {
+      "name": "Referent de dades (Data Stewart)",
+      "resp": "Gemma Ferran",
+      "email": "ferrancg@premiadedalt.cat",
+      "phone": "",
+      "obs": "Directora escoles bressol.\n\nTè acces a l'aplicació de les Escoles bressol. A nivell de gestió",
+      "areas": []
+    },
+    {
+      "name": "",
+      "resp": "Enric Miralles",
+      "email": "",
+      "phone": "",
+      "obs": "Tècnic Cultura te acces al gestor d'expedients. Però rol baix.",
+      "areas": []
+    },
+    {
+      "name": "",
+      "resp": "Gemma Planas",
+      "email": "",
+      "phone": "",
+      "obs": "Directora de la Biblioteca. \n- Treballa amb eines de la diputació per gestionar el catàleg de llibres i qui ho ha llogat.",
+      "areas": []
+    },
+    {
+      "name": "",
+      "resp": "Ester Àvila",
+      "email": "avilaae@premiadedalt.cat",
+      "phone": "",
+      "obs": "Reponsable de la interacció amb la AOC i de tots els datasets que hi resideixin al AOC.\n\nPer exemple, donar IDCat als ciutadans, la que controla el tema del padró.",
+      "areas": []
+    },
+    {
+      "name": "",
+      "resp": "Dolors Ollero",
+      "email": "ollerobd@premiadedalt.cat",
+      "phone": "",
+      "obs": "Arquitecte.\n- Te accès al gestor d'expedients. Geoportal i a la ùnitat compartida. ",
+      "areas": []
     }
   ],
   "arees": [
@@ -902,10 +974,10 @@
     },
     {
       "name": "Plan de Transformación Digital del Ayuntamiento",
-      "resp": "",
+      "resp": "Alejandro Costa",
       "email": "",
       "phone": "",
-      "obs": "",
+      "obs": "Son regidors, no tenen interacció amb les dades. Com a molt consulta.",
       "areas": []
     },
     {
@@ -1030,7 +1102,7 @@
       "_pagingStep": 2000,
       "_directSubordinatesPaging": 3,
       "_directSubordinates": 3,
-      "_totalSubordinates": 67
+      "_totalSubordinates": 66
     },
     {
       "id": "10",
@@ -1041,7 +1113,9 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 8,
       "_directSubordinates": 8,
-      "_totalSubordinates": 22
+      "_totalSubordinates": 22,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "20",
@@ -1052,7 +1126,7 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 13,
+      "_totalSubordinates": 12,
       "_expanded": true
     },
     {
@@ -1064,7 +1138,9 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 29
+      "_totalSubordinates": 29,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "11",
@@ -1075,18 +1151,24 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 2,
       "_directSubordinates": 2,
-      "_totalSubordinates": 2
+      "_totalSubordinates": 2,
+      "_expanded": true,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "12",
       "parentId": "10",
-      "name": "Antonio López",
-      "position": "Secretari Accidental",
+      "name": "Mireia Boté",
+      "position": "Secretaria",
       "_pagingStep": 2000,
       "_pagingButton": false,
       "_directSubordinatesPaging": 2,
       "_directSubordinates": 2,
-      "_totalSubordinates": 2
+      "_totalSubordinates": 2,
+      "_expanded": true,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "13",
@@ -1097,17 +1179,21 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 3,
       "_directSubordinates": 3,
-      "_totalSubordinates": 3
+      "_totalSubordinates": 3,
+      "_expanded": true,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "14",
       "parentId": "10",
-      "name": "Montse López",
+      "name": "Ricard Amaya",
       "position": "Tresorera",
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "15",
@@ -1118,18 +1204,22 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 2,
       "_directSubordinates": 2,
-      "_totalSubordinates": 2
+      "_totalSubordinates": 2,
+      "_expanded": true,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "16",
       "parentId": "10",
-      "name": "Polítiques Digitals",
-      "position": "",
+      "name": "Pedro Obrero",
+      "position": "Polítiques Digitals",
       "_pagingStep": 2000,
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 1
+      "_totalSubordinates": 1,
+      "_expanded": true
     },
     {
       "id": "17",
@@ -1140,7 +1230,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 1
+      "_totalSubordinates": 1,
+      "_expanded": true
     },
     {
       "id": "18",
@@ -1151,7 +1242,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 3,
       "_directSubordinates": 3,
-      "_totalSubordinates": 3
+      "_totalSubordinates": 3,
+      "_expanded": true
     },
     {
       "id": "111",
@@ -1161,7 +1253,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "112",
@@ -1171,7 +1264,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "121",
@@ -1181,7 +1275,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "122",
@@ -1191,7 +1286,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "131",
@@ -1201,7 +1297,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "132",
@@ -1211,7 +1308,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "133",
@@ -1221,7 +1319,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "151",
@@ -1231,7 +1330,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "152",
@@ -1241,17 +1341,19 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "161",
       "parentId": "16",
-      "name": "Salvador Mataró / Vicens Ferran / Pedro Obrero",
+      "name": "Xavier Silva / Maria del Mar Car",
       "position": "3 Tècnics aux. Informàtica",
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "171",
@@ -1302,13 +1404,15 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 8,
       "_directSubordinates": 8,
-      "_totalSubordinates": 12,
-      "_expanded": true
+      "_totalSubordinates": 11,
+      "_expanded": false,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "211",
       "parentId": "21",
-      "name": "Lluís Garcia",
+      "name": "Dolors Ollero",
       "position": "Arquitecte",
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
@@ -1337,18 +1441,6 @@
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
       "_totalSubordinates": 1,
-      "_expanded": true
-    },
-    {
-      "id": "214",
-      "parentId": "21",
-      "name": "Jordi Miquel",
-      "position": "Arquitecte tècnic brigada",
-      "_pagingStep": 2000,
-      "_pagingButton": false,
-      "_directSubordinatesPaging": 1,
-      "_directSubordinates": 1,
-      "_totalSubordinates": 3,
       "_expanded": true
     },
     {
@@ -1404,11 +1496,11 @@
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
       "_totalSubordinates": 0,
-      "_expanded": true
+      "_expanded": false
     },
     {
       "id": "2141",
-      "parentId": "214",
+      "parentId": "21",
       "name": "Encarregat Brigada",
       "position": "",
       "_pagingStep": 2000,
@@ -1416,7 +1508,7 @@
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
       "_totalSubordinates": 2,
-      "_expanded": true
+      "_expanded": false
     },
     {
       "id": "2142",
@@ -1428,7 +1520,7 @@
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
       "_totalSubordinates": 1,
-      "_expanded": true
+      "_expanded": false
     },
     {
       "id": "2143",
@@ -1439,7 +1531,7 @@
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
       "_totalSubordinates": 0,
-      "_expanded": true
+      "_expanded": false
     },
     {
       "id": "31",
@@ -1450,7 +1542,10 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 8,
       "_directSubordinates": 8,
-      "_totalSubordinates": 28
+      "_totalSubordinates": 28,
+      "_expanded": true,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "311",
@@ -1461,7 +1556,10 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 4,
       "_directSubordinates": 4,
-      "_totalSubordinates": 5
+      "_totalSubordinates": 5,
+      "_expanded": false,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "312",
@@ -1472,7 +1570,10 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 2,
       "_directSubordinates": 2,
-      "_totalSubordinates": 2
+      "_totalSubordinates": 2,
+      "_expanded": true,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "313",
@@ -1483,7 +1584,10 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 3,
       "_directSubordinates": 3,
-      "_totalSubordinates": 7
+      "_totalSubordinates": 7,
+      "_expanded": true,
+      "_centered": null,
+      "_centeredWithDescendants": null
     },
     {
       "id": "314",
@@ -1494,7 +1598,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 2
+      "_totalSubordinates": 2,
+      "_expanded": true
     },
     {
       "id": "315",
@@ -1505,7 +1610,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 1
+      "_totalSubordinates": 1,
+      "_expanded": true
     },
     {
       "id": "316",
@@ -1516,18 +1622,20 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 1
+      "_totalSubordinates": 1,
+      "_expanded": true
     },
     {
       "id": "317",
       "parentId": "31",
-      "name": "José Ángel Salido",
-      "position": "Monitor d'Esports",
+      "name": "Mar Anicart",
+      "position": "Tècnica d'Esports",
       "_pagingStep": 2000,
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 1
+      "_totalSubordinates": 1,
+      "_expanded": true
     },
     {
       "id": "318",
@@ -1538,7 +1646,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 1
+      "_totalSubordinates": 1,
+      "_expanded": true
     },
     {
       "id": "3111",
@@ -1548,7 +1657,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": false
     },
     {
       "id": "3112",
@@ -1558,7 +1668,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": false
     },
     {
       "id": "3113",
@@ -1568,7 +1679,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": false
     },
     {
       "id": "3114",
@@ -1579,7 +1691,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 1
+      "_totalSubordinates": 1,
+      "_expanded": false
     },
     {
       "id": "3115",
@@ -1589,7 +1702,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": false
     },
     {
       "id": "3121",
@@ -1599,7 +1713,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "3122",
@@ -1609,7 +1724,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "3131",
@@ -1619,7 +1735,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "3132",
@@ -1630,7 +1747,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 1,
       "_directSubordinates": 1,
-      "_totalSubordinates": 4
+      "_totalSubordinates": 4,
+      "_expanded": true
     },
     {
       "id": "3133",
@@ -1640,7 +1758,8 @@
       "_pagingButton": false,
       "_directSubordinatesPaging": 0,
       "_directSubordinates": 0,
-      "_totalSubordinates": 0
+      "_totalSubordinates": 0,
+      "_expanded": true
     },
     {
       "id": "3132a",
