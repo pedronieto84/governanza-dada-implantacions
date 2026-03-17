@@ -258,6 +258,9 @@ export class MapaResponsables implements OnInit, OnDestroy {
     this.customProjecteMode = false;
   }
 
+  // --- Rols Info Modal ---
+  isRolsInfoModalOpen = false;
+
   // --- Info Modal ---
   isInfoModalOpen = false;
   infoNode: any = null;
@@ -322,9 +325,10 @@ export class MapaResponsables implements OnInit, OnDestroy {
     let suggestions: string[] = [];
     if (tableKey === 'rolsClau') {
       suggestions = [
-        'Responsable de dades (Data Stewart)', 
-        'Propietari de dades (Data Owner)', 
-        'Referent de dades (Data Stewart)'
+        'Custodi tècnic de les dades',
+        'Gestor de les dades',
+        'Propietari de les dades',
+        'Responsable de qualitat de les dades'
       ];
     } else if (tableKey === 'processos') {
       suggestions = this.allProcessosSuggestions;

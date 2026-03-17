@@ -36,7 +36,13 @@
         <table class="table table-zebra w-full">
           <thead>
             <tr class="bg-base-200 text-base">
-              <th>Rol</th><th>Responsable</th><th>Correu responsable</th><th>Telèfon responsable</th><th>Observacions</th><th class="w-20">Accions</th>
+              <th>
+                <span class="flex items-center gap-1">Rol
+                  <button type="button" class="btn btn-circle btn-ghost btn-xs" (click)="isRolsInfoModalOpen = true" title="Informació dels rols">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
+                  </button>
+                </span>
+              </th><th>Responsable</th><th>Correu responsable</th><th>Telèfon responsable</th><th>Observacions</th><th class="w-20">Accions</th>
             </tr>
           </thead>
           <tbody>
@@ -471,12 +477,18 @@
             💡 Si el teu procés no apareix a la llista, escriu-lo manualment i quedarà desat igualment.
           </p>
         } @else if (currentTableKey === 'rolsClau') {
-          <select class="select select-bordered w-full" [(ngModel)]="currentRow.name">
-            <option value="">-- Selecciona un rol --</option>
-            <option value="Responsable de dades (Data Stewart)">Responsable de dades (Data Stewart)</option>
-            <option value="Propietari de dades (Data Owner)">Propietari de dades (Data Owner)</option>
-            <option value="Referent de dades (Data Stewart)">Referent de dades (Data Stewart)</option>
-          </select>
+          <div class="flex items-center gap-2">
+            <select class="select select-bordered w-full" [(ngModel)]="currentRow.name">
+              <option value="">-- Selecciona un rol --</option>
+              <option value="Custodi tècnic de les dades">Custodi tècnic de les dades</option>
+              <option value="Gestor de les dades">Gestor de les dades</option>
+              <option value="Propietari de les dades">Propietari de les dades</option>
+              <option value="Responsable de qualitat de les dades">Responsable de qualitat de les dades</option>
+            </select>
+            <button type="button" class="btn btn-circle btn-ghost btn-sm" (click)="isRolsInfoModalOpen = true" title="Informació dels rols">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
+            </button>
+          </div>
         } @else if (currentTableKey === 'projectes') {
           <select class="select select-bordered w-full" [(ngModel)]="currentRow.name" (ngModelChange)="onProjecteSelect($event)">
             <option value="">-- Selecciona un projecte --</option>
@@ -675,5 +687,56 @@
   </div>
   <form method="dialog" class="modal-backdrop">
     <button (click)="closeInfoModal()">close</button>
+  </form>
+</dialog>
+
+<!-- Rols Info Modal -->
+<dialog class="modal" [class.modal-open]="isRolsInfoModalOpen">
+  <div class="modal-box w-11/12 max-w-3xl bg-base-100">
+    <div class="flex justify-between items-center mb-4 border-b border-base-300 pb-3">
+      <h3 class="font-bold text-xl text-primary">Descripció dels Rols</h3>
+      <button class="btn btn-sm btn-circle btn-ghost text-red-500 hover:bg-red-100" (click)="isRolsInfoModalOpen = false">✕</button>
+    </div>
+    <div class="space-y-5">
+
+      <div class="card bg-base-200 shadow-sm">
+        <div class="card-body p-4">
+          <h4 class="font-bold text-md">🔧 Custodi tècnic de les dades</h4>
+          <p class="text-sm mt-1">Perfil tecnològic responsable del funcionament tècnic, emmagatzematge, seguretat i disponibilitat de les dades dins dels sistemes d'informació. Implementa les decisions aprovades pel propietari i col·labora amb el gestor per garantir la integritat tècnica de la dada.</p>
+          <p class="text-xs italic mt-2 text-base-content/60"><strong>Exemple:</strong> El perfil tecnològic responsable del sistema de gestió d'ajudes garanteix que la base de dades funcioni correctament, aplica els controls d'accés definits i executa les actualitzacions tècniques necessàries.</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-sm">
+        <div class="card-body p-4">
+          <h4 class="font-bold text-md">📋 Gestor de les dades</h4>
+          <p class="text-sm mt-1">Perfil tècnic-funcional de l'àmbit de negoci responsable de la gestió operativa i quotidiana de la dada en el seu domini. Coneix el seu significat, les seves regles i casuístiques, i vetlla per la seva correcta aplicació i documentació. Actua com a enllaç entre l'àmbit de negoci i el perfil tecnològic.</p>
+          <p class="text-xs italic mt-2 text-base-content/60"><strong>Exemple:</strong> El tècnic funcional de l'àrea de Cultura revisa que els registres d'equipaments culturals estiguin complets, aplica les regles de validació definides i coordina amb el perfil tecnològic la resolució d'incidències.</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-sm">
+        <div class="card-body p-4">
+          <h4 class="font-bold text-md">👑 Propietari de les dades</h4>
+          <p class="text-sm mt-1">Unitat administrativa responsable última d'un conjunt de dades. Defineix les normes d'ús i accés, els criteris de qualitat i la prioritat de la seva evolució. Té l'autoritat final sobre les decisions relacionades amb aquella dada.</p>
+          <p class="text-xs italic mt-2 text-base-content/60"><strong>Exemple:</strong> La Direcció de Serveis Socials és la propietària del registre de beneficiaris d'ajudes i decideix qui pot accedir a la informació i quins requisits de qualitat s'han de complir.</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-sm">
+        <div class="card-body p-4">
+          <h4 class="font-bold text-md">✅ Responsable de qualitat de les dades</h4>
+          <p class="text-sm mt-1">Perfil encarregat de vetllar per la correcta definició, coherència semàntica i qualitat de les dades dins un domini.</p>
+          <p class="text-xs italic mt-2 text-base-content/60"><strong>Exemple:</strong> Revisar duplicats a la base de dades de clients i corregir incoherències.</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-action">
+      <button class="btn btn-primary" (click)="isRolsInfoModalOpen = false">Tancar</button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button (click)="isRolsInfoModalOpen = false">close</button>
   </form>
 </dialog>

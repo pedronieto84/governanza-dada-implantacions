@@ -32,3 +32,7 @@
   font-size: 24px !important;
   white-space: normal !important;
 }
+
+dialog.modal {
+  z-index: 9999;
+}

@@ -1,0 +1,3 @@
+:host ::ng-deep thead.sticky th {
+  background-color: oklch(var(--b2));
+}
