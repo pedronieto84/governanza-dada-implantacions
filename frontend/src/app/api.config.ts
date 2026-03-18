@@ -1,6 +1,5 @@
 // ─── Configuració centralitzada del Backend API ───────────────────────────────
-// Modifica BACKEND_PORT per apuntar al port on corre el backend NestJS.
-// Ha de coincidir amb el PORT definit al fitxer .env de l'arrel del projecte.
+// Amb portless, el backend és accessible via el proxy a api.governanza.localhost:1355.
+// En producció, canvia API_BASE per l'URL corresponent.
 
-export const BACKEND_PORT = 3005;
-export const API_BASE = `http://localhost:${BACKEND_PORT}`;
+export const API_BASE = 'http://api.governanza.localhost:1355';

@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    ports:
+      - "1355:1355"
+    volumes:
+      - ./backend/src:/app/backend/src
+      - ./frontend/src:/app/frontend/src
+      - ./data:/app/data
