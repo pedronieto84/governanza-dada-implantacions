@@ -21,7 +21,15 @@ import { GlossariTable } from './pages/glossari/glossari-table/glossari-table';
 import { RelacionGlossari } from './pages/glossari/relacion-glossari/relacion-glossari';
 import { LlegendaGlossari } from './pages/glossari/llegenda-glossari/llegenda-glossari';
 
+// Auth / Admin
+import { LoginComponent } from './pages/login/login';
+import { AdminComponent } from './pages/admin/admin';
+import { AdminUsuariosComponent } from './pages/admin/usuarios/admin-usuarios';
+import { AdminEntidadesComponent } from './pages/admin/entidades/admin-entidades';
+import { adminGuard } from './guards/admin.guard';
+
 export const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   {
     path: '',
     component: Layout,
@@ -60,8 +68,18 @@ export const routes: Routes = [
           { path: '', redirectTo: 'taula', pathMatch: 'full' }
         ]
       },
-      { path: '', redirectTo: 'home', pathMatch: 'full' }
+      {
+        path: 'admin',
+        component: AdminComponent,
+        canActivate: [adminGuard],
+        children: [
+          { path: 'usuarios', component: AdminUsuariosComponent },
+          { path: 'entidades', component: AdminEntidadesComponent },
+          { path: '', redirectTo: 'usuarios', pathMatch: 'full' }
+        ]
+      },
+      { path: '', redirectTo: '/login', pathMatch: 'full' }
     ]
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '/login' }
 ];

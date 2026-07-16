@@ -1,16 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MunicipiService } from '../services/municipi.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, CommonModule],
   templateUrl: './layout.html',
   styleUrl: './layout.css',
 })
 export class Layout implements OnInit, OnDestroy {
+  authService = inject(AuthService);
   isSidebarOpen = true;
   municipiSeleccionat = '';
   showMunicipiDropdown = false;
