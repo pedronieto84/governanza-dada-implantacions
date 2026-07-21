@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/frontend/browser",
+    "public": "frontend/dist/frontend/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -18,9 +18,9 @@
     ]
   },
   "functions": {
-    "source": "../backend",
+    "source": "backend",
     "predeploy": [
-      "npm --prefix \"$RESOURCE_DIR\" run build"
+      "npm --prefix \"backend\" run build"
     ]
   }
 }

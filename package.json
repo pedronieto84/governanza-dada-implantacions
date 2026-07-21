@@ -13,5 +13,9 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "ag-grid-angular": "^36.0.1",
+    "ag-grid-community": "^36.0.1"
   }
 }

@@ -1,107 +1,113 @@
-import { Controller, Get, Post, Body, Param, HttpException, HttpStatus } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
+import { Controller, Get, Post, Body, Param, HttpException, HttpStatus, Inject } from '@nestjs/common';
+import * as admin from 'firebase-admin';
 
-@Controller('api/data')
+@Controller('data') // Prefix changed to 'data' assuming api is set globally in main.ts
 export class DataController {
-  private readonly dataDir = path.join(process.cwd(), '..', 'data');
-  private readonly municipisDir = path.join(process.cwd(), '..', 'data', 'municipis');
 
-  constructor() {
-    if (!fs.existsSync(this.dataDir)) {
-      fs.mkdirSync(this.dataDir, { recursive: true });
-    }
-    if (!fs.existsSync(this.municipisDir)) {
-      fs.mkdirSync(this.municipisDir, { recursive: true });
-    }
-  }
+  constructor(@Inject('FIRESTORE') private readonly db: admin.firestore.Firestore) {}
 
-  /** Returns an index of all municipalities that have real data on disk.
+  /** Returns an index of all municipalities that have real data.
    *  Shape: { [slug]: { [page]: rowCount } }
    */
   @Get('municipis')
-  getMunicipisIndex() {
+  async getMunicipisIndex() {
     const index: Record<string, Record<string, number>> = {};
-    if (!fs.existsSync(this.municipisDir)) return index;
-
-    const slugDirs = fs.readdirSync(this.municipisDir, { withFileTypes: true })
-      .filter(d => d.isDirectory())
-      .map(d => d.name);
-
-    for (const slug of slugDirs) {
-      const slugDir = path.join(this.municipisDir, slug);
-      const files = fs.readdirSync(slugDir).filter(f => f.endsWith('.json'));
-      index[slug] = {};
-      for (const file of files) {
-        const page = file.replace('.json', '');
-        try {
-          const content = JSON.parse(fs.readFileSync(path.join(slugDir, file), 'utf-8'));
-          index[slug][page] = this.countRows(content);
-        } catch {
-          index[slug][page] = 0;
+    
+    // In Firestore, retrieving all collections sizes per municipality can be heavy.
+    // Instead, we will assume you update a specific index document or just fetch all municipis.
+    try {
+      const municipisSnapshot = await this.db.collection('municipis').get();
+      
+      for (const doc of municipisSnapshot.docs) {
+        const slug = doc.id;
+        index[slug] = {};
+        
+        // Fetch pages subcollection sizes
+        const pagesSnapshot = await doc.ref.collection('pages').get();
+        for (const pageDoc of pagesSnapshot.docs) {
+          const pageName = pageDoc.id;
+          const data = pageDoc.data();
+          index[slug][pageName] = this.countRows(data?.payload || data);
         }
       }
+      return index;
+    } catch (error) {
+      console.error(error);
+      throw new HttpException('Error reading municipis index', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return index;
   }
 
   @Get('municipis/:slug/:page')
-  getMunicipiData(@Param('slug') slug: string, @Param('page') page: string) {
+  async getMunicipiData(@Param('slug') slug: string, @Param('page') page: string) {
     this.validateSegment(slug);
     this.validateSegment(page);
-    const filePath = path.join(this.municipisDir, slug, `${page}.json`);
-    if (fs.existsSync(filePath)) {
-      try {
-        return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-      } catch {
-        throw new HttpException('Error reading data file', HttpStatus.INTERNAL_SERVER_ERROR);
+    try {
+      const docRef = this.db.doc(`municipis/${slug}/pages/${page}`);
+      const docSnap = await docRef.get();
+      
+      if (docSnap.exists) {
+        const data = docSnap.data();
+        return data?.payload || data; // Adapt depending on how it was saved
       }
+      throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
+    } catch (error) {
+       if (error instanceof HttpException) throw error;
+       console.error(error);
+       throw new HttpException('Error reading data from Firestore', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
   }
 
   @Post('municipis/:slug/:page')
-  saveMunicipiData(
+  async saveMunicipiData(
     @Param('slug') slug: string,
     @Param('page') page: string,
     @Body() data: any,
   ) {
     this.validateSegment(slug);
     this.validateSegment(page);
-    const slugDir = path.join(this.municipisDir, slug);
-    if (!fs.existsSync(slugDir)) fs.mkdirSync(slugDir, { recursive: true });
-    const filePath = path.join(slugDir, `${page}.json`);
     try {
-      fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+      const docRef = this.db.doc(`municipis/${slug}/pages/${page}`);
+      
+      // Ensure the parent municipality document exists
+      await this.db.doc(`municipis/${slug}`).set({ exists: true }, { merge: true });
+      
+      // Save payload
+      await docRef.set({ payload: data });
       return { success: true };
-    } catch {
-      throw new HttpException('Error saving data file', HttpStatus.INTERNAL_SERVER_ERROR);
+    } catch (error) {
+       console.error(error);
+       throw new HttpException('Error saving data to Firestore', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Get(':page')
-  getData(@Param('page') page: string) {
-    const filePath = path.join(this.dataDir, `${page}.json`);
-    if (fs.existsSync(filePath)) {
-      try {
-        const fileContent = fs.readFileSync(filePath, 'utf-8');
-        return JSON.parse(fileContent);
-      } catch (error) {
-        throw new HttpException('Error reading data file', HttpStatus.INTERNAL_SERVER_ERROR);
+  async getData(@Param('page') page: string) {
+    try {
+      const docRef = this.db.collection('global_data').doc(page);
+      const docSnap = await docRef.get();
+
+      if (docSnap.exists) {
+        const data = docSnap.data();
+        return data?.payload || data;
+      } else {
+        throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
       }
-    } else {
-      throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      console.error(error);
+      throw new HttpException('Error reading data from Firestore', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Post(':page')
-  saveData(@Param('page') page: string, @Body() data: any) {
-    const filePath = path.join(this.dataDir, `${page}.json`);
+  async saveData(@Param('page') page: string, @Body() data: any) {
     try {
-      fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-      return { success: true, message: 'Data saved successfully' };
+      const docRef = this.db.collection('global_data').doc(page);
+      await docRef.set({ payload: data });
+      return { success: true, message: 'Data saved successfully in Firestore' };
     } catch (error) {
-      throw new HttpException('Error saving data file', HttpStatus.INTERNAL_SERVER_ERROR);
+      console.error(error);
+      throw new HttpException('Error saving data to Firestore', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
