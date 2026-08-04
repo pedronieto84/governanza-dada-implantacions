@@ -12,6 +12,9 @@ node_modules/
 .env
 .env.local
 
+# Credenciales
+/backend/service-account.json
+
 # IDE
 .idea/
 .vscode/

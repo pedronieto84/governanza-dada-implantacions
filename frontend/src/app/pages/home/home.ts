@@ -31,8 +31,8 @@ export class Home implements OnInit {
   private realIndex: Record<string, Record<string, number>> = {};
   readonly columns: Column[] = [
     { label: '1. Mapa Responsables', route: '/questionari/mapa-responsables', group: 1, dataKey: 'mapa-responsables' },
-    { label: '1. Sistemas',           route: '/questionari/sistemas',           group: 1, dataKey: 'sistemas' },
     { label: '1. Questionari',        route: '/questionari/form',               group: 1 },
+    { label: '2. Sistemas',           route: '/inventari/sistemas',             group: 2, dataKey: 'sistemas' },
     { label: '2. Entitats',           route: '/inventari/entitats',             group: 2 },
     { label: '2. Atributs',           route: '/inventari/atributs',             group: 2 },
     { label: '2. Rel. Atributs',      route: '/inventari/relacion',             group: 2 },

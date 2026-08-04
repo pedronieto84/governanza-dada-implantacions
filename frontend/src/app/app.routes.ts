@@ -7,10 +7,10 @@ import { Inventari } from './pages/inventari/inventari';
 import { Glossari } from './pages/glossari/glossari';
 // Level 2 - Questionari
 import { MapaResponsables } from './pages/questionari/mapa-responsables/mapa-responsables';
-import { Sistemas } from './pages/questionari/sistemas/sistemas';
 import { FormQuestionari } from './pages/questionari/form-questionari/form-questionari';
 import { Resultat } from './pages/questionari/resultat/resultat';
 // Level 2 - Inventari
+import { Sistemas } from './pages/inventari/sistemas/sistemas';
 import { Entitats } from './pages/inventari/entitats/entitats';
 import { Atributs } from './pages/inventari/atributs/atributs';
 import { RelacionAtributs } from './pages/inventari/relacion-atributs/relacion-atributs';
@@ -40,7 +40,6 @@ export const routes: Routes = [
         component: Questionari,
         children: [
           { path: 'mapa-responsables', component: MapaResponsables },
-          { path: 'sistemas', component: Sistemas },
           { path: 'form', component: FormQuestionari },
           { path: 'resultat', component: Resultat },
           { path: '', redirectTo: 'mapa-responsables', pathMatch: 'full' }
@@ -50,12 +49,13 @@ export const routes: Routes = [
         path: 'inventari', 
         component: Inventari,
         children: [
+          { path: 'sistemas', component: Sistemas },
           { path: 'entitats', component: Entitats },
           { path: 'atributs', component: Atributs },
           { path: 'relacion', component: RelacionAtributs },
           { path: 'llistes', component: Llistes },
           { path: 'llegenda', component: Llegenda },
-          { path: '', redirectTo: 'entitats', pathMatch: 'full' }
+          { path: '', redirectTo: 'sistemas', pathMatch: 'full' }
         ]
       },
       { 

@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
+import { catchError, switchMap, takeUntil } from 'rxjs/operators';
 import * as d3 from 'd3';
 // @ts-ignore
 import { OrgChart } from 'd3-org-chart';
@@ -23,6 +23,7 @@ export class MapaResponsables implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   municipiActual = '';
   viewMode: 'tabla' | 'organigrama' = 'tabla';
+  tableSubTab: 'rolsClau' | 'arees' | 'processos' | 'projectes' | 'altres' = 'rolsClau';
   isFullscreen = false;
   @ViewChild('chartContainer') chartContainer!: ElementRef;
   chart: any;
@@ -57,7 +58,16 @@ export class MapaResponsables implements OnInit, OnDestroy {
   isLoading = true;
 
   // --- Visibility toggles ---
-  showProcessos = false;
+  private static readonly SHOW_PROCESSOS_KEY = 'mapaResponsables.showProcessos';
+  showProcessos = localStorage.getItem(MapaResponsables.SHOW_PROCESSOS_KEY) === 'true';
+
+  toggleShowProcessos(): void {
+    this.showProcessos = !this.showProcessos;
+    localStorage.setItem(MapaResponsables.SHOW_PROCESSOS_KEY, String(this.showProcessos));
+    if (!this.showProcessos && this.tableSubTab === 'processos') {
+      this.tableSubTab = 'rolsClau';
+    }
+  }
 
   // --- Filters ---
   filterRols: string[] = [];
@@ -139,34 +149,29 @@ export class MapaResponsables implements OnInit, OnDestroy {
     this.municipiService.municipiSeleccionat$
       .pipe(
         takeUntil(this.destroy$),
-        filter((municipi): municipi is string => !!municipi),
         switchMap((municipi) => {
           this.municipiActual = municipi;
+          if (!municipi) {
+            this.isLoading = false;
+            return of(null);
+          }
           this.isLoading = true;
           this.cdr.detectChanges();
           const slug = toSlug(municipi);
-          return this.http.get<any>(`${API_BASE}/api/data/municipis/${slug}/mapa-responsables`);
+          return this.http.get<any>(`${API_BASE}/api/data/municipis/${slug}/mapa-responsables`).pipe(
+            // A 404/network error just means no data yet — don't let it kill the subscription
+            catchError(() => of(null)),
+          );
         }),
       )
       .subscribe({
         next: (data) => {
-          if (data.rolsClau) this.rolsClau = data.rolsClau;
-          if (data.arees) this.arees = data.arees;
-          if (data.processos) this.processos = data.processos;
-          if (data.projectes) this.projectes = data.projectes;
-          if (data.altres) this.altres = data.altres;
-          if (data.orgData) this.orgData = data.orgData;
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
-        error: () => {
-          // No data for this municipality yet — reset to empty
-          this.rolsClau = [];
-          this.arees = [];
-          this.processos = [];
-          this.projectes = [];
-          this.altres = [];
-          this.orgData = [];
+          this.rolsClau = data?.rolsClau ?? [];
+          this.arees = data?.arees ?? [];
+          this.processos = data?.processos ?? [];
+          this.projectes = data?.projectes ?? [];
+          this.altres = data?.altres ?? [];
+          this.orgData = data?.orgData ?? [];
           this.isLoading = false;
           this.cdr.detectChanges();
         },
@@ -179,6 +184,10 @@ export class MapaResponsables implements OnInit, OnDestroy {
   }
 
   saveData() {
+    if (!this.municipiActual) {
+      console.warn('No hi ha cap municipi seleccionat, no es pot desar');
+      return;
+    }
     const slug = toSlug(this.municipiActual);
     const payload = {
       rolsClau: this.rolsClau,
@@ -256,6 +265,99 @@ export class MapaResponsables implements OnInit, OnDestroy {
     this.processSearch = '';
     this.customRespMode = false;
     this.customProjecteMode = false;
+  }
+
+  // --- Taula: cerca i ordenació ---
+  tableSearch: Record<string, string> = { rolsClau: '', arees: '', processos: '', projectes: '', altres: '' };
+  tableSort: Record<string, { key: string; dir: 'asc' | 'desc' } | null> =
+    { rolsClau: null, arees: null, processos: null, projectes: null, altres: null };
+
+  setSort(tableKey: string, key: string) {
+    const current = this.tableSort[tableKey];
+    if (current && current.key === key) {
+      this.tableSort[tableKey] = { key, dir: current.dir === 'asc' ? 'desc' : 'asc' };
+    } else {
+      this.tableSort[tableKey] = { key, dir: 'asc' };
+    }
+  }
+
+  getSortIcon(tableKey: string, key: string): string {
+    const s = this.tableSort[tableKey];
+    if (!s || s.key !== key) return '↕';
+    return s.dir === 'asc' ? '↑' : '↓';
+  }
+
+  getRows(tableKey: string): any[] {
+    const list = ((this as any)[tableKey] as any[]) || [];
+    const search = (this.tableSearch[tableKey] || '').trim().toLowerCase();
+    let rows = search
+      ? list.filter((item: any) =>
+          ['name', 'resp', 'email', 'phone', 'obs'].some((k) =>
+            (item[k] ?? '').toString().toLowerCase().includes(search),
+          ),
+        )
+      : [...list];
+    const sort = this.tableSort[tableKey];
+    if (sort && sort.key) {
+      rows = [...rows].sort((a, b) => {
+        const av = (a[sort.key] ?? '').toString().toLowerCase();
+        const bv = (b[sort.key] ?? '').toString().toLowerCase();
+        if (av < bv) return sort.dir === 'asc' ? -1 : 1;
+        if (av > bv) return sort.dir === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+    return rows;
+  }
+
+  idxOf(tableKey: string, item: any): number {
+    return ((this as any)[tableKey] as any[]).indexOf(item);
+  }
+
+  // --- Canvi ràpid de Responsable des de la taula (nomes taules 2-5) ---
+  activeRespDropdown: { table: string; index: number } | null = null;
+
+  get distinctResponsables(): string[] {
+    return [...new Set(this.rolsClau.map((r: any) => r.resp).filter((r: string) => r && r.trim() !== ''))] as string[];
+  }
+
+  toggleRespDropdown(tableKey: string, item: any, event: Event) {
+    event.stopPropagation();
+    const idx = this.idxOf(tableKey, item);
+    if (this.activeRespDropdown && this.activeRespDropdown.table === tableKey && this.activeRespDropdown.index === idx) {
+      this.activeRespDropdown = null;
+    } else {
+      this.activeRespDropdown = { table: tableKey, index: idx };
+    }
+  }
+
+  isRespDropdownOpen(tableKey: string, item: any): boolean {
+    if (!this.activeRespDropdown) return false;
+    return this.activeRespDropdown.table === tableKey && this.activeRespDropdown.index === this.idxOf(tableKey, item);
+  }
+
+  closeRespDropdown() {
+    this.activeRespDropdown = null;
+  }
+
+  selectRespForRow(tableKey: string, item: any, resp: string) {
+    item.resp = resp;
+    // El correu i el telèfon sempre es deriven del Rol Clau corresponent
+    let email = '';
+    let phone = '';
+    for (const table of [this.rolsClau, this.arees, this.processos, this.projectes, this.altres]) {
+      for (const entry of table) {
+        if (entry.resp === resp) {
+          if (!email && entry.email) email = entry.email;
+          if (!phone && entry.phone) phone = entry.phone;
+        }
+      }
+      if (email && phone) break;
+    }
+    item.email = email;
+    item.phone = phone;
+    this.activeRespDropdown = null;
+    this.saveData();
   }
 
   // --- Rols Info Modal ---

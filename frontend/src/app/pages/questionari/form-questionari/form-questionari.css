@@ -1,0 +1,6 @@
+/* El desplegable en sí es manté petit, però les opcions es mostren més grans i llegibles en obrir-se */
+.select-resposta option {
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  white-space: normal;
+}

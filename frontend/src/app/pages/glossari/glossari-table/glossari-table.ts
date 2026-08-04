@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridReadyEvent, GridApi } from 'ag-grid-community';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { of, Subject } from 'rxjs';
+import { catchError, debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
+import { API_BASE } from '../../../api.config';
+import { MunicipiService } from '../../../services/municipi.service';
+import { toSlug } from '../../../utils/slug';
+import { environment } from '../../../../environments/environment';
 
 export interface GlossariRow {
   terme: string;
@@ -19,52 +25,46 @@ export interface GlossariRow {
   unitatRespFunc: string;
 }
 
+type GlossariColumn = {
+  key: keyof GlossariRow;
+  label: string;
+};
+
+type GlossariTab = 'mestres' | 'referencia' | 'negoci';
+
 @Component({
   selector: 'app-glossari-table',
-  imports: [AgGridAngular],
+  imports: [FormsModule],
   templateUrl: './glossari-table.html',
   styleUrl: './glossari-table.css',
 })
-export class GlossariTable {
-  activeTab: 'mestres' | 'referencia' | 'negoci' = 'mestres';
-  private gridApi!: GridApi;
+export class GlossariTable implements OnInit, OnDestroy {
+  private readonly destroy$ = new Subject<void>();
+  private readonly saveRequest$ = new Subject<void>();
+  private municipiActual = '';
 
-  colDefs: ColDef[] = [
-    { field: 'terme', headerName: 'Terme de glossari', editable: true, sortable: true, filter: true },
-    { field: 'descripcio', headerName: 'Descripció', editable: true, sortable: true, filter: true },
-    { field: 'dominiFuncional', headerName: 'Domini funcional principal', editable: true, sortable: true, filter: true },
-    { field: 'tipus', headerName: 'Tipus', editable: true, sortable: true, filter: true },
-    { field: 'descFormat', headerName: 'Descripció de format', editable: true, sortable: true, filter: true },
-    { field: 'formula', headerName: 'Fórmula de càlcul (mètrica)', editable: true, sortable: true, filter: true },
-    { field: 'comentaris', headerName: 'Comentaris', editable: true, sortable: true, filter: true },
-    { field: 'alies', headerName: "Noms d'àlies", editable: true, sortable: true, filter: true },
-    { field: 'refGovern', headerName: 'Referent de Govern', editable: true, sortable: true, filter: true },
-    { field: 'emailRefGov', headerName: 'Correu electrònic del Referent de Govern', editable: true, sortable: true, filter: true },
-    { field: 'unitatRefGov', headerName: 'Unitat Orgànica Referent de Govern', editable: true, sortable: true, filter: true },
-    { field: 'respFuncional', headerName: 'Responsable Funcional', editable: true, sortable: true, filter: true },
-    { field: 'emailRespFunc', headerName: 'Correu electrònic del Responsable Funcional', editable: true, sortable: true, filter: true },
-    { field: 'unitatRespFunc', headerName: 'Unitat orgànica Responsable Funcional', editable: true, sortable: true, filter: true },
-    {
-      headerName: 'Accions',
-      cellRenderer: (params: any) => {
-        const eDiv = document.createElement('div');
-        eDiv.innerHTML = `<button class="btn btn-error btn-xs">Eliminar</button>`;
-        eDiv.querySelector('button')?.addEventListener('click', () => {
-          this.removeRow(params.node.data);
-        });
-        return eDiv;
-      },
-      editable: false,
-      filter: false,
-      sortable: false,
-      width: 100
-    }
+  isLoading = false;
+  activeTab: GlossariTab = 'mestres';
+  filterText = '';
+  sortColumn: keyof GlossariRow | null = null;
+  sortDirection: 'asc' | 'desc' = 'asc';
+
+  readonly columns: GlossariColumn[] = [
+    { key: 'terme', label: 'Terme de glossari' },
+    { key: 'descripcio', label: 'Descripció' },
+    { key: 'dominiFuncional', label: 'Domini funcional principal' },
+    { key: 'tipus', label: 'Tipus' },
+    { key: 'descFormat', label: 'Descripció de format' },
+    { key: 'formula', label: 'Fórmula de càlcul (mètrica)' },
+    { key: 'comentaris', label: 'Comentaris' },
+    { key: 'alies', label: "Noms d'àlies" },
+    { key: 'refGovern', label: 'Referent de Govern' },
+    { key: 'emailRefGov', label: 'Correu electrònic del Referent de Govern' },
+    { key: 'unitatRefGov', label: 'Unitat Orgànica Referent de Govern' },
+    { key: 'respFuncional', label: 'Responsable Funcional' },
+    { key: 'emailRespFunc', label: 'Correu electrònic del Responsable Funcional' },
+    { key: 'unitatRespFunc', label: 'Unitat orgànica Responsable Funcional' },
   ];
-
-  defaultColDef: ColDef = {
-    minWidth: 150,
-    resizable: true,
-  };
 
   readonly emptyRow: GlossariRow = {
     terme: '', descripcio: '', dominiFuncional: '', tipus: '',
@@ -138,29 +138,73 @@ export class GlossariTable {
     { ...this.emptyRow },
   ];
 
-  onGridReady(params: GridReadyEvent) {
-    this.gridApi = params.api;
+  private readonly templateData = {
+    dadesMestres: this.dadesMestres.map((row) => ({ ...row })),
+    dadesReferencia: this.dadesReferencia.map((row) => ({ ...row })),
+    dadesNegoci: this.dadesNegoci.map((row) => ({ ...row })),
+  };
+
+  constructor(
+    private readonly http: HttpClient,
+    private readonly municipiService: MunicipiService,
+  ) {}
+
+  ngOnInit(): void {
+    this.saveRequest$
+      .pipe(debounceTime(500), takeUntil(this.destroy$))
+      .subscribe(() => this.saveData());
+
+    this.municipiService.municipiSeleccionat$
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((municipi): municipi is string => Boolean(municipi)),
+        switchMap((municipi) => {
+          this.municipiActual = municipi;
+          this.isLoading = true;
+          const localData = this.loadLocalData(municipi);
+          if (localData) this.applyData(localData);
+          if (!environment.production) return of(localData);
+          const slug = toSlug(municipi);
+          return this.http
+            .get<Partial<typeof this.templateData>>(`${API_BASE}/api/data/municipis/${slug}/glossari`)
+            .pipe(catchError(() => of(localData)));
+        }),
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.applyData(data);
+        } else {
+          this.restoreTemplateData();
+        }
+        this.isLoading = false;
+      });
   }
 
-  addRow() {
-    const newRow = { ...this.emptyRow };
-    if (this.activeTab === 'mestres') {
-      this.dadesMestres = [...this.dadesMestres, newRow];
-    } else if (this.activeTab === 'referencia') {
-      this.dadesReferencia = [...this.dadesReferencia, newRow];
-    } else {
-      this.dadesNegoci = [...this.dadesNegoci, newRow];
-    }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  removeRow(data: GlossariRow) {
+  setActiveTab(tab: GlossariTab): void {
+    this.activeTab = tab;
+    this.filterText = '';
+    this.sortColumn = null;
+  }
+
+  addRow(): void {
     if (this.activeTab === 'mestres') {
-      this.dadesMestres = this.dadesMestres.filter(row => row !== data);
+      this.dadesMestres = [...this.dadesMestres, { ...this.emptyRow }];
     } else if (this.activeTab === 'referencia') {
-      this.dadesReferencia = this.dadesReferencia.filter(row => row !== data);
+      this.dadesReferencia = [...this.dadesReferencia, { ...this.emptyRow }];
     } else {
-      this.dadesNegoci = this.dadesNegoci.filter(row => row !== data);
+      this.dadesNegoci = [...this.dadesNegoci, { ...this.emptyRow }];
     }
+    this.saveData();
+  }
+
+  removeRow(index: number): void {
+    this.currentData.splice(index, 1);
+    this.saveData();
   }
 
   get currentData(): GlossariRow[] {
@@ -169,5 +213,99 @@ export class GlossariTable {
       case 'referencia': return this.dadesReferencia;
       case 'negoci': return this.dadesNegoci;
     }
+  }
+
+  get displayedRows(): Array<GlossariRow & { originalIndex: number }> {
+    const filter = this.filterText.trim().toLocaleLowerCase('ca');
+    let rows = this.currentData.map((row, originalIndex) => ({ ...row, originalIndex }));
+
+    if (filter) {
+      rows = rows.filter((row) =>
+        this.columns.some(({ key }) => row[key].toLocaleLowerCase('ca').includes(filter)),
+      );
+    }
+
+    if (this.sortColumn) {
+      const column = this.sortColumn;
+      const direction = this.sortDirection === 'asc' ? 1 : -1;
+      rows.sort((first, second) =>
+        first[column].localeCompare(second[column], 'ca', { sensitivity: 'base' }) * direction,
+      );
+    }
+
+    return rows;
+  }
+
+  sort(column: keyof GlossariRow): void {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+      return;
+    }
+
+    this.sortColumn = column;
+    this.sortDirection = 'asc';
+  }
+
+  updateCell(index: number, column: keyof GlossariRow, event: Event): void {
+    this.currentData[index][column] = (event.target as HTMLInputElement).value;
+    this.persistLocally();
+    this.saveRequest$.next();
+  }
+
+  saveData(): void {
+    if (!this.municipiActual) return;
+
+    this.persistLocally();
+    if (!environment.production) return;
+
+    const slug = toSlug(this.municipiActual);
+    const payload = {
+      dadesMestres: this.dadesMestres,
+      dadesReferencia: this.dadesReferencia,
+      dadesNegoci: this.dadesNegoci,
+    };
+    this.http.post(`${API_BASE}/api/data/municipis/${slug}/glossari`, payload).subscribe({
+      error: (error) => console.error('Error saving glossari', error),
+    });
+  }
+
+  private restoreTemplateData(): void {
+    this.dadesMestres = this.cloneRows(this.templateData.dadesMestres);
+    this.dadesReferencia = this.cloneRows(this.templateData.dadesReferencia);
+    this.dadesNegoci = this.cloneRows(this.templateData.dadesNegoci);
+  }
+
+  private cloneRows(rows: GlossariRow[]): GlossariRow[] {
+    return rows.map((row) => ({ ...row }));
+  }
+
+  private applyData(data: Partial<typeof this.templateData>): void {
+    this.dadesMestres = this.cloneRows(data.dadesMestres ?? []);
+    this.dadesReferencia = this.cloneRows(data.dadesReferencia ?? []);
+    this.dadesNegoci = this.cloneRows(data.dadesNegoci ?? []);
+  }
+
+  private persistLocally(): void {
+    if (!this.municipiActual) return;
+    localStorage.setItem(this.storageKey(this.municipiActual), JSON.stringify({
+      dadesMestres: this.dadesMestres,
+      dadesReferencia: this.dadesReferencia,
+      dadesNegoci: this.dadesNegoci,
+    }));
+  }
+
+  private loadLocalData(municipi: string): Partial<typeof this.templateData> | null {
+    const stored = localStorage.getItem(this.storageKey(municipi));
+    if (!stored) return null;
+    try {
+      return JSON.parse(stored) as Partial<typeof this.templateData>;
+    } catch {
+      localStorage.removeItem(this.storageKey(municipi));
+      return null;
+    }
+  }
+
+  private storageKey(municipi: string): string {
+    return `glossari:${toSlug(municipi)}`;
   }
 }

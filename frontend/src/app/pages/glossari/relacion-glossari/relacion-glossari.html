@@ -4,25 +4,61 @@
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" /></svg>
       Relacions no Jeràrquiques del Glossari
     </h2>
+    @if (isLoading) {
+      <div class="flex justify-center items-center py-12">
+        <span class="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    } @else {
+    <div class="p-3 border-b border-base-200 flex flex-wrap items-center justify-between gap-3">
+      <label class="input input-sm input-bordered flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg>
+        <input type="search" class="grow" placeholder="Filtrar tota la taula" [(ngModel)]="filterText" />
+      </label>
+      <button class="btn btn-primary btn-sm" (click)="addRow()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14M5 12h14"/></svg>
+        Afegir fila
+      </button>
+    </div>
     <div class="overflow-x-auto w-full">
       <table class="table table-bordered table-zebra table-sm w-full text-xs">
         <thead class="bg-primary text-primary-content text-center">
           <tr>
-            <th class="border-r border-base-300">Terme d'origen</th>
-            <th class="border-r border-base-300">Terme relacionat</th>
-            <th>Tipus de relació</th>
+            @for (column of columns; track column.key) {
+              <th class="border-r border-base-300 cursor-pointer select-none" (click)="sort(column.key)">
+                <span class="flex items-center justify-between gap-2">
+                  {{ column.label }}
+                  <span class="opacity-70">{{ sortColumn === column.key ? (sortDirection === 'asc' ? '↑' : '↓') : '↕' }}</span>
+                </span>
+              </th>
+            }
+            <th class="w-16">Accions</th>
           </tr>
         </thead>
         <tbody>
-          @for (rel of relacions; track $index) {
+          @for (rel of displayedRows; track rel.originalIndex) {
             <tr class="hover whitespace-normal">
-              <td class="border-r border-base-300 font-bold bg-base-200/50">{{rel.termeOrigen}}</td>
-              <td class="border-r border-base-300">{{rel.termeRelacionat}}</td>
-              <td>{{rel.tipusRelacio}}</td>
+              @for (column of columns; track column.key) {
+                <td class="border-r border-base-300 p-0">
+                  <input
+                    class="input input-ghost input-sm w-full rounded-none focus:bg-base-100"
+                    [attr.aria-label]="column.label"
+                    [value]="rel[column.key]"
+                    (input)="updateCell(rel.originalIndex, column.key, $event)"
+                  />
+                </td>
+              }
+              <td class="text-center">
+                <button class="btn btn-xs btn-ghost text-error" title="Eliminar fila" (click)="removeRow(rel.originalIndex)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6"/></svg>
+                </button>
+              </td>
             </tr>
+          } @empty {
+            <tr><td [attr.colspan]="columns.length + 1" class="py-8 text-center text-base-content/60">No hi ha files que coincideixin amb el filtre.</td></tr>
           }
         </tbody>
       </table>
     </div>
+    }
   </div>
 </div>

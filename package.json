@@ -4,10 +4,10 @@
   "description": "Dashboard de Gobernanza de Datos - Monorepo",
   "private": true,
   "scripts": {
-    "start:backend": "npm run start:dev --prefix backend",
+    "start:backend": "npm run start --prefix backend",
     "start:frontend": "npm run start --prefix frontend",
-    "start:all": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-    "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend",
+    "start:all": "start \"backend\" cmd /k npm run start:backend & start \"frontend\" cmd /k npm run start:frontend",
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend --legacy-peer-deps",
     "docker": "docker compose up --build",
     "docker:test-portless": "docker compose exec app portless testapp node test-server.js"
   },

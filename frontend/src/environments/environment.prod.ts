@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  apiBase: '',
   firebase: {
     apiKey: 'AIzaSyBOr-6LMQlnAI9FGeH35vXceQvdQSGJbfk',
     authDomain: 'governanza-dada.firebaseapp.com',

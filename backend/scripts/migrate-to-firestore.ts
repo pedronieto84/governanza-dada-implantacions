@@ -2,11 +2,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as admin from 'firebase-admin';
 
-// Reemplaza esto con la forma en que quieras autenticarte si lo corres en local
-// Puedes exportar la variable GOOGLE_APPLICATION_CREDENTIALS="path/a/tu/cuenta-de-servicio.json" en tu terminal antes de correr esto
-admin.initializeApp({
-  credential: admin.credential.applicationDefault()
-});
+const serviceAccountPath = path.join(__dirname, '..', 'service-account.json');
+admin.initializeApp(
+  fs.existsSync(serviceAccountPath)
+    ? { credential: admin.credential.cert(JSON.parse(fs.readFileSync(serviceAccountPath, 'utf-8'))) }
+    : { credential: admin.credential.applicationDefault() },
+);
 
 const db = admin.firestore();
 

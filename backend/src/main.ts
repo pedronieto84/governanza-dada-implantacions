@@ -14,13 +14,21 @@ export const createNestServer = async (expressInstance: express.Express) => {
   
   app.enableCors();
   
-  app.setGlobalPrefix('api'); // Opcional, dependiendo de si en firebase rediges la url con /api
+  app.setGlobalPrefix('api'); // Firebase Hosting forwards /api requests to this function.
 
   await app.init();
 };
 
 createNestServer(server)
-  .then(() => console.log('Nest Ready'))
+  .then(() => {
+    if (process.env.FUNCTION_TARGET || process.env.K_SERVICE) {
+      console.log('Nest Ready');
+      return;
+    }
+
+    const port = Number(process.env.PORT) || 3005;
+    server.listen(port, () => console.log(`Nest Ready on port ${port}`));
+  })
   .catch((err) => console.error('Nest broken', err));
 
 // Export as Firebase HTTP Function v2

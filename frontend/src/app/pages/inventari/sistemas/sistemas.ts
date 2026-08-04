@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
+import { catchError, filter, switchMap, takeUntil } from 'rxjs/operators';
 
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
@@ -61,18 +61,14 @@ export class Sistemas implements OnInit, OnDestroy {
           this.municipiActual = municipi;
           this.sistemas = [];
           const slug = toSlug(municipi);
-          return this.http.get<any>(`${API_BASE}/api/data/municipis/${slug}/sistemas`);
+          return this.http.get<any>(`${API_BASE}/api/data/municipis/${slug}/sistemas`).pipe(
+            catchError(() => of(null)),
+          );
         }),
       )
       .subscribe({
         next: (data) => {
-          if (data.sistemas) {
-            this.sistemas = data.sistemas;
-            this.cdr.detectChanges();
-          }
-        },
-        error: () => {
-          this.sistemas = [];
+          this.sistemas = data?.sistemas ?? [];
           this.cdr.detectChanges();
         },
       });
@@ -84,6 +80,10 @@ export class Sistemas implements OnInit, OnDestroy {
   }
 
   saveData() {
+    if (!this.municipiActual) {
+      console.warn('No hi ha cap municipi seleccionat, no es pot desar');
+      return;
+    }
     const slug = toSlug(this.municipiActual);
     this.http.post(`${API_BASE}/api/data/municipis/${slug}/sistemas`, { sistemas: this.sistemas }).subscribe({
       error: (err) => console.error('Error saving Sistemas data', err)

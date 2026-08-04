@@ -6,31 +6,75 @@
       <span class="text-sm font-semibold text-base-content/60 italic">Diputació de Barcelona</span>
     </div>
 
-    <!-- Tabs -->
+    @if (isLoading) {
+      <div class="flex justify-center items-center py-12">
+        <span class="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    } @else {
     <div role="tablist" class="tabs tabs-bordered px-4 pt-2">
-      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'mestres'" (click)="activeTab = 'mestres'">Dades Mestres</button>
-      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'referencia'" (click)="activeTab = 'referencia'">Dades de Referència</button>
-      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'negoci'" (click)="activeTab = 'negoci'">Dades de Negoci</button>
+      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'mestres'" (click)="setActiveTab('mestres')">Dades Mestres</button>
+      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'referencia'" (click)="setActiveTab('referencia')">Dades de Referència</button>
+      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'negoci'" (click)="setActiveTab('negoci')">Dades de Negoci</button>
     </div>
 
-    <div class="p-2 border-b border-base-300 flex justify-between items-center bg-base-100">
+    <div class="p-3 border-b border-base-300 flex flex-wrap justify-between items-center gap-3 bg-base-100">
       <div class="font-bold text-sm text-red-800 bg-red-100 px-3 py-1 rounded">
         DADES {{ activeTab === 'mestres' ? 'MESTRES' : activeTab === 'referencia' ? 'DE REFERÈNCIA' : 'DE NEGOCI' }}
       </div>
-      <button class="btn btn-primary btn-sm" (click)="addRow()">Afegir Fila</button>
+      <div class="flex items-center gap-2">
+        <label class="input input-sm input-bordered flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg>
+          <input type="search" class="grow" placeholder="Filtrar tota la taula" [(ngModel)]="filterText" />
+        </label>
+        <button class="btn btn-primary btn-sm" (click)="addRow()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14M5 12h14"/></svg>
+          Afegir fila
+        </button>
+      </div>
     </div>
 
-    <div class="w-full" style="height: 600px;">
-      <ag-grid-angular
-        style="width: 100%; height: 100%;"
-        class="ag-theme-alpine"
-        [rowData]="currentData"
-        [columnDefs]="colDefs"
-        [defaultColDef]="defaultColDef"
-        (gridReady)="onGridReady($event)"
-      >
-      </ag-grid-angular>
+    <div class="overflow-auto w-full max-h-[600px]">
+      <table class="table table-xs w-full border-collapse min-w-[2600px]">
+        <thead class="sticky top-0 z-10">
+          <tr class="bg-primary text-primary-content">
+            @for (column of columns; track column.key) {
+              <th class="border border-base-300 min-w-40 cursor-pointer select-none" (click)="sort(column.key)">
+                <span class="flex items-center justify-between gap-2">
+                  {{ column.label }}
+                  <span class="opacity-70">{{ sortColumn === column.key ? (sortDirection === 'asc' ? '↑' : '↓') : '↕' }}</span>
+                </span>
+              </th>
+            }
+            <th class="border border-base-300 w-16 text-center sticky right-0 bg-primary">Accions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of displayedRows; track row.originalIndex) {
+            <tr class="hover">
+              @for (column of columns; track column.key) {
+                <td class="border border-base-300 p-0">
+                  <input
+                    class="input input-ghost input-xs w-full rounded-none focus:bg-base-100"
+                    [attr.aria-label]="column.label"
+                    [value]="row[column.key]"
+                    (input)="updateCell(row.originalIndex, column.key, $event)"
+                  />
+                </td>
+              }
+              <td class="border border-base-300 text-center sticky right-0 bg-base-100">
+                <button class="btn btn-xs btn-ghost text-error" title="Eliminar fila" (click)="removeRow(row.originalIndex)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6"/></svg>
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td [attr.colspan]="columns.length + 1" class="py-8 text-center text-base-content/60">No hi ha files que coincideixin amb el filtre.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
     </div>
-
+    }
   </div>
 </div>

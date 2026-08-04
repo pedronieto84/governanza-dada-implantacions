@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
+import { catchError, switchMap, takeUntil } from 'rxjs/operators';
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
 import { toSlug } from '../../../utils/slug';
@@ -64,19 +64,20 @@ export class Atributs implements OnInit, OnDestroy {
         switchMap((municipi) => {
           this.municipiActual = municipi;
           this.atributs = [];
+          if (!municipi) {
+            this.isLoading = false;
+            return of(null);
+          }
           this.isLoading = true;
           const slug = toSlug(municipi);
-          return this.http.get<any>(`${API_BASE}/api/data/municipis/${slug}/atributs`);
+          return this.http.get<any>(`${API_BASE}/api/data/municipis/${slug}/atributs`).pipe(
+            catchError(() => of(null)),
+          );
         }),
       )
       .subscribe({
         next: (data) => {
-          this.atributs = data.atributs ?? [];
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
-        error: () => {
-          this.atributs = [];
+          this.atributs = data?.atributs ?? [];
           this.isLoading = false;
           this.cdr.detectChanges();
         },
@@ -89,6 +90,10 @@ export class Atributs implements OnInit, OnDestroy {
   }
 
   saveData() {
+    if (!this.municipiActual) {
+      console.warn('No hi ha cap municipi seleccionat, no es pot desar');
+      return;
+    }
     const slug = toSlug(this.municipiActual);
     this.http.post(`${API_BASE}/api/data/municipis/${slug}/atributs`, { atributs: this.atributs }).subscribe({
       error: (err) => console.error('Error saving atributs', err)

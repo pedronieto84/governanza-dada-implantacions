@@ -1,5 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Subject, catchError, of } from 'rxjs';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
+
+import { API_BASE } from '../../../api.config';
+import { MunicipiService } from '../../../services/municipi.service';
+import { toSlug } from '../../../utils/slug';
+
+interface QuestionariPayload {
+  answers: Record<string, string>;
+  observacions: Record<string, string>;
+  evidencies: Record<string, string>;
+}
 
 @Component({
   selector: 'app-form-questionari',
@@ -7,10 +20,66 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './form-questionari.html',
   styleUrl: './form-questionari.css',
 })
-export class FormQuestionari {
+export class FormQuestionari implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  private municipiActual = '';
+
   answers: Record<string, string> = {};
   observacions: Record<string, string> = {};
   evidencies: Record<string, string> = {};
+
+  constructor(
+    private http: HttpClient,
+    private municipiService: MunicipiService,
+  ) {}
+
+  ngOnInit(): void {
+    this.municipiService.municipiSeleccionat$
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((municipi): municipi is string => !!municipi),
+        switchMap((municipi) => {
+          this.municipiActual = municipi;
+          this.resetForm();
+          return this.http
+            .get<Partial<QuestionariPayload>>(
+              `${API_BASE}/api/data/municipis/${toSlug(municipi)}/questionari`,
+            )
+            .pipe(catchError(() => of<Partial<QuestionariPayload>>({})));
+        }),
+      )
+      .subscribe({
+        next: (data) => {
+          this.answers = data.answers ?? {};
+          this.observacions = data.observacions ?? {};
+          this.evidencies = data.evidencies ?? {};
+        },
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  saveData(): void {
+    if (!this.municipiActual) return;
+
+    const payload: QuestionariPayload = {
+      answers: this.answers,
+      observacions: this.observacions,
+      evidencies: this.evidencies,
+    };
+    this.http
+      .post(`${API_BASE}/api/data/municipis/${toSlug(this.municipiActual)}/questionari`, payload)
+      .subscribe({ error: (error) => console.error('Error saving Qüestionari data', error) });
+  }
+
+  private resetForm(): void {
+    this.answers = {};
+    this.observacions = {};
+    this.evidencies = {};
+  }
 
   seccions = [
     {

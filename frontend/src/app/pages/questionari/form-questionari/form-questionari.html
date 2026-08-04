@@ -25,7 +25,7 @@
                   <td class="font-bold text-primary align-top pt-3">{{ pregunta.id }}</td>
                   <td class="whitespace-pre-line text-sm align-top pt-3">{{ pregunta.text }}</td>
                   <td class="align-top pt-2">
-                    <select class="select select-bordered select-sm w-full text-xs" [(ngModel)]="answers[pregunta.id]">
+                    <select class="select select-bordered select-sm select-resposta w-full text-xs" [(ngModel)]="answers[pregunta.id]">
                       <option value="">-- Selecciona --</option>
                       @for (r of pregunta.respostes; track $index) {
                         <option [value]="($index + 1).toString()">{{ $index + 1 }}. {{ r }}</option>
