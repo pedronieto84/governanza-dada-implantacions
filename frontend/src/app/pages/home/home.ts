@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -215,11 +215,16 @@ export class Home implements OnInit {
     private municipiService: MunicipiService,
     private router: Router,
     private http: HttpClient,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
     this.http.get<Record<string, Record<string, number>>>(`${API_BASE}/api/data/municipis`).subscribe({
-      next: (data) => { this.realIndex = data; },
+      next: (data) => {
+        this.realIndex = data;
+        // L'app és zoneless: cal forçar la detecció de canvis, arriben fora d'un event del DOM
+        this.cdr.detectChanges();
+      },
       error: () => {},
     });
   }

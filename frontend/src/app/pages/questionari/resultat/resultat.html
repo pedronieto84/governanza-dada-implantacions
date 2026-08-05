@@ -55,22 +55,15 @@
 				</div>
 
 				<div class="radar-layout">
-					<svg class="radar" viewBox="0 0 200 200" role="img" aria-label="Gràfic radar de la visió global">
-						@for (level of levels; track level) {
-							<polygon class="radar-ring" [attr.points]="radarGridPoints(ambits.length, level)"></polygon>
-						}
-						@for (ambit of ambits; track ambit.nom; let index = $index) {
-							<line class="radar-axis" x1="100" y1="100" [attr.x2]="axisEnd(index, ambits.length).x" [attr.y2]="axisEnd(index, ambits.length).y"></line>
-							<text class="radar-number" [attr.x]="labelPoint(index, ambits.length).x" [attr.y]="labelPoint(index, ambits.length).y">{{ index + 1 }}</text>
-						}
-						<polygon class="radar-area" [attr.points]="radarPoints(ambits.map(ambit => ambit.puntuacio))"></polygon>
-						@for (ambit of ambits; track ambit.nom; let index = $index) {
-							<circle class="radar-point" [attr.cx]="axisEnd(index, ambits.length).x - (axisEnd(index, ambits.length).x - 100) * (1 - ambit.puntuacio / 4)" [attr.cy]="axisEnd(index, ambits.length).y - (axisEnd(index, ambits.length).y - 100) * (1 - ambit.puntuacio / 4)" r="3"></circle>
-						}
-					</svg>
+					<div class="radar">
+						<app-radar-chart
+							[labels]="ambitLabels"
+							[data]="ambitScores">
+						</app-radar-chart>
+					</div>
 					<ol class="radar-legend">
 						@for (ambit of ambits; track ambit.nom) {
-							<li><span>{{ $index + 1 }}</span><b>{{ ambit.nom }}</b><strong>{{ formatScore(ambit.puntuacio) }}</strong></li>
+							<li><span></span><b>{{ ambit.nom }}</b><strong>{{ formatScore(ambit.puntuacio) }}</strong></li>
 						}
 					</ol>
 				</div>
@@ -87,22 +80,15 @@
 					</div>
 
 					<div class="radar-layout">
-						<svg class="radar" viewBox="0 0 200 200" role="img" [attr.aria-label]="'Gràfic radar de ' + ambit.nom">
-							@for (level of levels; track level) {
-								<polygon class="radar-ring" [attr.points]="radarGridPoints(ambit.processos.length, level)"></polygon>
-							}
-							@for (proces of ambit.processos; track proces.nom; let index = $index) {
-								<line class="radar-axis" x1="100" y1="100" [attr.x2]="axisEnd(index, ambit.processos.length).x" [attr.y2]="axisEnd(index, ambit.processos.length).y"></line>
-								<text class="radar-number" [attr.x]="labelPoint(index, ambit.processos.length).x" [attr.y]="labelPoint(index, ambit.processos.length).y">{{ index + 1 }}</text>
-							}
-							<polygon class="radar-area" [attr.points]="radarPoints(ambit.processos.map(proces => proces.puntuacio))"></polygon>
-							@for (proces of ambit.processos; track proces.nom; let index = $index) {
-								<circle class="radar-point" [attr.cx]="axisEnd(index, ambit.processos.length).x - (axisEnd(index, ambit.processos.length).x - 100) * (1 - proces.puntuacio / 4)" [attr.cy]="axisEnd(index, ambit.processos.length).y - (axisEnd(index, ambit.processos.length).y - 100) * (1 - proces.puntuacio / 4)" r="3"></circle>
-							}
-						</svg>
+						<div class="radar">
+							<app-radar-chart
+								[labels]="ambit.procesLabels"
+								[data]="ambit.procesScores">
+							</app-radar-chart>
+						</div>
 						<ol class="radar-legend">
 							@for (proces of ambit.processos; track proces.nom) {
-								<li><span>{{ $index + 1 }}</span><b>{{ proces.nom }}</b><strong>{{ formatScore(proces.puntuacio) }}</strong></li>
+								<li><span></span><b>{{ proces.nom }}</b><strong>{{ formatScore(proces.puntuacio) }}</strong></li>
 							}
 						</ol>
 					</div>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { of, Subject } from 'rxjs';
@@ -59,6 +59,7 @@ export class RelacionGlossari implements OnInit, OnDestroy {
     private readonly http: HttpClient,
     private readonly municipiService: MunicipiService,
     private readonly toast: ToastService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -86,6 +87,8 @@ export class RelacionGlossari implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.relacions = (data?.relacions ?? this.templateRelacions).map((row) => ({ ...row }));
         this.isLoading = false;
+        // L'app és zoneless: cal forçar la detecció de canvis, arriben fora d'un event del DOM
+        this.cdr.detectChanges();
       });
   }
 

@@ -1,15 +1,12 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, computed, inject } from '@angular/core';
+import { AppModeService } from './app-mode.service';
 
 /**
  * Punt centralitzat per activar/desactivar el botó "Fake data" a tota l'aplicació.
- * Per amagar el botó pertot arreu n'hi ha prou amb posar `enabled` a `false`.
+ * Visible sempre que l'app estigui en mode DEV (veure `AppModeService`).
  */
 @Injectable({ providedIn: 'root' })
 export class FakeDataService {
-  private readonly enabledSignal = signal(true);
-  readonly enabled = this.enabledSignal.asReadonly();
-
-  setEnabled(value: boolean): void {
-    this.enabledSignal.set(value);
-  }
+  private readonly appMode = inject(AppModeService);
+  readonly enabled = computed(() => this.appMode.isDev());
 }

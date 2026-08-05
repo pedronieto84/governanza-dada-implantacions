@@ -24,8 +24,19 @@ export class StickyStackDirective implements AfterViewInit, OnDestroy {
     const offset = Array.from({ length: slot }, (_, i) => `var(--sticky-h-${i}, 0px)`).join(' + ') || '0px';
 
     host.style.position = 'sticky';
-    host.style.top = slot === 0 ? '0px' : `calc(${offset})`;
     host.style.zIndex = `${30 - slot}`;
+
+    if (slot === 0) {
+      // Browsers clamp a top:0 sticky element to the scroll ancestor's content edge,
+      // ignoring its top padding, which leaves that padding transparent (scrolled
+      // content shows through it). Offsetting top by -paddingTop shifts the clamp
+      // point back up to the scroll ancestor's real top edge.
+      const scrollParent = this.findScrollParent(host);
+      const paddingTop = scrollParent ? parseFloat(getComputedStyle(scrollParent).paddingTop) || 0 : 0;
+      host.style.top = paddingTop > 0 ? `-${paddingTop}px` : '0px';
+    } else {
+      host.style.top = `calc(${offset})`;
+    }
 
     const updateHeight = () => {
       document.documentElement.style.setProperty(`--sticky-h-${slot}`, `${host.getBoundingClientRect().height}px`);
@@ -33,6 +44,15 @@ export class StickyStackDirective implements AfterViewInit, OnDestroy {
     updateHeight();
     this.resizeObserver = new ResizeObserver(updateHeight);
     this.resizeObserver.observe(host);
+  }
+
+  private findScrollParent(el: HTMLElement): HTMLElement | null {
+    let node = el.parentElement;
+    while (node) {
+      if (/(auto|scroll)/.test(getComputedStyle(node).overflowY)) return node;
+      node = node.parentElement;
+    }
+    return null;
   }
 
   ngOnDestroy(): void {

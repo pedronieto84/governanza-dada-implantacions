@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Subject, catchError, of } from 'rxjs';
@@ -37,6 +37,7 @@ export class FormQuestionari implements OnInit, OnDestroy {
     private http: HttpClient,
     private municipiService: MunicipiService,
     private toast: ToastService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.activeSeccio = this.seccions[0]?.ambit ?? '';
   }
@@ -61,6 +62,8 @@ export class FormQuestionari implements OnInit, OnDestroy {
           this.answers = data.answers ?? {};
           this.observacions = data.observacions ?? {};
           this.evidencies = data.evidencies ?? {};
+          // L'app és zoneless: cal forçar la detecció de canvis, arriben fora d'un event del DOM
+          this.cdr.detectChanges();
         },
       });
   }

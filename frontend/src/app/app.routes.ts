@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
 import { Layout } from './layout/layout';
 import { Home } from './pages/home/home';
+import { AppModeService } from './services/app-mode.service';
 // Level 1
 import { Questionari } from './pages/questionari/questionari';
 import { Inventari } from './pages/inventari/inventari';
@@ -28,6 +30,9 @@ import { AdminComponent } from './pages/admin/admin';
 import { AdminUsuariosComponent } from './pages/admin/usuarios/admin-usuarios';
 import { AdminEntidadesComponent } from './pages/admin/entidades/admin-entidades';
 import { adminGuard } from './guards/admin.guard';
+
+// En modo DEV se evita forzar el login (p.ej. para webscraping/testing automatizado).
+const homeOrLoginRedirect = () => (inject(AppModeService).isDev() ? '/home' : '/login');
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -80,8 +85,8 @@ export const routes: Routes = [
           { path: '', redirectTo: 'usuarios', pathMatch: 'full' }
         ]
       },
-      { path: '', redirectTo: '/login', pathMatch: 'full' }
+      { path: '', redirectTo: homeOrLoginRedirect, pathMatch: 'full' }
     ]
   },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: homeOrLoginRedirect }
 ];

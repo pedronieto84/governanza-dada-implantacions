@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MunicipiService } from '../services/municipi.service';
 import { AuthService } from '../services/auth.service';
+import { AppModeService } from '../services/app-mode.service';
 
 @Component({
   selector: 'app-layout',
@@ -14,6 +15,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class Layout implements OnInit, OnDestroy {
   authService = inject(AuthService);
+  appModeService = inject(AppModeService);
   municipiSeleccionat = '';
   showMunicipiDropdown = false;
   municipiSearch = '';

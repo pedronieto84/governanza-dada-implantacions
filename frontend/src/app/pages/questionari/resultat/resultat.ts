@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject, catchError, filter, of, switchMap, takeUntil } from 'rxjs';
 
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
+import { RadarChart } from '../../../shared/radar-chart/radar-chart';
 import { toSlug } from '../../../utils/slug';
 
 export interface ProcesResultat {
@@ -16,6 +17,9 @@ export interface AmbitResultat {
   nom: string;
   processos: ProcesResultat[];
   puntuacio: number;
+  /** Precalculat perquè el template no generi un array nou a cada cicle de detecció de canvis. */
+  procesLabels: string[];
+  procesScores: number[];
 }
 
 interface QuestionariPayload {
@@ -69,6 +73,8 @@ export function calculateQuestionariResults(
       nom: ambit.nom,
       processos,
       puntuacio: average(processos.map((proces) => proces.puntuacio)),
+      procesLabels: processos.map((proces) => proces.nom),
+      procesScores: processos.map((proces) => proces.puntuacio),
     };
   });
 }
@@ -79,14 +85,13 @@ function average(values: number[]): number {
 
 @Component({
   selector: 'app-resultat',
-  imports: [],
+  imports: [RadarChart],
   templateUrl: './resultat.html',
   styleUrl: './resultat.css',
 })
 export class Resultat {
   private destroy$ = new Subject<void>();
 
-  readonly levels = [1, 2, 3, 4];
   readonly questionIds = RESULTAT_STRUCTURE.flatMap((ambit) =>
     ambit.processos.flatMap((proces) => proces.preguntes),
   );
@@ -94,11 +99,14 @@ export class Resultat {
   municipiActual = '';
   answers: Record<string, string> = {};
   ambits: AmbitResultat[] = [];
+  ambitLabels: string[] = [];
+  ambitScores: number[] = [];
   isLoading = false;
 
   constructor(
     private http: HttpClient,
     private municipiService: MunicipiService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.calculateResults();
   }
@@ -122,6 +130,8 @@ export class Resultat {
         this.answers = data.answers ?? {};
         this.calculateResults();
         this.isLoading = false;
+        // L'app és zoneless: cal forçar la detecció de canvis, arriben fora d'un event del DOM
+        this.cdr.detectChanges();
       });
   }
 
@@ -151,36 +161,9 @@ export class Resultat {
     return score.toFixed(1).replace('.', ',');
   }
 
-  radarGridPoints(itemCount: number, level: number): string {
-    return this.radarPoints(new Array(itemCount).fill(level));
-  }
-
-  radarPoints(scores: number[]): string {
-    return scores.map((score, index) => this.radarPoint(index, scores.length, score)).join(' ');
-  }
-
-  axisEnd(index: number, itemCount: number): { x: number; y: number } {
-    return this.pointAt(index, itemCount, 4);
-  }
-
-  labelPoint(index: number, itemCount: number): { x: number; y: number } {
-    const angle = -Math.PI / 2 + (2 * Math.PI * index) / itemCount;
-    return { x: 100 + 86 * Math.cos(angle), y: 100 + 86 * Math.sin(angle) };
-  }
-
   private calculateResults(): void {
     this.ambits = calculateQuestionariResults(this.answers);
+    this.ambitLabels = this.ambits.map((ambit) => ambit.nom);
+    this.ambitScores = this.ambits.map((ambit) => ambit.puntuacio);
   }
-
-  private radarPoint(index: number, itemCount: number, score: number): string {
-    const point = this.pointAt(index, itemCount, score);
-    return `${point.x},${point.y}`;
-  }
-
-  private pointAt(index: number, itemCount: number, score: number): { x: number; y: number } {
-    const angle = -Math.PI / 2 + (2 * Math.PI * index) / itemCount;
-    const radius = 68 * (score / 4);
-    return { x: 100 + radius * Math.cos(angle), y: 100 + radius * Math.sin(angle) };
-  }
-
 }

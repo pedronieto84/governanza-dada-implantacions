@@ -7,9 +7,9 @@
       </span>
       <app-fake-data-button (fill)="fillFakeData()" />
     </h2>
-    <div class="overflow-x-auto overflow-y-auto max-h-[70vh] w-full">
+    <div class="w-full">
       <table class="table table-zebra table-sm min-w-[1400px]">
-        <thead class="sticky top-0 z-10">
+        <thead [stickyStack]="2">
           <tr class="bg-primary text-primary-content text-xs">
             <th class="min-w-32">Nom curt</th>
             <th>És extern?</th>

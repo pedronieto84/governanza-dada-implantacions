@@ -159,36 +159,7 @@
 .radar {
 	width: 100%;
 	max-width: 18rem;
-	aspect-ratio: 1;
-	overflow: visible;
-}
-
-.radar-ring,
-.radar-axis {
-	fill: none;
-	stroke: #c7d4cf;
-	stroke-width: 0.8;
-}
-
-.radar-area {
-	fill: rgb(8 127 91 / 22%);
-	stroke: var(--accent);
-	stroke-linejoin: round;
-	stroke-width: 2;
-}
-
-.radar-point {
-	fill: #fff;
-	stroke: var(--accent);
-	stroke-width: 2;
-}
-
-.radar-number {
-	fill: var(--ink);
-	font-size: 10px;
-	font-weight: 700;
-	text-anchor: middle;
-	dominant-baseline: middle;
+	margin-inline: auto;
 }
 
 .radar-legend {
@@ -202,7 +173,7 @@
 
 .radar-legend li {
 	display: grid;
-	grid-template-columns: 1.5rem minmax(0, 1fr) 2.5rem;
+	grid-template-columns: 0.9rem minmax(0, 1fr) 2.5rem;
 	align-items: start;
 	gap: 0.55rem;
 	padding-bottom: 0.55rem;
@@ -211,14 +182,12 @@
 }
 
 .radar-legend li > span {
-	display: grid;
-	width: 1.35rem;
-	height: 1.35rem;
-	place-items: center;
+	display: block;
+	width: 0.65rem;
+	height: 0.65rem;
+	margin-top: 0.3rem;
 	border-radius: 50%;
-	background: var(--accent-soft);
-	color: var(--accent);
-	font-weight: 800;
+	background: var(--accent);
 }
 
 .radar-legend li > b {
