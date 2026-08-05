@@ -8,6 +8,7 @@ import { Glossari } from './pages/glossari/glossari';
 // Level 2 - Questionari
 import { MapaResponsables } from './pages/questionari/mapa-responsables/mapa-responsables';
 import { FormQuestionari } from './pages/questionari/form-questionari/form-questionari';
+import { PlaAccions } from './pages/questionari/pla-accions/pla-accions';
 import { Resultat } from './pages/questionari/resultat/resultat';
 // Level 2 - Inventari
 import { Sistemas } from './pages/inventari/sistemas/sistemas';
@@ -41,6 +42,7 @@ export const routes: Routes = [
         children: [
           { path: 'mapa-responsables', component: MapaResponsables },
           { path: 'form', component: FormQuestionari },
+          { path: 'pla-accions', component: PlaAccions },
           { path: 'resultat', component: Resultat },
           { path: '', redirectTo: 'mapa-responsables', pathMatch: 'full' }
         ]

@@ -6,7 +6,11 @@ import { Subject, of } from 'rxjs';
 import { catchError, switchMap, takeUntil } from 'rxjs/operators';
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
+import { ToastService } from '../../../services/toast.service';
 import { toSlug } from '../../../utils/slug';
+import { getHttpErrorCode } from '../../../utils/http-error';
+import { fillEmptyFields, randomCode, randomFrom, randomInt, randomWords, randomYesNo } from '../../../utils/fake-data';
+import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
 
 const EMPTY_ATRIBUT = () => ({
   id: '', nom: '', desc: '', entitat: '', clau: '', sistema: '', tipus: '',
@@ -33,7 +37,7 @@ const DEFAULT_ATRIBUTS = [
 
 @Component({
   selector: 'app-atributs',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FakeDataButton],
   templateUrl: './atributs.html',
   styleUrl: './atributs.css',
   standalone: true,
@@ -55,6 +59,7 @@ export class Atributs implements OnInit, OnDestroy {
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private municipiService: MunicipiService,
+    private toast: ToastService,
   ) {}
 
   ngOnInit() {
@@ -96,7 +101,11 @@ export class Atributs implements OnInit, OnDestroy {
     }
     const slug = toSlug(this.municipiActual);
     this.http.post(`${API_BASE}/api/data/municipis/${slug}/atributs`, { atributs: this.atributs }).subscribe({
-      error: (err) => console.error('Error saving atributs', err)
+      next: () => this.toast.success(),
+      error: (err) => {
+        console.error('Error saving atributs', err);
+        this.toast.error(`Error ${getHttpErrorCode(err)} al intentar guardar el dato`);
+      }
     });
   }
 
@@ -120,6 +129,33 @@ export class Atributs implements OnInit, OnDestroy {
 
   deleteItem(index: number) {
     this.atributs.splice(index, 1);
+    this.saveData();
+  }
+
+  /** Omple l'inventari amb atributs versemblants (crea files si cal) i desa immediatament */
+  fillFakeData(): void {
+    if (this.atributs.length === 0) {
+      this.atributs = Array.from({ length: 6 }, () => ({
+        ...EMPTY_ATRIBUT(),
+        id: randomCode('A', 1, 99),
+        nom: randomWords(1, 2),
+        entitat: randomWords(1, 1),
+        sistema: randomWords(1, 1),
+      }));
+    }
+    fillEmptyFields(this.atributs, {
+      desc: () => randomWords(4, 10),
+      clau: () => randomYesNo(),
+      tipus: () => randomFrom(this.tipusOptions),
+      sensible: () => randomYesNo(),
+      terme: () => randomWords(1, 2),
+      format: () => randomFrom(['VARCHAR(255)', 'INTEGER', 'DATE', 'BOOLEAN', 'TEXT']),
+      nul: () => randomYesNo(),
+      unicitat: () => randomFrom(['Única', 'No única']),
+      completesa: () => `${randomInt(60, 100)}%`,
+      consistencia: () => randomFrom(['Alta', 'Mitjana', 'Baixa']),
+      actualizacio: () => randomFrom(['Diària', 'Setmanal', 'Mensual', 'Anual']),
+    });
     this.saveData();
   }
 }

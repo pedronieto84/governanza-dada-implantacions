@@ -1,8 +1,30 @@
 <div class="flex flex-col gap-8">
-  <!-- Sub-Tabs -->
-  <div role="tablist" class="tabs tabs-boxed view-mode-tabs mb-4">
-    <a role="tab" class="tab" [class.tab-active]="viewMode === 'tabla'" (click)="setViewMode('tabla')">Tabla</a>
-    <a role="tab" class="tab" [class.tab-active]="viewMode === 'organigrama'" (click)="setViewMode('organigrama')">Organigrama</a>
+  <!-- Capçalera: submenú de subtaules + toggle a l'esquerra, Tabla/Organigrama a la dreta -->
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+    @if (viewMode === 'tabla' && !isLoading) {
+      <div class="flex flex-wrap items-center gap-3">
+        <div role="tablist" class="tabs tabs-boxed">
+          <a role="tab" class="tab" [class.tab-active]="tableSubTab === 'rolsClau'" (click)="tableSubTab = 'rolsClau'">Rols Clau</a>
+          <a role="tab" class="tab" [class.tab-active]="tableSubTab === 'arees'" (click)="tableSubTab = 'arees'">Àrees / Dominis</a>
+          @if (showProcessos) {
+            <a role="tab" class="tab" [class.tab-active]="tableSubTab === 'processos'" (click)="tableSubTab = 'processos'">Processos clau</a>
+          }
+          <a role="tab" class="tab" [class.tab-active]="tableSubTab === 'projectes'" (click)="tableSubTab = 'projectes'">Projectes estratègics</a>
+          <a role="tab" class="tab" [class.tab-active]="tableSubTab === 'altres'" (click)="tableSubTab = 'altres'">Altres Responsables</a>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="checkbox" class="toggle toggle-primary toggle-sm" [checked]="showProcessos" (change)="toggleShowProcessos()" id="toggle-processos" />
+          <label for="toggle-processos" class="text-sm font-medium cursor-pointer select-none">Mostrar Processos clau</label>
+        </div>
+        <app-fake-data-button (fill)="fillFakeData()" />
+      </div>
+    } @else {
+      <div></div>
+    }
+    <div role="tablist" class="tabs tabs-boxed view-mode-tabs">
+      <a role="tab" class="tab" [class.tab-active]="viewMode === 'tabla'" (click)="setViewMode('tabla')">Tabla</a>
+      <a role="tab" class="tab" [class.tab-active]="viewMode === 'organigrama'" (click)="setViewMode('organigrama')">Organigrama</a>
+    </div>
   </div>
 
   @if (viewMode === 'tabla') {
@@ -21,23 +43,6 @@
       }
     </div>
   } @else {
-
-  <!-- Submenú de subtaules -->
-  <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-    <div role="tablist" class="tabs tabs-boxed">
-      <a role="tab" class="tab" [class.tab-active]="tableSubTab === 'rolsClau'" (click)="tableSubTab = 'rolsClau'">Rols Clau</a>
-      <a role="tab" class="tab" [class.tab-active]="tableSubTab === 'arees'" (click)="tableSubTab = 'arees'">Àrees / Dominis</a>
-      @if (showProcessos) {
-        <a role="tab" class="tab" [class.tab-active]="tableSubTab === 'processos'" (click)="tableSubTab = 'processos'">Processos clau</a>
-      }
-      <a role="tab" class="tab" [class.tab-active]="tableSubTab === 'projectes'" (click)="tableSubTab = 'projectes'">Projectes estratègics</a>
-      <a role="tab" class="tab" [class.tab-active]="tableSubTab === 'altres'" (click)="tableSubTab = 'altres'">Altres Responsables</a>
-    </div>
-    <div class="flex items-center gap-2">
-      <input type="checkbox" class="toggle toggle-primary toggle-sm" [checked]="showProcessos" (change)="toggleShowProcessos()" id="toggle-processos" />
-      <label for="toggle-processos" class="text-sm font-medium cursor-pointer select-none">Mostrar Processos clau</label>
-    </div>
-  </div>
 
   @if (tableSubTab === 'rolsClau') {
 
@@ -143,16 +148,6 @@
                     <button type="button" class="btn btn-circle btn-ghost btn-xs" (click)="toggleRespDropdown('arees', item, $event)" title="Canviar responsable des de Rols Clau">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
-                    @if (isRespDropdownOpen('arees', item)) {
-                      <div class="absolute left-0 top-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-xl z-50 min-w-[200px] max-h-60 overflow-y-auto" (click)="$event.stopPropagation()">
-                        @for (persona of distinctResponsables; track persona) {
-                          <div class="px-3 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-content" (click)="selectRespForRow('arees', item, persona)">{{persona}}</div>
-                        }
-                        @if (distinctResponsables.length === 0) {
-                          <div class="px-3 py-2 text-sm opacity-50">Cap responsable a Rols Clau</div>
-                        }
-                      </div>
-                    }
                   </div>
                 </td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
@@ -231,16 +226,6 @@
                     <button type="button" class="btn btn-circle btn-ghost btn-xs" (click)="toggleRespDropdown('processos', item, $event)" title="Canviar responsable des de Rols Clau">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
-                    @if (isRespDropdownOpen('processos', item)) {
-                      <div class="absolute left-0 top-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-xl z-50 min-w-[200px] max-h-60 overflow-y-auto" (click)="$event.stopPropagation()">
-                        @for (persona of distinctResponsables; track persona) {
-                          <div class="px-3 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-content" (click)="selectRespForRow('processos', item, persona)">{{persona}}</div>
-                        }
-                        @if (distinctResponsables.length === 0) {
-                          <div class="px-3 py-2 text-sm opacity-50">Cap responsable a Rols Clau</div>
-                        }
-                      </div>
-                    }
                   </div>
                 </td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
@@ -312,16 +297,6 @@
                     <button type="button" class="btn btn-circle btn-ghost btn-xs" (click)="toggleRespDropdown('projectes', item, $event)" title="Canviar responsable des de Rols Clau">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
-                    @if (isRespDropdownOpen('projectes', item)) {
-                      <div class="absolute left-0 top-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-xl z-50 min-w-[200px] max-h-60 overflow-y-auto" (click)="$event.stopPropagation()">
-                        @for (persona of distinctResponsables; track persona) {
-                          <div class="px-3 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-content" (click)="selectRespForRow('projectes', item, persona)">{{persona}}</div>
-                        }
-                        @if (distinctResponsables.length === 0) {
-                          <div class="px-3 py-2 text-sm opacity-50">Cap responsable a Rols Clau</div>
-                        }
-                      </div>
-                    }
                   </div>
                 </td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
@@ -386,16 +361,6 @@
                     <button type="button" class="btn btn-circle btn-ghost btn-xs" (click)="toggleRespDropdown('altres', item, $event)" title="Canviar responsable des de Rols Clau">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
-                    @if (isRespDropdownOpen('altres', item)) {
-                      <div class="absolute left-0 top-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-xl z-50 min-w-[200px] max-h-60 overflow-y-auto" (click)="$event.stopPropagation()">
-                        @for (persona of distinctResponsables; track persona) {
-                          <div class="px-3 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-content" (click)="selectRespForRow('altres', item, persona)">{{persona}}</div>
-                        }
-                        @if (distinctResponsables.length === 0) {
-                          <div class="px-3 py-2 text-sm opacity-50">Cap responsable a Rols Clau</div>
-                        }
-                      </div>
-                    }
                   </div>
                 </td>
                 <td><a href="mailto:{{item.email}}" class="link link-primary">{{item.email}}</a></td>
@@ -428,7 +393,23 @@
   } <!-- end isLoading @else -->
 
   @if (activeRespDropdown) {
-    <div class="fixed inset-0 z-40" (click)="closeRespDropdown()"></div>
+    <div class="fixed inset-0 z-[9998]" (click)="closeRespDropdown()"></div>
+    <div class="fixed bg-base-100 border border-base-300 rounded-lg shadow-xl z-[9999] min-w-[220px] max-w-[280px] flex flex-col"
+      [style.top.px]="respDropdownPos.top" [style.left.px]="respDropdownPos.left" (click)="$event.stopPropagation()">
+      <div class="p-2 border-b border-base-200">
+        <input type="text" class="input input-sm input-bordered w-full" placeholder="Cercar responsable..."
+          [(ngModel)]="respDropdownFilter" (click)="$event.stopPropagation()" autofocus />
+      </div>
+      <div class="max-h-60 overflow-y-auto">
+        @for (persona of filteredResponsables; track persona) {
+          <div class="px-3 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-content"
+            (click)="selectRespForRow(activeRespDropdown!.table, getActiveRespRow(), persona)">{{persona}}</div>
+        }
+        @if (filteredResponsables.length === 0) {
+          <div class="px-3 py-2 text-sm opacity-50">Cap responsable trobat</div>
+        }
+      </div>
+    </div>
   }
 
   } @else {

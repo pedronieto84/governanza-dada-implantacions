@@ -9,7 +9,11 @@ import { OrgChart } from 'd3-org-chart';
 
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
+import { ToastService } from '../../../services/toast.service';
 import { toSlug } from '../../../utils/slug';
+import { getHttpErrorCode } from '../../../utils/http-error';
+import { fillEmptyFields, randomEmail, randomInt, randomName, randomWords } from '../../../utils/fake-data';
+import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
 
 
 @Component({
@@ -17,7 +21,7 @@ import { toSlug } from '../../../utils/slug';
   templateUrl: './mapa-responsables.html',
   styleUrl: './mapa-responsables.css',
   standalone: true,
-  imports: [FormsModule]
+  imports: [FormsModule, FakeDataButton]
 })
 export class MapaResponsables implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -39,6 +43,7 @@ export class MapaResponsables implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
     private municipiService: MunicipiService,
+    private toast: ToastService,
   ) {
     // Expose methods to global scope for D3 node HTML string binding
     (window as any).triggerOrgNodeEdit = (nodeId: string) => this.openEditModal(nodeId);
@@ -198,8 +203,28 @@ export class MapaResponsables implements OnInit, OnDestroy {
       orgData: this.orgData
     };
     this.http.post(`${API_BASE}/api/data/municipis/${slug}/mapa-responsables`, payload).subscribe({
-      error: (err) => console.error('Error saving data', err)
+      next: () => this.toast.success(),
+      error: (err) => {
+        console.error('Error saving data', err);
+        this.toast.error(`Error ${getHttpErrorCode(err)} al intentar guardar el dato`);
+      },
     });
+  }
+
+  /** Omple totes les taules (Rols Clau, Àrees, Processos, Projectes, Altres) amb dades versemblants i desa immediatament */
+  fillFakeData(): void {
+    for (const list of [this.rolsClau, this.arees, this.processos, this.projectes, this.altres]) {
+      if (list.length === 0) {
+        list.push({ name: randomWords(1, 3), resp: '', email: '', phone: '', obs: '', areas: [] });
+      }
+      fillEmptyFields(list, {
+        resp: () => randomName(),
+        email: () => randomEmail(),
+        phone: () => `6${randomInt(10000000, 99999999)}`,
+        obs: () => randomWords(3, 8),
+      });
+    }
+    this.saveData();
   }
 
   // --- Table Row CRUD ---
@@ -316,9 +341,18 @@ export class MapaResponsables implements OnInit, OnDestroy {
 
   // --- Canvi ràpid de Responsable des de la taula (nomes taules 2-5) ---
   activeRespDropdown: { table: string; index: number } | null = null;
+  respDropdownFilter = '';
+  respDropdownPos = { top: 0, left: 0 };
 
   get distinctResponsables(): string[] {
-    return [...new Set(this.rolsClau.map((r: any) => r.resp).filter((r: string) => r && r.trim() !== ''))] as string[];
+    const values = [...new Set(this.rolsClau.map((r: any) => r.resp).filter((r: string) => r && r.trim() !== ''))] as string[];
+    return values.sort((a, b) => a.localeCompare(b, 'ca', { sensitivity: 'base' }));
+  }
+
+  get filteredResponsables(): string[] {
+    const filter = this.respDropdownFilter.trim().toLowerCase();
+    if (!filter) return this.distinctResponsables;
+    return this.distinctResponsables.filter(p => p.toLowerCase().includes(filter));
   }
 
   toggleRespDropdown(tableKey: string, item: any, event: Event) {
@@ -327,6 +361,9 @@ export class MapaResponsables implements OnInit, OnDestroy {
     if (this.activeRespDropdown && this.activeRespDropdown.table === tableKey && this.activeRespDropdown.index === idx) {
       this.activeRespDropdown = null;
     } else {
+      const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+      this.respDropdownPos = { top: rect.bottom, left: rect.left };
+      this.respDropdownFilter = '';
       this.activeRespDropdown = { table: tableKey, index: idx };
     }
   }
@@ -338,6 +375,12 @@ export class MapaResponsables implements OnInit, OnDestroy {
 
   closeRespDropdown() {
     this.activeRespDropdown = null;
+    this.respDropdownFilter = '';
+  }
+
+  getActiveRespRow(): any {
+    if (!this.activeRespDropdown) return null;
+    return (this as any)[this.activeRespDropdown.table][this.activeRespDropdown.index];
   }
 
   selectRespForRow(tableKey: string, item: any, resp: string) {

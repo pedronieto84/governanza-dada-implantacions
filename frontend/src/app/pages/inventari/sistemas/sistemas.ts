@@ -6,7 +6,11 @@ import { catchError, filter, switchMap, takeUntil } from 'rxjs/operators';
 
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
+import { ToastService } from '../../../services/toast.service';
 import { toSlug } from '../../../utils/slug';
+import { getHttpErrorCode } from '../../../utils/http-error';
+import { fillEmptyFields, randomFrom, randomName } from '../../../utils/fake-data';
+import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
 import {
   SOFTWARE_CATALOG,
   NOM_CURT_OPTIONS,
@@ -25,7 +29,7 @@ const EMPTY_SISTEMA = () => ({
   templateUrl: './sistemas.html',
   styleUrl: './sistemas.css',
   standalone: true,
-  imports: [FormsModule]
+  imports: [FormsModule, FakeDataButton]
 })
 export class Sistemas implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -50,6 +54,7 @@ export class Sistemas implements OnInit, OnDestroy {
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private municipiService: MunicipiService,
+    private toast: ToastService,
   ) {}
 
   ngOnInit() {
@@ -86,7 +91,11 @@ export class Sistemas implements OnInit, OnDestroy {
     }
     const slug = toSlug(this.municipiActual);
     this.http.post(`${API_BASE}/api/data/municipis/${slug}/sistemas`, { sistemas: this.sistemas }).subscribe({
-      error: (err) => console.error('Error saving Sistemas data', err)
+      next: () => this.toast.success(),
+      error: (err) => {
+        console.error('Error saving Sistemas data', err);
+        this.toast.error(`Error ${getHttpErrorCode(err)} al intentar guardar el dato`);
+      }
     });
   }
 
@@ -117,6 +126,29 @@ export class Sistemas implements OnInit, OnDestroy {
 
   deleteItem(index: number) {
     this.sistemas.splice(index, 1);
+    this.saveData();
+  }
+
+  /** Omple l'inventari de sistemes amb dades versemblants (crea files si cal) i desa immediatament */
+  fillFakeData(): void {
+    if (this.sistemas.length === 0) {
+      this.sistemas = Array.from({ length: 4 }, () => {
+        const software = randomFrom(SOFTWARE_CATALOG);
+        return { ...EMPTY_SISTEMA(), nomCurt: software.nomCurt, proveidor: software.proveidor };
+      });
+    }
+    fillEmptyFields(this.sistemas, {
+      extern: () => randomFrom(['Sí', 'No']),
+      descripcio: () => `Sistema de gestió ${randomFrom(TIPUS_SOFTWARE_OPTIONS).toLowerCase()}`,
+      tipus: () => randomFrom(TIPUS_SOFTWARE_OPTIONS),
+      proveidor: () => randomFrom(PROVEIDOR_OPTIONS),
+      adminSis: () => randomName(),
+      adminEmail: () => `${randomName().toLowerCase().replace(' ', '.')}@diba.cat`,
+      adminUnitat: () => 'Informàtica',
+      arqDada: () => randomName(),
+      arqEmail: () => `${randomName().toLowerCase().replace(' ', '.')}@diba.cat`,
+      arqUnitat: () => 'Informàtica',
+    });
     this.saveData();
   }
 

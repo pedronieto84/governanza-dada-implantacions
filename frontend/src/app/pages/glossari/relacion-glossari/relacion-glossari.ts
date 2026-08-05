@@ -5,8 +5,12 @@ import { of, Subject } from 'rxjs';
 import { catchError, debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
+import { ToastService } from '../../../services/toast.service';
 import { toSlug } from '../../../utils/slug';
+import { getHttpErrorCode } from '../../../utils/http-error';
 import { environment } from '../../../../environments/environment';
+import { fillEmptyFields, randomFrom, randomWords } from '../../../utils/fake-data';
+import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
 
 interface RelacioGlossariRow {
   termeOrigen: string;
@@ -21,7 +25,7 @@ type RelacioColumn = {
 
 @Component({
   selector: 'app-relacion-glossari',
-  imports: [FormsModule],
+  imports: [FormsModule, FakeDataButton],
   templateUrl: './relacion-glossari.html',
   styleUrl: './relacion-glossari.css',
 })
@@ -54,6 +58,7 @@ export class RelacionGlossari implements OnInit, OnDestroy {
   constructor(
     private readonly http: HttpClient,
     private readonly municipiService: MunicipiService,
+    private readonly toast: ToastService,
   ) {}
 
   ngOnInit(): void {
@@ -126,6 +131,23 @@ export class RelacionGlossari implements OnInit, OnDestroy {
     this.saveData();
   }
 
+  /** Omple la taula amb relacions de glossari versemblants (crea una fila si cal) i desa immediatament */
+  fillFakeData(): void {
+    if (this.relacions.length === 0) {
+      this.relacions.push({ termeOrigen: '', termeRelacionat: '', tipusRelacio: '' });
+    }
+    fillEmptyFields(this.relacions, {
+      termeOrigen: () => randomWords(1, 2),
+      termeRelacionat: () => randomWords(1, 2),
+      tipusRelacio: () => randomFrom([
+        'Correspondència (Terme similar que pot tenir variacions en diferents departaments o sistemes)',
+        'Relació jeràrquica (el terme origen domina el terme relacionat)',
+        'Sinònim',
+      ]),
+    });
+    this.saveData();
+  }
+
   sort(column: keyof RelacioGlossariRow): void {
     if (this.sortColumn === column) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -154,7 +176,11 @@ export class RelacionGlossari implements OnInit, OnDestroy {
         relacions: this.relacions,
       })
       .subscribe({
-        error: (error) => console.error('Error saving relacion-glossari', error),
+        next: () => this.toast.success(),
+        error: (error) => {
+          console.error('Error saving relacion-glossari', error);
+          this.toast.error(`Error ${getHttpErrorCode(error)} al intentar guardar el dato`);
+        },
       });
   }
 

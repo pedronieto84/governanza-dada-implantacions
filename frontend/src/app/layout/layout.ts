@@ -14,7 +14,6 @@ import { AuthService } from '../services/auth.service';
 })
 export class Layout implements OnInit, OnDestroy {
   authService = inject(AuthService);
-  isSidebarOpen = true;
   municipiSeleccionat = '';
   showMunicipiDropdown = false;
   municipiSearch = '';
@@ -110,10 +109,6 @@ export class Layout implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._sub?.unsubscribe();
-  }
-
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   selectMunicipi(m: string) {

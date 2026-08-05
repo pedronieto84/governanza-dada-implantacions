@@ -7,6 +7,7 @@ import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
 import { toSlug } from '../../../utils/slug';
+import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
 
 interface QuestionariPayload {
   answers: Record<string, string>;
@@ -16,7 +17,7 @@ interface QuestionariPayload {
 
 @Component({
   selector: 'app-form-questionari',
-  imports: [FormsModule],
+  imports: [FormsModule, FakeDataButton],
   templateUrl: './form-questionari.html',
   styleUrl: './form-questionari.css',
 })
@@ -27,11 +28,14 @@ export class FormQuestionari implements OnInit, OnDestroy {
   answers: Record<string, string> = {};
   observacions: Record<string, string> = {};
   evidencies: Record<string, string> = {};
+  activeSeccio = '';
 
   constructor(
     private http: HttpClient,
     private municipiService: MunicipiService,
-  ) {}
+  ) {
+    this.activeSeccio = this.seccions[0]?.ambit ?? '';
+  }
 
   ngOnInit(): void {
     this.municipiService.municipiSeleccionat$
@@ -79,6 +83,18 @@ export class FormQuestionari implements OnInit, OnDestroy {
     this.answers = {};
     this.observacions = {};
     this.evidencies = {};
+  }
+
+  /** Omple totes les respostes amb valors aleatoris i desa immediatament */
+  fillFakeData(): void {
+    for (const seccio of this.seccions) {
+      for (const proc of seccio.processos) {
+        for (const pregunta of proc.preguntes) {
+          this.answers[pregunta.id] = (Math.floor(Math.random() * pregunta.respostes.length) + 1).toString();
+        }
+      }
+    }
+    this.saveData();
   }
 
   seccions = [

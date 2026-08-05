@@ -1,5 +1,15 @@
 <div class="flex flex-col gap-6">
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+    <div role="tablist" class="tabs tabs-boxed w-fit">
+      @for (seccio of seccions; track seccio.ambit) {
+        <a role="tab" class="tab" [class.tab-active]="activeSeccio === seccio.ambit" (click)="activeSeccio = seccio.ambit">{{ seccio.ambit }}</a>
+      }
+    </div>
+    <app-fake-data-button (fill)="fillFakeData()" />
+  </div>
+
   @for (seccio of seccions; track seccio.ambit) {
+    @if (activeSeccio === seccio.ambit) {
     <div>
       <h2 class="text-2xl font-bold text-primary mb-3">{{ seccio.ambit }}</h2>
       <div class="overflow-x-auto rounded-xl border border-base-200 shadow">
@@ -25,7 +35,7 @@
                   <td class="font-bold text-primary align-top pt-3">{{ pregunta.id }}</td>
                   <td class="whitespace-pre-line text-sm align-top pt-3">{{ pregunta.text }}</td>
                   <td class="align-top pt-2">
-                    <select class="select select-bordered select-sm select-resposta w-full text-xs" [(ngModel)]="answers[pregunta.id]">
+                    <select class="select select-bordered select-sm w-full text-xs" [(ngModel)]="answers[pregunta.id]" (ngModelChange)="saveData()">
                       <option value="">-- Selecciona --</option>
                       @for (r of pregunta.respostes; track $index) {
                         <option [value]="($index + 1).toString()">{{ $index + 1 }}. {{ r }}</option>
@@ -33,10 +43,10 @@
                     </select>
                   </td>
                   <td class="align-top pt-2">
-                    <textarea class="textarea textarea-bordered textarea-sm w-full text-xs" rows="2" [(ngModel)]="observacions[pregunta.id]" placeholder="Observacions..."></textarea>
+                    <textarea class="textarea textarea-bordered textarea-sm w-full text-xs" rows="2" [(ngModel)]="observacions[pregunta.id]" (change)="saveData()" placeholder="Observacions..."></textarea>
                   </td>
                   <td class="align-top pt-2">
-                    <textarea class="textarea textarea-bordered textarea-sm w-full text-xs" rows="2" [(ngModel)]="evidencies[pregunta.id]" placeholder="Evidències i documentació..."></textarea>
+                    <textarea class="textarea textarea-bordered textarea-sm w-full text-xs" rows="2" [(ngModel)]="evidencies[pregunta.id]" (change)="saveData()" placeholder="Evidències i documentació..."></textarea>
                   </td>
                 </tr>
               }
@@ -45,5 +55,6 @@
         </table>
       </div>
     </div>
+    }
   }
 </div>

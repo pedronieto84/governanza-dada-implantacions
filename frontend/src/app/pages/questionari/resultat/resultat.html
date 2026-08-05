@@ -1,1 +1,157 @@
-<p>resultat works!</p>
+@if (isLoading) {
+	<div class="result-loading" role="status">
+		<span class="loading loading-spinner loading-md"></span>
+		<span>Carregant resultats...</span>
+	</div>
+} @else {
+	<section class="result-page">
+		<header class="result-header">
+			<div>
+				<p class="result-kicker">Qüestionari d'avaluació de la maduresa</p>
+				<h2>Resultat</h2>
+			</div>
+			<div class="result-meta">
+				<span>Ajuntament/Organisme</span>
+				<strong>{{ municipiActual || 'Cap municipi seleccionat' }}</strong>
+			</div>
+		</header>
+
+		<div class="summary-band">
+			<div class="global-score">
+				<span>Mitjana global</span>
+				<strong>{{ formatScore(globalScore) }}</strong>
+				<small>sobre 4</small>
+			</div>
+			<div class="completion">
+				<div class="completion-copy">
+					<span>Qüestions respostes</span>
+					<strong>{{ completedQuestions }} de {{ questionIds.length }}</strong>
+				</div>
+				<progress
+					class="progress progress-primary"
+					[value]="completedQuestions"
+					[max]="questionIds.length">
+				</progress>
+				@if (!isComplete) {
+					<p>Les respostes pendents computen com a 0, igual que a la fórmula del full de càlcul.</p>
+				}
+			</div>
+			@for (ambit of ambits; track ambit.nom) {
+				<div class="scope-score">
+					<span>{{ ambit.nom }}</span>
+					<strong>{{ formatScore(ambit.puntuacio) }}</strong>
+				</div>
+			}
+		</div>
+
+		<div class="result-grid">
+			<article class="result-panel overview-panel">
+				<div class="panel-heading">
+					<div>
+						<span class="panel-index">01</span>
+						<h3>Visió global</h3>
+					</div>
+					<strong>{{ formatScore(globalScore) }}</strong>
+				</div>
+
+				<div class="radar-layout">
+					<svg class="radar" viewBox="0 0 200 200" role="img" aria-label="Gràfic radar de la visió global">
+						@for (level of levels; track level) {
+							<polygon class="radar-ring" [attr.points]="radarGridPoints(ambits.length, level)"></polygon>
+						}
+						@for (ambit of ambits; track ambit.nom; let index = $index) {
+							<line class="radar-axis" x1="100" y1="100" [attr.x2]="axisEnd(index, ambits.length).x" [attr.y2]="axisEnd(index, ambits.length).y"></line>
+							<text class="radar-number" [attr.x]="labelPoint(index, ambits.length).x" [attr.y]="labelPoint(index, ambits.length).y">{{ index + 1 }}</text>
+						}
+						<polygon class="radar-area" [attr.points]="radarPoints(ambits.map(ambit => ambit.puntuacio))"></polygon>
+						@for (ambit of ambits; track ambit.nom; let index = $index) {
+							<circle class="radar-point" [attr.cx]="axisEnd(index, ambits.length).x - (axisEnd(index, ambits.length).x - 100) * (1 - ambit.puntuacio / 4)" [attr.cy]="axisEnd(index, ambits.length).y - (axisEnd(index, ambits.length).y - 100) * (1 - ambit.puntuacio / 4)" r="3"></circle>
+						}
+					</svg>
+					<ol class="radar-legend">
+						@for (ambit of ambits; track ambit.nom) {
+							<li><span>{{ $index + 1 }}</span><b>{{ ambit.nom }}</b><strong>{{ formatScore(ambit.puntuacio) }}</strong></li>
+						}
+					</ol>
+				</div>
+			</article>
+
+			@for (ambit of ambits; track ambit.nom; let ambitIndex = $index) {
+				<article class="result-panel">
+					<div class="panel-heading">
+						<div>
+							<span class="panel-index">0{{ ambitIndex + 2 }}</span>
+							<h3>{{ ambit.nom }}</h3>
+						</div>
+						<strong>{{ formatScore(ambit.puntuacio) }}</strong>
+					</div>
+
+					<div class="radar-layout">
+						<svg class="radar" viewBox="0 0 200 200" role="img" [attr.aria-label]="'Gràfic radar de ' + ambit.nom">
+							@for (level of levels; track level) {
+								<polygon class="radar-ring" [attr.points]="radarGridPoints(ambit.processos.length, level)"></polygon>
+							}
+							@for (proces of ambit.processos; track proces.nom; let index = $index) {
+								<line class="radar-axis" x1="100" y1="100" [attr.x2]="axisEnd(index, ambit.processos.length).x" [attr.y2]="axisEnd(index, ambit.processos.length).y"></line>
+								<text class="radar-number" [attr.x]="labelPoint(index, ambit.processos.length).x" [attr.y]="labelPoint(index, ambit.processos.length).y">{{ index + 1 }}</text>
+							}
+							<polygon class="radar-area" [attr.points]="radarPoints(ambit.processos.map(proces => proces.puntuacio))"></polygon>
+							@for (proces of ambit.processos; track proces.nom; let index = $index) {
+								<circle class="radar-point" [attr.cx]="axisEnd(index, ambit.processos.length).x - (axisEnd(index, ambit.processos.length).x - 100) * (1 - proces.puntuacio / 4)" [attr.cy]="axisEnd(index, ambit.processos.length).y - (axisEnd(index, ambit.processos.length).y - 100) * (1 - proces.puntuacio / 4)" r="3"></circle>
+							}
+						</svg>
+						<ol class="radar-legend">
+							@for (proces of ambit.processos; track proces.nom) {
+								<li><span>{{ $index + 1 }}</span><b>{{ proces.nom }}</b><strong>{{ formatScore(proces.puntuacio) }}</strong></li>
+							}
+						</ol>
+					</div>
+				</article>
+			}
+		</div>
+
+		<section class="detail-section">
+			<div class="detail-heading">
+				<div>
+					<p class="result-kicker">Traçabilitat del càlcul</p>
+					<h3>Detall de puntuacions</h3>
+				</div>
+				<span>Escala 0-4</span>
+			</div>
+
+			@for (ambit of ambits; track ambit.nom) {
+				<div class="scope-table">
+					<div class="scope-table-title">
+						<h4>{{ ambit.nom }}</h4>
+						<span>Mitjana de processos</span>
+						<strong>{{ formatScore(ambit.puntuacio) }}</strong>
+					</div>
+					<div class="overflow-x-auto">
+						<table class="table table-sm">
+							<thead>
+								<tr>
+									<th>Procés</th>
+									<th>Qüestions</th>
+									<th class="score-cell">Mitjana</th>
+								</tr>
+							</thead>
+							<tbody>
+								@for (proces of ambit.processos; track proces.nom) {
+									<tr>
+										<td>{{ proces.nom }}</td>
+										<td class="question-values">
+											@for (id of proces.preguntes; track id) {
+												<span [class.unanswered]="scoreForQuestion(id) === 0">{{ id }} · {{ scoreForQuestion(id) }}</span>
+											}
+										</td>
+										<td class="score-cell"><strong>{{ formatScore(proces.puntuacio) }}</strong></td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			}
+		</section>
+	</section>
+}

@@ -1,0 +1,111 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+    <div role="tablist" class="tabs tabs-boxed w-fit">
+      @for (seccio of seccions; track seccio.ambit) {
+        <a role="tab" class="tab" [class.tab-active]="activeSeccio === seccio.ambit" (click)="activeSeccio = seccio.ambit">{{ seccio.ambit }}</a>
+      }
+    </div>
+    <app-fake-data-button (fill)="fillFakeData()" />
+  </div>
+
+  <p class="text-sm text-base-content/70 max-w-3xl self-end text-right">
+    Pla d'acció generat automàticament a partir de les respostes del Qüestionari. Per a cada pregunta es mostra la
+    resposta i l'acció recomanada segons el nivell de maduresa assolit (marcat en destacat), i es pot valorar
+    l'impacte, la dificultat i el termini objectiu de la implementació. Els canvis es desen automàticament.
+  </p>
+
+  @for (seccio of seccions; track seccio.ambit) {
+    @if (activeSeccio === seccio.ambit) {
+    <div>
+      <h2 class="text-2xl font-bold text-primary mb-3">{{ seccio.ambit }}</h2>
+      <div class="overflow-x-auto rounded-xl border border-base-200 shadow">
+        <table class="table table-bordered table-xs w-full text-center min-w-[1800px]">
+          <thead>
+            <tr class="bg-primary text-primary-content">
+              <th rowspan="2" class="w-16 border-r border-base-300">Id.</th>
+              <th colspan="4" class="border-r border-base-300">Respostes</th>
+              <th colspan="4" class="border-r border-base-300">Accions recomanades</th>
+              <th rowspan="2" class="border-r border-base-300 w-64">Pla d'acció</th>
+              <th rowspan="2" class="border-r border-base-300 w-20">Prioritat aut.</th>
+              <th rowspan="2" class="border-r border-base-300 w-32">Impacte</th>
+              <th rowspan="2" class="border-r border-base-300 w-32">Dificultat</th>
+              <th rowspan="2" class="border-r border-base-300 w-20">Imp. + Dif.</th>
+              <th rowspan="2" class="w-48">Termini objectiu</th>
+            </tr>
+            <tr class="bg-base-200 text-base-content">
+              <th class="w-40 border-r border-base-300 text-error">1</th>
+              <th class="w-40 border-r border-base-300 text-warning">2</th>
+              <th class="w-40 border-r border-base-300 text-info">3</th>
+              <th class="w-40 border-r border-base-300 text-success">4</th>
+              <th class="w-40 border-r border-base-300 text-error">1</th>
+              <th class="w-40 border-r border-base-300 text-warning">2</th>
+              <th class="w-40 border-r border-base-300 text-info">3</th>
+              <th class="w-40 border-r border-base-300 text-success">4</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (proc of seccio.processos; track proc.proces) {
+              <tr class="bg-base-200">
+                <td colspan="15" class="font-semibold text-sm py-2 px-4 text-left">
+                  {{ proc.proces }}
+                </td>
+              </tr>
+              @for (pregunta of proc.preguntes; track pregunta.id) {
+                <tr class="hover">
+                  <td class="font-bold border-r border-base-300 bg-base-100">{{ pregunta.id }}</td>
+
+                  @for (resposta of pregunta.respostes; track $index) {
+                    <td [class]="nivellCellClass(pregunta.id, $index)">
+                      {{ resposta }}
+                    </td>
+                  }
+
+                  @for (accio of pregunta.accions; track $index) {
+                    <td [class]="nivellCellClass(pregunta.id, $index)">
+                      {{ accio || '—' }}
+                    </td>
+                  }
+
+                  <td class="border-r border-base-300 whitespace-normal text-left text-xs font-semibold">
+                    {{ plaAccioAuto(pregunta, pregunta.id) || 'Assolit / No aplica' }}
+                  </td>
+                  <td class="border-r border-base-300 font-bold text-lg">
+                    {{ prioritatAuto(pregunta.id) || '—' }}
+                  </td>
+                  <td class="border-r border-base-300 align-middle">
+                    <select class="select select-bordered select-xs w-full text-xs" [ngModel]="impactes[pregunta.id]" (ngModelChange)="impactes[pregunta.id] = $event; saveData()">
+                      <option value="">-- Selecciona --</option>
+                      @for (o of impacteOptions; track o) {
+                        <option [value]="o">{{ o }}</option>
+                      }
+                    </select>
+                  </td>
+                  <td class="border-r border-base-300 align-middle">
+                    <select class="select select-bordered select-xs w-full text-xs" [ngModel]="dificultats[pregunta.id]" (ngModelChange)="dificultats[pregunta.id] = $event; saveData()">
+                      <option value="">-- Selecciona --</option>
+                      @for (o of dificultatOptions; track o) {
+                        <option [value]="o">{{ o }}</option>
+                      }
+                    </select>
+                  </td>
+                  <td class="border-r border-base-300 font-bold">
+                    {{ impacteDificultat(pregunta.id) || '—' }}
+                  </td>
+                  <td class="align-middle">
+                    <select class="select select-bordered select-xs w-full text-xs" [ngModel]="terminis[pregunta.id]" (ngModelChange)="terminis[pregunta.id] = $event; saveData()">
+                      <option value="">-- Selecciona --</option>
+                      @for (o of terminiOptions; track o) {
+                        <option [value]="o">{{ o }}</option>
+                      }
+                    </select>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    }
+  }
+</div>

@@ -1,141 +1,110 @@
-<div class="drawer" [class.lg:drawer-open]="isSidebarOpen">
-  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content flex flex-col">
-    <!-- Navbar -->
-    <div class="navbar bg-base-100 w-full sticky top-0 z-30 shadow-sm" [class.lg:hidden]="isSidebarOpen">
-      <div class="flex-none">
-        <!-- Móvil (abre overlay native drawer) -->
-        <label for="my-drawer-2" class="btn btn-square btn-ghost lg:hidden">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-        </label>
-        <!-- Desktop (restaura fixed sidebar) -->
-        <button class="btn btn-square btn-ghost hidden lg:flex" (click)="toggleSidebar()">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+<div class="min-h-screen flex flex-col">
+  <!-- Cabecera superior -->
+  <header class="bg-base-100 border-b border-base-300 sticky top-0 z-30 shadow-sm">
+    <!-- Fila 1: marca + selector municipi + zona auth -->
+    <div class="flex items-center gap-4 px-4 py-2 flex-wrap">
+      <a routerLink="/home" class="flex flex-col leading-tight hover:opacity-75 transition-opacity shrink-0">
+        <span class="text-xl font-bold text-primary">Gobernanza</span>
+        <span class="text-[11px] text-base-content/60 -mt-0.5">Dashboard Principal</span>
+      </a>
+
+      <!-- Chip selector de municipi -->
+      <div class="relative">
+        <button
+          class="btn btn-sm gap-1 rounded-full px-3"
+          [class.btn-primary]="municipiSeleccionat"
+          [class.btn-outline]="!municipiSeleccionat"
+          (click)="showMunicipiDropdown = !showMunicipiDropdown">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span class="text-xs font-medium max-w-[140px] truncate">
+            {{ municipiSeleccionat || 'Selecciona Municipi' }}
+          </span>
         </button>
-      </div>
-      <div class="flex-1 px-2 mx-2 text-xl font-bold">Gobernanza de Datos</div>
-    </div>
-    
-    <!-- Contenido Principal -->
-    <main class="flex-1 overflow-y-auto bg-base-200 p-6">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
-  
-  <!-- Sidebar -->
-  <div class="drawer-side border-r border-base-300">
-    <label for="my-drawer-2" class="drawer-overlay"></label>
-    <div class="menu w-80 min-h-full bg-base-200 text-base-content p-4">
-      <!-- Título Sidebar -->
-      <div class="mb-5 px-4 flex justify-between items-start">
-        <div class="flex-1">
-          <a routerLink="/home" class="text-2xl font-bold text-primary hover:opacity-75 transition-opacity">Gobernanza</a>
-          <p class="text-xs text-base-content/60">Dashboard Principal</p>
 
-          <!-- Chip selector de municipi -->
-          <div class="relative mt-3">
-            <button
-              class="btn btn-sm gap-1 rounded-full px-3"
-              [class.btn-primary]="municipiSeleccionat"
-              [class.btn-outline]="!municipiSeleccionat"
-              (click)="showMunicipiDropdown = !showMunicipiDropdown">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span class="text-xs font-medium max-w-[140px] truncate">
-                {{ municipiSeleccionat || 'Selecciona Municipi' }}
-              </span>
-            </button>
-
-            @if (showMunicipiDropdown) {
-              <div class="absolute z-50 top-full left-0 mt-1 w-64 bg-base-100 border border-base-300 rounded-box shadow-xl">
-                <div class="p-2 border-b border-base-200">
-                  <input
-                    type="text"
-                    class="input input-sm input-bordered w-full"
-                    placeholder="Cerca municipi..."
-                    [(ngModel)]="municipiSearch"
-                    (click)="$event.stopPropagation()"
-                    autofocus />
+        @if (showMunicipiDropdown) {
+          <div class="absolute z-50 top-full left-0 mt-1 w-64 bg-base-100 border border-base-300 rounded-box shadow-xl">
+            <div class="p-2 border-b border-base-200">
+              <input
+                type="text"
+                class="input input-sm input-bordered w-full"
+                placeholder="Cerca municipi..."
+                [(ngModel)]="municipiSearch"
+                (click)="$event.stopPropagation()"
+                autofocus />
+            </div>
+            <div class="max-h-56 overflow-y-auto">
+              @if (municipisFiltered.length === 0) {
+                <div class="p-3 text-sm text-base-content/50 italic">Cap resultat</div>
+              }
+              @for (m of municipisFiltered; track m) {
+                <div
+                  class="px-4 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-content transition-colors"
+                  [class.bg-primary]="m === municipiSeleccionat"
+                  [class.text-primary-content]="m === municipiSeleccionat"
+                  (click)="selectMunicipi(m)">
+                  {{m}}
                 </div>
-                <div class="max-h-56 overflow-y-auto">
-                  @if (municipisFiltered.length === 0) {
-                    <div class="p-3 text-sm text-base-content/50 italic">Cap resultat</div>
-                  }
-                  @for (m of municipisFiltered; track m) {
-                    <div
-                      class="px-4 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-content transition-colors"
-                      [class.bg-primary]="m === municipiSeleccionat"
-                      [class.text-primary-content]="m === municipiSeleccionat"
-                      (click)="selectMunicipi(m)">
-                      {{m}}
-                    </div>
-                  }
-                </div>
-              </div>
-              <!-- backdrop -->
-              <div class="fixed inset-0 z-40" (click)="showMunicipiDropdown = false; municipiSearch = ''"></div>
-            }
+              }
+            </div>
           </div>
-        </div>
-        <button class="btn btn-ghost btn-sm btn-square hidden lg:flex" (click)="toggleSidebar()" title="Colapsar menú">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-        </button>
+          <!-- backdrop -->
+          <div class="fixed inset-0 z-40" (click)="showMunicipiDropdown = false; municipiSearch = ''"></div>
+        }
       </div>
-      <ul class="menu">
-        <!-- Pestaña 1 -->
+
+      <!-- Zona Auth / Admin (se empuja a la derecha) -->
+      <div class="flex items-center gap-2 ml-auto">
+        @if (authService.isAdmin$ | async) {
+          <a routerLink="/admin" routerLinkActive="text-primary font-bold" class="btn btn-ghost btn-sm gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Admin
+          </a>
+        }
+        @if (authService.user$ | async; as user) {
+          <span class="text-xs opacity-75 hidden md:inline truncate max-w-[180px]">{{user.email}}</span>
+          <button (click)="authService.logout()" class="btn btn-ghost btn-sm text-error gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+            <span class="hidden sm:inline">Cerrar sesión</span>
+          </button>
+        } @else {
+          <a routerLink="/login" class="btn btn-ghost btn-sm text-primary gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+            Iniciar sesión
+          </a>
+        }
+      </div>
+    </div>
+
+    <!-- Fila 2: navegación principal -->
+    <nav class="border-t border-base-200 px-2 overflow-x-auto">
+      <ul class="menu menu-horizontal flex-nowrap gap-1 p-0 py-1">
         <li>
-          <a routerLink="/questionari" routerLinkActive="active font-bold text-primary">
+          <a routerLink="/questionari" routerLinkActive="active font-bold text-primary" class="rounded-lg whitespace-nowrap">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
             1. 1B Quëstionari d'avaluació
           </a>
         </li>
-        <!-- Pestaña 2 -->
         <li>
-          <a routerLink="/inventari" routerLinkActive="active font-bold text-primary">
+          <a routerLink="/inventari" routerLinkActive="active font-bold text-primary" class="rounded-lg whitespace-nowrap">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>
             2. 3B. Inventari
           </a>
         </li>
-        <!-- Pestaña 3 -->
         <li>
-          <a routerLink="/glossari" routerLinkActive="active font-bold text-primary">
+          <a routerLink="/glossari" routerLinkActive="active font-bold text-primary" class="rounded-lg whitespace-nowrap">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
             3. 3C. Glossari
           </a>
         </li>
       </ul>
-      
-      <!-- Zona inferior Auth / Admin -->
-      <div class="mt-auto border-t border-base-300 pt-4">
-        <ul class="menu p-0">
-          @if (authService.isAdmin$ | async) {
-            <li>
-              <a routerLink="/admin" routerLinkActive="active font-bold text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Admin
-              </a>
-            </li>
-          }
-          @if (authService.user$ | async; as user) {
-            <li class="mt-2 text-xs opacity-75 px-4 mb-2 truncate">Conectado como: {{user.email}}</li>
-            <li>
-              <button (click)="authService.logout()" class="text-error">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                Cerrar sesión
-              </button>
-            </li>
-          } @else {
-            <li>
-              <a routerLink="/login" class="text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
-                Iniciar sesión
-              </a>
-            </li>
-          }
-        </ul>
-      </div>
-    </div>
-  </div>
+    </nav>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="flex-1 overflow-y-auto bg-base-200 p-6">
+    <router-outlet></router-outlet>
+  </main>
 </div>

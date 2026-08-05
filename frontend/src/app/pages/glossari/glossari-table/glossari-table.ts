@@ -5,8 +5,12 @@ import { of, Subject } from 'rxjs';
 import { catchError, debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
+import { ToastService } from '../../../services/toast.service';
 import { toSlug } from '../../../utils/slug';
+import { getHttpErrorCode } from '../../../utils/http-error';
 import { environment } from '../../../../environments/environment';
+import { fillEmptyFields, randomEmail, randomFrom, randomName, randomUnitat, randomWords } from '../../../utils/fake-data';
+import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
 
 export interface GlossariRow {
   terme: string;
@@ -34,7 +38,7 @@ type GlossariTab = 'mestres' | 'referencia' | 'negoci';
 
 @Component({
   selector: 'app-glossari-table',
-  imports: [FormsModule],
+  imports: [FormsModule, FakeDataButton],
   templateUrl: './glossari-table.html',
   styleUrl: './glossari-table.css',
 })
@@ -147,6 +151,7 @@ export class GlossariTable implements OnInit, OnDestroy {
   constructor(
     private readonly http: HttpClient,
     private readonly municipiService: MunicipiService,
+    private readonly toast: ToastService,
   ) {}
 
   ngOnInit(): void {
@@ -204,6 +209,30 @@ export class GlossariTable implements OnInit, OnDestroy {
 
   removeRow(index: number): void {
     this.currentData.splice(index, 1);
+    this.saveData();
+  }
+
+  /** Omple la pestanya activa amb dades de glossari versemblants (crea una fila si cal) i desa immediatament */
+  fillFakeData(): void {
+    if (this.currentData.length === 0) {
+      this.currentData.push({ ...this.emptyRow });
+    }
+    fillEmptyFields(this.currentData, {
+      terme: () => randomWords(1, 2),
+      descripcio: () => randomWords(4, 10),
+      dominiFuncional: () => randomWords(1, 2),
+      tipus: () => randomFrom(['Text', 'Numèric', 'Data', 'Booleà']),
+      descFormat: () => randomFrom(['VARCHAR(255)', 'INTEGER', 'DATE', 'BOOLEAN']),
+      formula: () => randomWords(2, 5),
+      comentaris: () => randomWords(3, 8),
+      alies: () => randomWords(1, 3),
+      refGovern: () => randomName(),
+      emailRefGov: () => randomEmail(),
+      unitatRefGov: () => randomUnitat(),
+      respFuncional: () => randomName(),
+      emailRespFunc: () => randomEmail(),
+      unitatRespFunc: () => randomUnitat(),
+    });
     this.saveData();
   }
 
@@ -265,7 +294,11 @@ export class GlossariTable implements OnInit, OnDestroy {
       dadesNegoci: this.dadesNegoci,
     };
     this.http.post(`${API_BASE}/api/data/municipis/${slug}/glossari`, payload).subscribe({
-      error: (error) => console.error('Error saving glossari', error),
+      next: () => this.toast.success(),
+      error: (error) => {
+        console.error('Error saving glossari', error);
+        this.toast.error(`Error ${getHttpErrorCode(error)} al intentar guardar el dato`);
+      },
     });
   }
 

@@ -5,7 +5,11 @@ import { Subject, of } from 'rxjs';
 import { catchError, switchMap, takeUntil } from 'rxjs/operators';
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
+import { ToastService } from '../../../services/toast.service';
 import { toSlug } from '../../../utils/slug';
+import { getHttpErrorCode } from '../../../utils/http-error';
+import { fillEmptyFields, randomFrom, randomInt, randomWords, randomYesNo } from '../../../utils/fake-data';
+import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
 
 const EMPTY_ENTITAT = () => ({
   nom: '', descripcio: '', sistema: '', termesGlossari: '', tipus: '',
@@ -121,7 +125,7 @@ const MOCK_ENTITATS = [
 
 @Component({
   selector: 'app-entitats',
-  imports: [FormsModule],
+  imports: [FormsModule, FakeDataButton],
   templateUrl: './entitats.html',
   styleUrl: './entitats.css',
   standalone: true,
@@ -156,6 +160,7 @@ export class Entitats implements OnInit, OnDestroy {
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private municipiService: MunicipiService,
+    private toast: ToastService,
   ) {}
 
   ngOnInit() {
@@ -224,7 +229,11 @@ export class Entitats implements OnInit, OnDestroy {
     }
     const slug = toSlug(this.municipiActual);
     this.http.post(`${API_BASE}/api/data/municipis/${slug}/entitats`, { entitats: this.entitats }).subscribe({
-      error: (err) => console.error('Error saving entitats', err)
+      next: () => this.toast.success(),
+      error: (err) => {
+        console.error('Error saving entitats', err);
+        this.toast.error(`Error ${getHttpErrorCode(err)} al intentar guardar el dato`);
+      }
     });
   }
 
@@ -248,6 +257,51 @@ export class Entitats implements OnInit, OnDestroy {
 
   deleteItem(index: number) {
     this.entitats.splice(index, 1);
+    this.saveData();
+  }
+
+  /** Omple l'inventari amb entitats versemblants (crea files si cal) i desa immediatament */
+  fillFakeData(): void {
+    if (this.entitats.length === 0) {
+      this.entitats = Array.from({ length: 4 }, () => ({
+        ...EMPTY_ENTITAT(),
+        nom: randomWords(1, 2),
+      }));
+    }
+    fillEmptyFields(this.entitats, {
+      descripcio: () => randomWords(4, 10),
+      sistema: () => randomWords(1, 1),
+      termesGlossari: () => randomWords(1, 2),
+      tipus: () => randomFrom(this.tipusOptions),
+      infoGeografica: () => randomYesNo(),
+      infoCiutadania: () => randomYesNo(),
+      infoEmpreses: () => randomYesNo(),
+      infoGenere: () => randomYesNo(),
+      valoracioLlindar: () => randomWords(3, 8),
+      valoracioEsbiaixos: () => randomWords(3, 8),
+      valoracioQualitat: () => `${randomInt(60, 100)}%`,
+      proteccioDades: () => randomFrom(this.proteccioOptions),
+      visibilitat: () => randomFrom(this.visibilitatOptions),
+      intraoperabilitat: () => randomYesNo(),
+      interoperabilitat: () => randomYesNo(),
+      interesCiutadania: () => randomYesNo(),
+      obertura: () => randomFrom(this.oberturaOptions),
+      restriccionsObertura: () => randomWords(2, 6),
+      entUnicaVegada: () => randomYesNo(),
+      llengControlats: () => randomYesNo(),
+      completesHistoric: () => `${randomInt(60, 100)}%`,
+      completesActuals: () => `${randomInt(60, 100)}%`,
+      enviamentsPeriodics: () => randomYesNo(),
+      criticitat: () => randomYesNo(),
+      quadresComandament: () => randomYesNo(),
+      referentTecnic: () => randomWords(1, 2),
+      emailReferent: () => `${randomWords(1, 1).toLowerCase()}@municipi.cat`,
+      unitatReferent: () => randomWords(1, 2),
+      arquitecteDada: () => randomWords(1, 2),
+      emailArquitecte: () => `${randomWords(1, 1).toLowerCase()}@municipi.cat`,
+      unitatArquitecte: () => randomWords(1, 2),
+      observacions: () => randomWords(3, 8),
+    });
     this.saveData();
   }
 }
