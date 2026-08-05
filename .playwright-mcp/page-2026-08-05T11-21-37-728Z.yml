@@ -1,0 +1,149 @@
+- generic [ref=f2e4]:
+  - banner [ref=f2e5]:
+    - generic [ref=f2e6]:
+      - link "Gobernanza Dashboard Principal" [ref=f2e7] [cursor=pointer]:
+        - /url: /home
+        - generic [ref=f2e8]: Gobernanza
+        - generic [ref=f2e9]: Dashboard Principal
+      - button "Premià de Dalt" [ref=f2e11] [cursor=pointer]
+      - link "Iniciar sesión" [ref=f2e17] [cursor=pointer]:
+        - /url: /login
+    - navigation [ref=f2e20]:
+      - list [ref=f2e21]:
+        - listitem [ref=f2e22]:
+          - link "1B Quëstionari d'avaluació" [ref=f2e23] [cursor=pointer]:
+            - /url: /questionari
+        - listitem [ref=f2e26]:
+          - link "3B. Inventari" [ref=f2e27] [cursor=pointer]:
+            - /url: /inventari
+        - listitem [ref=f2e30]:
+          - link "3C. Glossari" [ref=f2e31] [cursor=pointer]:
+            - /url: /glossari
+  - main [ref=f2e34]:
+    - generic [ref=f2e36]:
+      - tablist [ref=f2e37]:
+        - tab "Sistemas" [ref=f2e38] [cursor=pointer]
+        - tab "Entitats" [ref=f2e39] [cursor=pointer]
+        - tab "Atributs" [ref=f2e40] [cursor=pointer]
+        - tab "Rel. Atributs" [ref=f2e41] [cursor=pointer]
+        - tab "Llistes" [ref=f2e42] [cursor=pointer]
+        - tab "Llegenda" [ref=f2e43] [cursor=pointer]
+      - generic [ref=f2e45]:
+        - generic [ref=f2e47]:
+          - heading [level=2] [ref=f2e48]:
+            - generic [ref=f2e49]: Inventari de Sistemes
+            - button "Fake data" [ref=f2e53] [cursor=pointer]
+          - table [ref=f2e55]:
+            - rowgroup [ref=f2e56]:
+              - row [ref=f2e57]:
+                - columnheader "Nom curt" [ref=f2e58]
+                - columnheader "És extern?" [ref=f2e59]
+                - columnheader "Descripció" [ref=f2e60]
+                - columnheader "Tipus" [ref=f2e61]
+                - columnheader "Proveïdor" [ref=f2e62]
+                - columnheader "Admin de sistemes" [ref=f2e63]
+                - columnheader "Email Admin" [ref=f2e64]
+                - columnheader "Dept. Admin" [ref=f2e65]
+                - columnheader "Arquitecte de la dada" [ref=f2e66]
+                - columnheader "Email Arquitecte" [ref=f2e67]
+                - columnheader "Dept. Arquitecte" [ref=f2e68]
+                - columnheader "Accions" [ref=f2e69]
+            - rowgroup
+          - button "Afegir sistema" [ref=f2e71] [cursor=pointer]
+        - dialog:
+          - generic:
+            - heading "Afegir Sistema" [level=3]
+            - generic:
+              - generic:
+                - generic: Nom curt
+                - combobox "Nom curt":
+                  - option "Selecciona un programa..." [disabled] [selected]
+                  - option "Audifilm / AL_G_A"
+                  - option "SICAL / TAO"
+                  - option "Gestiona"
+                  - option "Savilla / Ginpix7"
+                  - option "Rosmiman"
+                  - option "Mejoras Energéticas"
+                  - option "Aytos / SicalWin"
+                  - option "Modulo Informatica / WinLocal"
+                  - option "Efial"
+                  - option "Nexus Geographics"
+                  - option "AbsysNet"
+                  - option "Vortal"
+                  - option "Spai"
+                  - option "ATM Mediatraffic"
+                  - option "CST / DRAG"
+                  - option "Otros (escriu manualment)"
+              - generic:
+                - generic: És extern?
+                - combobox "És extern?":
+                  - option "Sí"
+                  - option "No" [selected]
+              - generic:
+                - generic: Descripció
+                - textbox "Descripció"
+              - generic:
+                - generic: Tipus
+                - combobox "Tipus":
+                  - option "Selecciona un tipus..." [disabled] [selected]
+                  - option "Gestió tributària i recaptació"
+                  - option "Comptabilitat i pressupost"
+                  - option "Gestió de recursos humans i nòmines"
+                  - option "Registre general d'entrada i sortida"
+                  - option "Gestió d'expedients i tramitació electrònica"
+                  - option "Padró municipal d'habitants"
+                  - option "Gestió d'urbanisme i llicències"
+                  - option "Gestió de manteniment d'infraestructures"
+                  - option "Gestió energètica i medi ambient"
+                  - option "Sistemes d'informació geogràfica (SIG/GIS)"
+                  - option "Gestió de biblioteques"
+                  - option "Contractació pública i compres"
+                  - option "Portal de transparència i govern obert"
+                  - option "Gestió de cementiri"
+                  - option "Gestió de multes i sancions"
+                  - option "Gestió de subvencions"
+                  - option "Atenció ciutadana (CRM)"
+                  - option "Gestió d'inventari i patrimoni"
+                  - option "Otros (escriu manualment)"
+              - generic:
+                - generic: Proveïdor
+                - combobox "Proveïdor":
+                  - option "Selecciona un proveïdor..." [disabled] [selected]
+                  - option "Berger-Levrault"
+                  - option "T-Systems"
+                  - option "EsPúblico"
+                  - option "Savia"
+                  - option "Rosmiman Software Corporation"
+                  - option "Grupo FCC"
+                  - option "Modulo Informatica"
+                  - option "Consultoría y Gestión Local"
+                  - option "Nexus Geographics"
+                  - option "Baratz"
+                  - option "Vortal"
+                  - option "Spai Innova"
+                  - option "ATM"
+                  - option "Seidor"
+                  - option "Otros (escriu manualment)"
+              - generic:
+                - generic: Admin de sistemes
+                - textbox "Admin de sistemes"
+              - generic:
+                - generic: Email Admin
+                - textbox "Email Admin"
+              - generic:
+                - generic: Dept. Admin
+                - textbox "Dept. Admin"
+              - generic:
+                - generic: Arquitecte de la dada
+                - textbox "Arquitecte de la dada"
+              - generic:
+                - generic: Email Arquitecte
+                - textbox "Email Arquitecte"
+              - generic:
+                - generic: Dept. Arquitecte
+                - textbox "Dept. Arquitecte"
+            - generic:
+              - button "Cancel·lar"
+              - button "Guardar"
+          - generic:
+            - button "close"
