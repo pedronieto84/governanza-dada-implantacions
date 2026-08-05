@@ -8,7 +8,6 @@ import { MunicipiService } from '../../../services/municipi.service';
 import { ToastService } from '../../../services/toast.service';
 import { toSlug } from '../../../utils/slug';
 import { getHttpErrorCode } from '../../../utils/http-error';
-import { environment } from '../../../../environments/environment';
 import { fillEmptyFields, randomEmail, randomFrom, randomName, randomUnitat, randomWords } from '../../../utils/fake-data';
 import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
 
@@ -168,7 +167,6 @@ export class GlossariTable implements OnInit, OnDestroy {
           this.isLoading = true;
           const localData = this.loadLocalData(municipi);
           if (localData) this.applyData(localData);
-          if (!environment.production) return of(localData);
           const slug = toSlug(municipi);
           return this.http
             .get<Partial<typeof this.templateData>>(`${API_BASE}/api/data/municipis/${slug}/glossari`)
@@ -285,7 +283,6 @@ export class GlossariTable implements OnInit, OnDestroy {
     if (!this.municipiActual) return;
 
     this.persistLocally();
-    if (!environment.production) return;
 
     const slug = toSlug(this.municipiActual);
     const payload = {

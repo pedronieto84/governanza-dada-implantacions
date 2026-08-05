@@ -11,10 +11,13 @@
         <span class="loading loading-spinner loading-lg text-primary"></span>
       </div>
     } @else {
-    <div role="tablist" class="tabs tabs-bordered px-4 pt-2">
-      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'mestres'" (click)="setActiveTab('mestres')">Dades Mestres</button>
-      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'referencia'" (click)="setActiveTab('referencia')">Dades de Referència</button>
-      <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'negoci'" (click)="setActiveTab('negoci')">Dades de Negoci</button>
+    <div class="flex flex-wrap items-center gap-3 px-4 pt-2">
+      <div role="tablist" class="tabs tabs-bordered">
+        <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'mestres'" (click)="setActiveTab('mestres')">Dades Mestres</button>
+        <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'referencia'" (click)="setActiveTab('referencia')">Dades de Referència</button>
+        <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'negoci'" (click)="setActiveTab('negoci')">Dades de Negoci</button>
+      </div>
+      <app-fake-data-button (fill)="fillFakeData()" />
     </div>
 
     <div class="p-3 border-b border-base-300 flex flex-wrap justify-between items-center gap-3 bg-base-100">
@@ -30,7 +33,6 @@
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14M5 12h14"/></svg>
           Afegir fila
         </button>
-        <app-fake-data-button (fill)="fillFakeData()" />
       </div>
     </div>
 

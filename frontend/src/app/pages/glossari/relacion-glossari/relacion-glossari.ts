@@ -8,7 +8,6 @@ import { MunicipiService } from '../../../services/municipi.service';
 import { ToastService } from '../../../services/toast.service';
 import { toSlug } from '../../../utils/slug';
 import { getHttpErrorCode } from '../../../utils/http-error';
-import { environment } from '../../../../environments/environment';
 import { fillEmptyFields, randomFrom, randomWords } from '../../../utils/fake-data';
 import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
 
@@ -75,9 +74,6 @@ export class RelacionGlossari implements OnInit, OnDestroy {
           this.isLoading = true;
           const localData = this.loadLocalData(municipi);
           if (localData) this.relacions = localData;
-          if (!environment.production) {
-            return of(localData ? { relacions: localData } : null);
-          }
           const slug = toSlug(municipi);
           return this.http
             .get<{ relacions?: RelacioGlossariRow[] }>(
@@ -168,7 +164,6 @@ export class RelacionGlossari implements OnInit, OnDestroy {
     if (!this.municipiActual) return;
 
     this.persistLocally();
-    if (!environment.production) return;
 
     const slug = toSlug(this.municipiActual);
     this.http

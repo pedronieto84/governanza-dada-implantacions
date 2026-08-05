@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-6">
-  <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+  <div class="flex flex-wrap items-center gap-3 mb-4">
     <div role="tablist" class="tabs tabs-boxed w-fit">
       @for (seccio of seccions; track seccio.ambit) {
         <a role="tab" class="tab" [class.tab-active]="activeSeccio === seccio.ambit" (click)="activeSeccio = seccio.ambit">{{ seccio.ambit }}</a>
@@ -11,7 +11,6 @@
   @for (seccio of seccions; track seccio.ambit) {
     @if (activeSeccio === seccio.ambit) {
     <div>
-      <h2 class="text-2xl font-bold text-primary mb-3">{{ seccio.ambit }}</h2>
       <div class="overflow-x-auto rounded-xl border border-base-200 shadow">
         <table class="table table-zebra w-full">
           <thead>

@@ -6,7 +6,9 @@ import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
 import { API_BASE } from '../../../api.config';
 import { MunicipiService } from '../../../services/municipi.service';
+import { ToastService } from '../../../services/toast.service';
 import { toSlug } from '../../../utils/slug';
+import { getHttpErrorCode } from '../../../utils/http-error';
 import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
 
 interface QuestionariPayload {
@@ -33,6 +35,7 @@ export class FormQuestionari implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private municipiService: MunicipiService,
+    private toast: ToastService,
   ) {
     this.activeSeccio = this.seccions[0]?.ambit ?? '';
   }
@@ -76,7 +79,13 @@ export class FormQuestionari implements OnInit, OnDestroy {
     };
     this.http
       .post(`${API_BASE}/api/data/municipis/${toSlug(this.municipiActual)}/questionari`, payload)
-      .subscribe({ error: (error) => console.error('Error saving Qüestionari data', error) });
+      .subscribe({
+        next: () => this.toast.success(),
+        error: (error) => {
+          console.error('Error saving Qüestionari data', error);
+          this.toast.error(`Error ${getHttpErrorCode(error)} al intentar guardar el dato`);
+        },
+      });
   }
 
   private resetForm(): void {

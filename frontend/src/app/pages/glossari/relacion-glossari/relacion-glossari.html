@@ -3,6 +3,7 @@
     <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" /></svg>
       Relacions no Jeràrquiques del Glossari
+      <app-fake-data-button (fill)="fillFakeData()" />
     </h2>
     @if (isLoading) {
       <div class="flex justify-center items-center py-12">
@@ -18,7 +19,6 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14M5 12h14"/></svg>
         Afegir fila
       </button>
-      <app-fake-data-button (fill)="fillFakeData()" />
     </div>
     <div class="overflow-x-auto w-full">
       <table class="table table-bordered table-zebra table-sm w-full text-xs">
