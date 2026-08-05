@@ -10,6 +10,7 @@ import { toSlug } from '../../../utils/slug';
 import { getHttpErrorCode } from '../../../utils/http-error';
 import { fillEmptyFields, randomEmail, randomFrom, randomName, randomUnitat, randomWords } from '../../../utils/fake-data';
 import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
+import { StickyStackDirective } from '../../../shared/sticky-stack.directive';
 
 export interface GlossariRow {
   terme: string;
@@ -37,7 +38,7 @@ type GlossariTab = 'mestres' | 'referencia' | 'negoci';
 
 @Component({
   selector: 'app-glossari-table',
-  imports: [FormsModule, FakeDataButton],
+  imports: [FormsModule, FakeDataButton, StickyStackDirective],
   templateUrl: './glossari-table.html',
   styleUrl: './glossari-table.css',
 })

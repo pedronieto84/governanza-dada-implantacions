@@ -10,6 +10,7 @@ import { ToastService } from '../../../services/toast.service';
 import { toSlug } from '../../../utils/slug';
 import { getHttpErrorCode } from '../../../utils/http-error';
 import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
+import { StickyStackDirective } from '../../../shared/sticky-stack.directive';
 
 interface QuestionariPayload {
   answers: Record<string, string>;
@@ -50,7 +51,7 @@ const TERMINI_OPTIONS = [
 
 @Component({
   selector: 'app-pla-accions',
-  imports: [FormsModule, FakeDataButton],
+  imports: [FormsModule, FakeDataButton, StickyStackDirective],
   templateUrl: './pla-accions.html',
   styleUrl: './pla-accions.css',
 })

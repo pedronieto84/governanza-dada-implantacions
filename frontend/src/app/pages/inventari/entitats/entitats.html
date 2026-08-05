@@ -1,6 +1,6 @@
 <div class="card bg-base-100 shadow-xl border border-base-200">
   <div class="card-body p-0">
-    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2" [stickyStack]="1">
       <span class="flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
         Entitats (conjunts de dades)
@@ -13,12 +13,12 @@
         <span class="loading loading-spinner loading-lg text-primary"></span>
       </div>
     } @else {
-      <div class="p-3 border-b border-base-200">
+      <div class="p-3 border-b border-base-200 bg-base-100" [stickyStack]="2">
         <input type="text" class="input input-sm input-bordered w-full max-w-sm" placeholder="🔍 Filtrar..." [(ngModel)]="filterText" />
       </div>
       <div class="overflow-x-auto w-full">
         <table class="table table-zebra table-xs w-full" style="min-width: 3200px;">
-          <thead>
+          <thead [stickyStack]="3">
             <tr class="bg-primary text-primary-content text-xs">
               <th class="w-10 sticky left-0 bg-primary z-10">Id</th>
               <th class="min-w-28 cursor-pointer select-none whitespace-nowrap" (click)="sort('nom')">Nom <span class="opacity-60">{{ sortColumn === 'nom' ? (sortDir === 'asc' ? '↑' : '↓') : '↕' }}</span></th>

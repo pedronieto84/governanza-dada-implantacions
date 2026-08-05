@@ -14,6 +14,7 @@ import { toSlug } from '../../../utils/slug';
 import { getHttpErrorCode } from '../../../utils/http-error';
 import { fillEmptyFields, randomEmail, randomInt, randomName, randomWords } from '../../../utils/fake-data';
 import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
+import { StickyStackDirective } from '../../../shared/sticky-stack.directive';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-butto
   templateUrl: './mapa-responsables.html',
   styleUrl: './mapa-responsables.css',
   standalone: true,
-  imports: [FormsModule, FakeDataButton]
+  imports: [FormsModule, FakeDataButton, StickyStackDirective]
 })
 export class MapaResponsables implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

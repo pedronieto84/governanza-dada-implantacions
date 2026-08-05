@@ -10,6 +10,7 @@ import { toSlug } from '../../../utils/slug';
 import { getHttpErrorCode } from '../../../utils/http-error';
 import { fillEmptyFields, randomFrom, randomInt, randomWords, randomYesNo } from '../../../utils/fake-data';
 import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
+import { StickyStackDirective } from '../../../shared/sticky-stack.directive';
 
 const EMPTY_ENTITAT = () => ({
   nom: '', descripcio: '', sistema: '', termesGlossari: '', tipus: '',
@@ -125,7 +126,7 @@ const MOCK_ENTITATS = [
 
 @Component({
   selector: 'app-entitats',
-  imports: [FormsModule, FakeDataButton],
+  imports: [FormsModule, FakeDataButton, StickyStackDirective],
   templateUrl: './entitats.html',
   styleUrl: './entitats.css',
   standalone: true,

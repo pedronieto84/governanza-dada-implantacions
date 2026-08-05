@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-6">
-  <div class="flex flex-wrap items-center gap-3 mb-4">
+  <div class="flex flex-wrap items-center gap-3 mb-4 bg-base-100" [stickyStack]="1">
     <div role="tablist" class="tabs tabs-boxed w-fit">
       @for (seccio of seccions; track seccio.ambit) {
         <a role="tab" class="tab" [class.tab-active]="activeSeccio === seccio.ambit" (click)="activeSeccio = seccio.ambit">{{ seccio.ambit }}</a>
@@ -19,7 +19,7 @@
     <div>
       <div class="overflow-x-auto rounded-xl border border-base-200 shadow">
         <table class="table table-bordered table-xs w-full text-center min-w-[1800px]">
-          <thead>
+          <thead [stickyStack]="2">
             <tr class="bg-primary text-primary-content">
               <th rowspan="2" class="w-16 border-r border-base-300">Id.</th>
               <th colspan="4" class="border-r border-base-300">Respostes</th>

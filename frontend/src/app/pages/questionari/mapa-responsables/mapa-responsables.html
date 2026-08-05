@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-8">
   <!-- Capçalera: submenú de subtaules + toggle a l'esquerra, Tabla/Organigrama a la dreta -->
-  <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-4 bg-base-100" [stickyStack]="1">
     @if (viewMode === 'tabla' && !isLoading) {
       <div class="flex flex-wrap items-center gap-3">
         <div role="tablist" class="tabs tabs-boxed">
@@ -49,7 +49,7 @@
   <!-- Rols Clau -->
   <div class="card bg-base-100 shadow-xl border border-base-200">
     <div class="card-body p-0">
-      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center gap-3">
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center gap-3" [stickyStack]="2">
         <span>Rols Clau</span>
         <div class="flex items-center gap-2">
           <button class="btn btn-sm text-primary bg-base-100 hover:bg-base-200 border-none shadow-sm" (click)="populateTable('rolsClau')">
@@ -65,19 +65,19 @@
       </h2>
       <div class="overflow-x-auto">
         <table class="table table-zebra w-full">
-          <thead>
-            <tr class="bg-base-200 text-base">
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('rolsClau', 'name')">
+          <thead [stickyStack]="3">
+            <tr class="bg-primary text-primary-content text-base">
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('rolsClau', 'name')">
                 <span class="flex items-center gap-1">Rol <span class="text-xs opacity-60">{{getSortIcon('rolsClau', 'name')}}</span>
                   <button type="button" class="btn btn-circle btn-ghost btn-xs" (click)="$event.stopPropagation(); isRolsInfoModalOpen = true" title="Informació dels rols">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
                   </button>
                 </span>
               </th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('rolsClau', 'resp')">Responsable <span class="text-xs opacity-60">{{getSortIcon('rolsClau', 'resp')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('rolsClau', 'email')">Correu responsable <span class="text-xs opacity-60">{{getSortIcon('rolsClau', 'email')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('rolsClau', 'phone')">Telèfon responsable <span class="text-xs opacity-60">{{getSortIcon('rolsClau', 'phone')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('rolsClau', 'obs')">Observacions <span class="text-xs opacity-60">{{getSortIcon('rolsClau', 'obs')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('rolsClau', 'resp')">Responsable <span class="text-xs opacity-60">{{getSortIcon('rolsClau', 'resp')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('rolsClau', 'email')">Correu responsable <span class="text-xs opacity-60">{{getSortIcon('rolsClau', 'email')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('rolsClau', 'phone')">Telèfon responsable <span class="text-xs opacity-60">{{getSortIcon('rolsClau', 'phone')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('rolsClau', 'obs')">Observacions <span class="text-xs opacity-60">{{getSortIcon('rolsClau', 'obs')}}</span></th>
               <th class="w-20">Accions</th>
             </tr>
           </thead>
@@ -118,7 +118,7 @@
   <!-- Àrees / Dominis -->
   <div class="card bg-base-100 shadow-xl border border-base-200">
     <div class="card-body p-0">
-      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center gap-3">
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center gap-3" [stickyStack]="2">
         <span>Àrees / Dominis</span>
         <div class="relative">
           <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-base-content/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -128,13 +128,13 @@
       </h2>
       <div class="overflow-x-auto">
         <table class="table table-zebra w-full">
-          <thead>
-            <tr class="bg-base-200 text-base">
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('arees', 'name')">Nom de l'àrea <span class="text-xs opacity-60">{{getSortIcon('arees', 'name')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('arees', 'resp')">Responsable <span class="text-xs opacity-60">{{getSortIcon('arees', 'resp')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('arees', 'email')">Correu responsable <span class="text-xs opacity-60">{{getSortIcon('arees', 'email')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('arees', 'phone')">Telèfon responsable <span class="text-xs opacity-60">{{getSortIcon('arees', 'phone')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('arees', 'obs')">Observacions <span class="text-xs opacity-60">{{getSortIcon('arees', 'obs')}}</span></th>
+          <thead [stickyStack]="3">
+            <tr class="bg-primary text-primary-content text-base">
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('arees', 'name')">Nom de l'àrea <span class="text-xs opacity-60">{{getSortIcon('arees', 'name')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('arees', 'resp')">Responsable <span class="text-xs opacity-60">{{getSortIcon('arees', 'resp')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('arees', 'email')">Correu responsable <span class="text-xs opacity-60">{{getSortIcon('arees', 'email')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('arees', 'phone')">Telèfon responsable <span class="text-xs opacity-60">{{getSortIcon('arees', 'phone')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('arees', 'obs')">Observacions <span class="text-xs opacity-60">{{getSortIcon('arees', 'obs')}}</span></th>
               <th class="w-20">Accions</th>
             </tr>
           </thead>
@@ -183,7 +183,7 @@
   @if (showProcessos) {
   <div class="card bg-base-100 shadow-xl border border-base-200">
     <div class="card-body p-0">
-      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center gap-3">
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center gap-3" [stickyStack]="2">
         <span>Processos clau</span>
         <div class="flex items-center gap-2">
           <button class="btn btn-sm text-primary bg-base-100 hover:bg-base-200 border-none shadow-sm" (click)="populateTable('processos')">
@@ -199,13 +199,13 @@
       </h2>
       <div class="overflow-x-auto">
         <table class="table table-zebra w-full">
-          <thead>
-            <tr class="bg-base-200 text-base">
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('processos', 'name')">Nom del procés <span class="text-xs opacity-60">{{getSortIcon('processos', 'name')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('processos', 'resp')">Responsable <span class="text-xs opacity-60">{{getSortIcon('processos', 'resp')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('processos', 'email')">Correu responsable <span class="text-xs opacity-60">{{getSortIcon('processos', 'email')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('processos', 'phone')">Telèfon responsable <span class="text-xs opacity-60">{{getSortIcon('processos', 'phone')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('processos', 'obs')">Observacions <span class="text-xs opacity-60">{{getSortIcon('processos', 'obs')}}</span></th>
+          <thead [stickyStack]="3">
+            <tr class="bg-primary text-primary-content text-base">
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('processos', 'name')">Nom del procés <span class="text-xs opacity-60">{{getSortIcon('processos', 'name')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('processos', 'resp')">Responsable <span class="text-xs opacity-60">{{getSortIcon('processos', 'resp')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('processos', 'email')">Correu responsable <span class="text-xs opacity-60">{{getSortIcon('processos', 'email')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('processos', 'phone')">Telèfon responsable <span class="text-xs opacity-60">{{getSortIcon('processos', 'phone')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('processos', 'obs')">Observacions <span class="text-xs opacity-60">{{getSortIcon('processos', 'obs')}}</span></th>
               <th class="w-20">Accions</th>
             </tr>
           </thead>
@@ -261,7 +261,7 @@
   <!-- Projectes estratègics -->
   <div class="card bg-base-100 shadow-xl border border-base-200">
     <div class="card-body p-0">
-      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center gap-3">
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center gap-3" [stickyStack]="2">
         <span>Projectes estratègics (p.e. PAM, Dades obertes etc.)</span>
         <div class="flex items-center gap-2">
           <button class="btn btn-sm text-primary bg-base-100 hover:bg-base-200 border-none shadow-sm" (click)="populateTable('projectes')">
@@ -277,13 +277,13 @@
       </h2>
       <div class="overflow-x-auto">
         <table class="table table-zebra w-full">
-          <thead>
-            <tr class="bg-base-200 text-base">
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('projectes', 'name')">Nom del projecte <span class="text-xs opacity-60">{{getSortIcon('projectes', 'name')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('projectes', 'resp')">Responsable <span class="text-xs opacity-60">{{getSortIcon('projectes', 'resp')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('projectes', 'email')">Correu responsable <span class="text-xs opacity-60">{{getSortIcon('projectes', 'email')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('projectes', 'phone')">Telèfon responsable <span class="text-xs opacity-60">{{getSortIcon('projectes', 'phone')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('projectes', 'obs')">Observacions <span class="text-xs opacity-60">{{getSortIcon('projectes', 'obs')}}</span></th>
+          <thead [stickyStack]="3">
+            <tr class="bg-primary text-primary-content text-base">
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('projectes', 'name')">Nom del projecte <span class="text-xs opacity-60">{{getSortIcon('projectes', 'name')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('projectes', 'resp')">Responsable <span class="text-xs opacity-60">{{getSortIcon('projectes', 'resp')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('projectes', 'email')">Correu responsable <span class="text-xs opacity-60">{{getSortIcon('projectes', 'email')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('projectes', 'phone')">Telèfon responsable <span class="text-xs opacity-60">{{getSortIcon('projectes', 'phone')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('projectes', 'obs')">Observacions <span class="text-xs opacity-60">{{getSortIcon('projectes', 'obs')}}</span></th>
               <th class="w-20">Accions</th>
             </tr>
           </thead>
@@ -331,7 +331,7 @@
   <!-- Altres responsables -->
   <div class="card bg-base-100 shadow-xl border border-base-200">
     <div class="card-body p-0">
-      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center gap-3">
+      <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex justify-between items-center gap-3" [stickyStack]="2">
         <span>Altres responsables</span>
         <div class="relative">
           <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-base-content/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -341,13 +341,13 @@
       </h2>
       <div class="overflow-x-auto">
         <table class="table table-zebra w-full">
-          <thead>
-            <tr class="bg-base-200 text-base">
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('altres', 'name')">Àmbit de responsabilitat <span class="text-xs opacity-60">{{getSortIcon('altres', 'name')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('altres', 'resp')">Responsable <span class="text-xs opacity-60">{{getSortIcon('altres', 'resp')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('altres', 'email')">Correu responsable <span class="text-xs opacity-60">{{getSortIcon('altres', 'email')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('altres', 'phone')">Telèfon responsable <span class="text-xs opacity-60">{{getSortIcon('altres', 'phone')}}</span></th>
-              <th class="cursor-pointer select-none hover:bg-base-300" (click)="setSort('altres', 'obs')">Observacions <span class="text-xs opacity-60">{{getSortIcon('altres', 'obs')}}</span></th>
+          <thead [stickyStack]="3">
+            <tr class="bg-primary text-primary-content text-base">
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('altres', 'name')">Àmbit de responsabilitat <span class="text-xs opacity-60">{{getSortIcon('altres', 'name')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('altres', 'resp')">Responsable <span class="text-xs opacity-60">{{getSortIcon('altres', 'resp')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('altres', 'email')">Correu responsable <span class="text-xs opacity-60">{{getSortIcon('altres', 'email')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('altres', 'phone')">Telèfon responsable <span class="text-xs opacity-60">{{getSortIcon('altres', 'phone')}}</span></th>
+              <th class="cursor-pointer select-none hover:bg-black/10" (click)="setSort('altres', 'obs')">Observacions <span class="text-xs opacity-60">{{getSortIcon('altres', 'obs')}}</span></th>
               <th class="w-20">Accions</th>
             </tr>
           </thead>

@@ -1,6 +1,6 @@
 <div class="card bg-base-100 shadow-xl border border-base-200">
   <div class="card-body p-0">
-    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2">
+    <h2 class="text-xl font-bold p-4 bg-primary text-primary-content rounded-t-2xl flex items-center gap-2" [stickyStack]="1">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" /></svg>
       Relacions no Jeràrquiques del Glossari
       <app-fake-data-button (fill)="fillFakeData()" />
@@ -10,7 +10,7 @@
         <span class="loading loading-spinner loading-lg text-primary"></span>
       </div>
     } @else {
-    <div class="p-3 border-b border-base-200 flex flex-wrap items-center justify-between gap-3">
+    <div class="p-3 border-b border-base-200 flex flex-wrap items-center justify-between gap-3 bg-base-100" [stickyStack]="2">
       <label class="input input-sm input-bordered flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg>
         <input type="search" class="grow" placeholder="Filtrar tota la taula" [(ngModel)]="filterText" />
@@ -22,7 +22,7 @@
     </div>
     <div class="overflow-x-auto w-full">
       <table class="table table-bordered table-zebra table-sm w-full text-xs">
-        <thead class="bg-primary text-primary-content text-center">
+        <thead class="bg-primary text-primary-content text-center" [stickyStack]="3">
           <tr>
             @for (column of columns; track column.key) {
               <th class="border-r border-base-300 cursor-pointer select-none" (click)="sort(column.key)">

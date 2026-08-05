@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { StickyStackDirective } from '../../../shared/sticky-stack.directive';
 
 type SortDir = 'asc' | 'desc' | null;
 
 @Component({
   selector: 'app-relacion-atributs',
-  imports: [FormsModule],
+  imports: [FormsModule, StickyStackDirective],
   templateUrl: './relacion-atributs.html',
   styleUrl: './relacion-atributs.css',
 })

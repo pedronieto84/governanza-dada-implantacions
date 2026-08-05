@@ -10,6 +10,7 @@ import { toSlug } from '../../../utils/slug';
 import { getHttpErrorCode } from '../../../utils/http-error';
 import { fillEmptyFields, randomFrom, randomWords } from '../../../utils/fake-data';
 import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
+import { StickyStackDirective } from '../../../shared/sticky-stack.directive';
 
 interface RelacioGlossariRow {
   termeOrigen: string;
@@ -24,7 +25,7 @@ type RelacioColumn = {
 
 @Component({
   selector: 'app-relacion-glossari',
-  imports: [FormsModule, FakeDataButton],
+  imports: [FormsModule, FakeDataButton, StickyStackDirective],
   templateUrl: './relacion-glossari.html',
   styleUrl: './relacion-glossari.css',
 })

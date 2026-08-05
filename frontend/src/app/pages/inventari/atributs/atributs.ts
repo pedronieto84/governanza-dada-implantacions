@@ -11,6 +11,7 @@ import { toSlug } from '../../../utils/slug';
 import { getHttpErrorCode } from '../../../utils/http-error';
 import { fillEmptyFields, randomCode, randomFrom, randomInt, randomWords, randomYesNo } from '../../../utils/fake-data';
 import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
+import { StickyStackDirective } from '../../../shared/sticky-stack.directive';
 
 const EMPTY_ATRIBUT = () => ({
   id: '', nom: '', desc: '', entitat: '', clau: '', sistema: '', tipus: '',
@@ -37,7 +38,7 @@ const DEFAULT_ATRIBUTS = [
 
 @Component({
   selector: 'app-atributs',
-  imports: [CommonModule, FormsModule, FakeDataButton],
+  imports: [CommonModule, FormsModule, FakeDataButton, StickyStackDirective],
   templateUrl: './atributs.html',
   styleUrl: './atributs.css',
   standalone: true,

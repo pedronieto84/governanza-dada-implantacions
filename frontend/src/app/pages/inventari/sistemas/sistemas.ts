@@ -11,6 +11,7 @@ import { toSlug } from '../../../utils/slug';
 import { getHttpErrorCode } from '../../../utils/http-error';
 import { fillEmptyFields, randomFrom, randomName } from '../../../utils/fake-data';
 import { FakeDataButton } from '../../../shared/fake-data-button/fake-data-button';
+import { StickyStackDirective } from '../../../shared/sticky-stack.directive';
 import {
   SOFTWARE_CATALOG,
   NOM_CURT_OPTIONS,
@@ -29,7 +30,7 @@ const EMPTY_SISTEMA = () => ({
   templateUrl: './sistemas.html',
   styleUrl: './sistemas.css',
   standalone: true,
-  imports: [FormsModule, FakeDataButton]
+  imports: [FormsModule, FakeDataButton, StickyStackDirective]
 })
 export class Sistemas implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
