@@ -1,0 +1,492 @@
+- generic [ref=f20e4]:
+  - banner [ref=f20e5]:
+    - generic [ref=f20e6]:
+      - link "Gobernanza Dashboard Principal" [ref=f20e7] [cursor=pointer]:
+        - /url: /home
+        - generic [ref=f20e8]: Gobernanza
+        - generic [ref=f20e9]: Dashboard Principal
+      - button "Premià de Dalt" [ref=f20e11] [cursor=pointer]
+      - link "Iniciar sesión" [ref=f20e17] [cursor=pointer]:
+        - /url: /login
+    - navigation [ref=f20e20]:
+      - list [ref=f20e21]:
+        - listitem [ref=f20e22]:
+          - link "1B Quëstionari d'avaluació" [ref=f20e23] [cursor=pointer]:
+            - /url: /questionari
+        - listitem [ref=f20e26]:
+          - link "3B. Inventari" [ref=f20e27] [cursor=pointer]:
+            - /url: /inventari
+        - listitem [ref=f20e30]:
+          - link "3C. Glossari" [ref=f20e31] [cursor=pointer]:
+            - /url: /glossari
+  - main [ref=f20e34]:
+    - generic [ref=f20e36]:
+      - tablist [ref=f20e37]:
+        - tab "Mapa Responsables" [ref=f20e38] [cursor=pointer]
+        - tab "Qüestionari" [ref=f20e39] [cursor=pointer]
+        - tab "Pla d'accions" [ref=f20e40] [cursor=pointer]
+        - tab "Resultat" [ref=f20e41] [cursor=pointer]
+      - generic [ref=f20e43]:
+        - generic [ref=f20e44]:
+          - generic [ref=f20e45]:
+            - generic [ref=f20e46]:
+              - tablist [ref=f20e47]:
+                - tab "Rols Clau" [ref=f20e48] [cursor=pointer]
+                - tab "Àrees / Dominis" [ref=f20e49] [cursor=pointer]
+                - tab "Projectes estratègics" [ref=f20e50] [cursor=pointer]
+                - tab "Altres Responsables" [ref=f20e51] [cursor=pointer]
+              - generic [ref=f20e52]:
+                - checkbox "Mostrar Processos clau" [ref=f20e53] [cursor=pointer]
+                - generic [ref=f20e54] [cursor=pointer]: Mostrar Processos clau
+              - button "Fake data" [ref=f20e56] [cursor=pointer]
+            - tablist [ref=f20e57]:
+              - tab "Tabla" [ref=f20e58] [cursor=pointer]
+              - tab "Organigrama" [ref=f20e59] [cursor=pointer]
+          - generic [ref=f20e61]:
+            - heading "Rols Clau Poblar" [level=2] [ref=f20e62]:
+              - generic [ref=f20e63]: Rols Clau
+              - generic [ref=f20e64]:
+                - button "Poblar" [ref=f20e65] [cursor=pointer]
+                - textbox "Cercar..." [ref=f20e69]
+            - table [ref=f20e71]:
+              - rowgroup [ref=f20e72]:
+                - row [ref=f20e73]:
+                  - columnheader "Rol ↕" [ref=f20e74] [cursor=pointer]:
+                    - generic [ref=f20e75]:
+                      - text: Rol
+                      - generic [ref=f20e76]: ↕
+                      - button "Informació dels rols" [ref=f20e77]
+                  - columnheader "Responsable ↕" [ref=f20e80] [cursor=pointer]
+                  - columnheader "Correu responsable ↕" [ref=f20e81] [cursor=pointer]
+                  - columnheader "Telèfon responsable ↕" [ref=f20e82] [cursor=pointer]
+                  - columnheader "Observacions ↕" [ref=f20e83] [cursor=pointer]
+                  - columnheader "Accions" [ref=f20e84]
+              - rowgroup [ref=f20e85]:
+                - row [ref=f20e86]:
+                  - cell "Responsable de dades (Data Stewart)" [ref=f20e87]
+                  - cell "Gemma Álvarez" [ref=f20e88]
+                  - cell [ref=f20e89]:
+                    - link:
+                      - /url: "mailto:"
+                  - cell [ref=f20e90]
+                  - cell [ref=f20e91]
+                  - cell [ref=f20e92]:
+                    - button [ref=f20e93] [cursor=pointer]
+                    - button [ref=f20e96] [cursor=pointer]
+                - row [ref=f20e99]:
+                  - cell "Propietari de dades (Data Owner)" [ref=f20e100]
+                  - cell [ref=f20e101]
+                  - cell [ref=f20e102]:
+                    - link:
+                      - /url: "mailto:"
+                  - cell [ref=f20e103]
+                  - cell [ref=f20e104]
+                  - cell [ref=f20e105]:
+                    - button [ref=f20e106] [cursor=pointer]
+                    - button [ref=f20e109] [cursor=pointer]
+                - row [ref=f20e112]:
+                  - cell "Referent de dades (Data Stewart)" [ref=f20e113]
+                  - cell "Gemma Àlvarez" [ref=f20e114]
+                  - cell [ref=f20e115]:
+                    - link "alvarezmgm@premiadedalt.cat" [ref=f20e116] [cursor=pointer]:
+                      - /url: mailto:alvarezmgm@premiadedalt.cat
+                  - cell "936931509" [ref=f20e117]
+                  - 'cell "Cap de Recursos humans i de Serveis a les persones: sol·licita accés a Informàtica per un treballador nou. RESPONSABLE DE DADES DE RECURSOS HUMANS - Decideix sobre les dades/estructura de nòmines, de treballadors. -Nòmines (SIGEP) - NetTime (control horaris), Spec - TOts tenen accès al gestor d''Expedients." [ref=f20e118]'
+                  - cell [ref=f20e119]:
+                    - button [ref=f20e120] [cursor=pointer]
+                    - button [ref=f20e123] [cursor=pointer]
+                - row [ref=f20e126]:
+                  - cell "Referent de dades (Data Stewart)" [ref=f20e127]
+                  - cell "Nuria Riera" [ref=f20e128]
+                  - cell [ref=f20e129]:
+                    - link "rieran@premiadedalt.cat" [ref=f20e130] [cursor=pointer]:
+                      - /url: mailto:rieran@premiadedalt.cat
+                  - cell "674951891" [ref=f20e131]
+                  - cell "Serveis Socials, demana a Informàtica per afegir un treballador nou. - Fan servir HESTIA del consell comarcal. Gestor d'expedients. Unitat compartida. No tè capacitat de modificar estructura de les dades" [ref=f20e132]
+                  - cell [ref=f20e133]:
+                    - button [ref=f20e134] [cursor=pointer]
+                    - button [ref=f20e137] [cursor=pointer]
+                - row [ref=f20e140]:
+                  - cell "Responsable de dades (Data Stewart)" [ref=f20e141]
+                  - cell "Teresa Pallarés" [ref=f20e142]
+                  - cell [ref=f20e143]:
+                    - link "pallarestm@premiadedalt.cat" [ref=f20e144] [cursor=pointer]:
+                      - /url: mailto:pallarestm@premiadedalt.cat
+                  - cell "670961003" [ref=f20e145]
+                  - cell "Tresoreria i Intervenció, mateixa dinàmica. Gestor d'expedients. Tè accès a comptabilitat." [ref=f20e146]
+                  - cell [ref=f20e147]:
+                    - button [ref=f20e148] [cursor=pointer]
+                    - button [ref=f20e151] [cursor=pointer]
+                - row [ref=f20e154]:
+                  - cell [ref=f20e155]
+                  - cell "Pedro Obrero Román" [ref=f20e156]
+                  - cell [ref=f20e157]:
+                    - link "obrerorp@premiadedalt.cat" [ref=f20e158] [cursor=pointer]:
+                      - /url: mailto:obrerorp@premiadedalt.cat
+                  - cell "607118371" [ref=f20e159]
+                  - 'cell "Responsable d''Informàtica que accedeix a les peticions dels diferents departaments. Dona els permisos, sota indicació del responsable de cada departament. Per exemple: La interventora, li fa un document indicant qui ha de tenir accesos a que." [ref=f20e160]'
+                  - cell [ref=f20e161]:
+                    - button [ref=f20e162] [cursor=pointer]
+                    - button [ref=f20e165] [cursor=pointer]
+                - row [ref=f20e168]:
+                  - cell [ref=f20e169]
+                  - cell "Lluis García" [ref=f20e170]
+                  - cell [ref=f20e171]:
+                    - link "garciajll@premiadedalt.cat" [ref=f20e172] [cursor=pointer]:
+                      - /url: mailto:garciajll@premiadedalt.cat
+                  - cell "666530168" [ref=f20e173]
+                  - cell "Urbanisme o territori, mateixa dinàmica que abans. - Accès al Gestor d'Expedients. - Si comença algun tècnic li dona un document a Pedro Obrero indicant quins permisos ha de tenir cadascú. - Tothom tè accés a la unitat compartida. (Com tothom) - Geoportal (Web) on publiquen normativa del poble. - La resta al gestor d'expedients o a la unitat compartida. Responsable de tot lo relatiu a Serveis Territorials" [ref=f20e174]
+                  - cell [ref=f20e175]:
+                    - button [ref=f20e176] [cursor=pointer]
+                    - button [ref=f20e179] [cursor=pointer]
+                - row [ref=f20e182]:
+                  - cell "Referent de dades (Data Stewart)" [ref=f20e183]
+                  - cell "Virginia Merlos" [ref=f20e184]
+                  - cell [ref=f20e185]:
+                    - link "merloscv@premiadedalt.cat" [ref=f20e186] [cursor=pointer]:
+                      - /url: mailto:merloscv@premiadedalt.cat
+                  - cell "637755094" [ref=f20e187]
+                  - cell "Promoció econòmica, mateixa dinàmica. - Gestor d'expedients. No te capacitat de decissió sobre modificació d'estructura de dades, es nomès tècnica." [ref=f20e188]
+                  - cell [ref=f20e189]:
+                    - button [ref=f20e190] [cursor=pointer]
+                    - button [ref=f20e193] [cursor=pointer]
+                - row [ref=f20e196]:
+                  - cell "Responsable de dades (Data Stewart)" [ref=f20e197]
+                  - cell "Eli Gummà" [ref=f20e198]
+                  - cell [ref=f20e199]:
+                    - link "gummabe@premiadedalt.cat" [ref=f20e200] [cursor=pointer]:
+                      - /url: mailto:gummabe@premiadedalt.cat
+                  - cell "667470681" [ref=f20e201]
+                  - cell "Educació i joventut, mateixa dinàmica. -Gestor d'expedients. - Responsable d'educació. Tenen una aplicació de gestió d'altes i baixes dels alumnes del curs, i algo del menjador. (No sabem exactament el nom). Té poder de decissió sobre aquesta aplicació." [ref=f20e202]
+                  - cell [ref=f20e203]:
+                    - button [ref=f20e204] [cursor=pointer]
+                    - button [ref=f20e207] [cursor=pointer]
+                - row [ref=f20e210]:
+                  - cell "Propietari de dades (Data Owner)" [ref=f20e211]
+                  - cell "Carlos Matallan" [ref=f20e212]
+                  - cell [ref=f20e213]:
+                    - link "prmd.pl1335@premiadedalt.cat" [ref=f20e214] [cursor=pointer]:
+                      - /url: mailto:prmd.pl1335@premiadedalt.cat
+                  - cell "936931500" [ref=f20e215]
+                  - cell "Policia, sargent cap. - Accedeixen a l'aplicació dels Mossos. - Aplicació Eurocop (al estiu probablement la canviaràn per DRAG), gestió policial, grues, gestió d'atestats. Eurocop el tenen al servidor POSSE (Base de dades SQL). Al estiu ho migraran a DRAG que un SAAS." [ref=f20e216]
+                  - cell [ref=f20e217]:
+                    - button [ref=f20e218] [cursor=pointer]
+                    - button [ref=f20e221] [cursor=pointer]
+                - row [ref=f20e224]:
+                  - cell [ref=f20e225]
+                  - cell "Mireia Boté" [ref=f20e226]
+                  - cell [ref=f20e227]:
+                    - link "botemmr@premiadedalt.cat" [ref=f20e228] [cursor=pointer]:
+                      - /url: mailto:botemmr@premiadedalt.cat
+                  - cell "936931511" [ref=f20e229]
+                  - cell "Secretaria" [ref=f20e230]
+                  - cell [ref=f20e231]:
+                    - button [ref=f20e232] [cursor=pointer]
+                    - button [ref=f20e235] [cursor=pointer]
+                - row [ref=f20e238]:
+                  - cell "Responsable de dades (Data Stewart)" [ref=f20e239]
+                  - cell "Monica Farré" [ref=f20e240]
+                  - cell [ref=f20e241]:
+                    - link "farresm@premiadedalt.cat" [ref=f20e242] [cursor=pointer]:
+                      - /url: mailto:farresm@premiadedalt.cat
+                  - cell "936931502" [ref=f20e243]
+                  - cell "Gestor de dades Lectura, Te acces al gestor d'expedients permisos CRUD, dintre de la seva area. Porta la gestió de la pàgina web i el tema de Transparència" [ref=f20e244]
+                  - cell [ref=f20e245]:
+                    - button [ref=f20e246] [cursor=pointer]
+                    - button [ref=f20e249] [cursor=pointer]
+                - row [ref=f20e252]:
+                  - cell "Responsable de dades (Data Stewart)" [ref=f20e253]
+                  - cell "Eva Roig" [ref=f20e254]
+                  - cell [ref=f20e255]:
+                    - link "prmd.alcaldia@premiadedalt.cat" [ref=f20e256] [cursor=pointer]:
+                      - /url: mailto:prmd.alcaldia@premiadedalt.cat
+                  - cell [ref=f20e257]
+                  - cell "Porta la base de dades del cementiri dels ninxols. Porta el registre d'expedients, les entrades que van cap a alcaldia." [ref=f20e258]
+                  - cell [ref=f20e259]:
+                    - button [ref=f20e260] [cursor=pointer]
+                    - button [ref=f20e263] [cursor=pointer]
+                - row [ref=f20e266]:
+                  - cell "Responsable de dades (Data Stewart)" [ref=f20e267]
+                  - cell "Mireia Boté" [ref=f20e268]
+                  - cell [ref=f20e269]:
+                    - link "botmmr@premiadedalt.cat" [ref=f20e270] [cursor=pointer]:
+                      - /url: mailto:botmmr@premiadedalt.cat
+                  - cell [ref=f20e271]
+                  - cell "Secretaria (firmar informes juridics, assesorar). Fa servir el gestor d'expedients. Tè accés. Tè poder per establir protocols." [ref=f20e272]
+                  - cell [ref=f20e273]:
+                    - button [ref=f20e274] [cursor=pointer]
+                    - button [ref=f20e277] [cursor=pointer]
+                - row [ref=f20e280]:
+                  - cell "Responsable de dades (Data Stewart)" [ref=f20e281]
+                  - cell "Ricard Amaya" [ref=f20e282]
+                  - cell [ref=f20e283]:
+                    - link "amayaar@premiadedalt.cat" [ref=f20e284] [cursor=pointer]:
+                      - /url: mailto:amayaar@premiadedalt.cat
+                  - cell [ref=f20e285]
+                  - cell "Tresorer. Responsable de les dades de comptabilitat. Dels bancs, dels comptes corrents. Fa pagament de nòmines i factures. Fa l'autorització de pagament. Tota entrada i sortida monetaria la controla ell." [ref=f20e286]
+                  - cell [ref=f20e287]:
+                    - button [ref=f20e288] [cursor=pointer]
+                    - button [ref=f20e291] [cursor=pointer]
+                - row [ref=f20e294]:
+                  - cell "Referent de dades (Data Stewart)" [ref=f20e295]
+                  - cell "Gemma Ferran" [ref=f20e296]
+                  - cell [ref=f20e297]:
+                    - link "ferrancg@premiadedalt.cat" [ref=f20e298] [cursor=pointer]:
+                      - /url: mailto:ferrancg@premiadedalt.cat
+                  - cell [ref=f20e299]
+                  - cell "Directora escoles bressol. Tè acces a l'aplicació de les Escoles bressol. A nivell de gestió" [ref=f20e300]
+                  - cell [ref=f20e301]:
+                    - button [ref=f20e302] [cursor=pointer]
+                    - button [ref=f20e305] [cursor=pointer]
+                - row [ref=f20e308]:
+                  - cell [ref=f20e309]
+                  - cell "Enric Miralles" [ref=f20e310]
+                  - cell [ref=f20e311]:
+                    - link:
+                      - /url: "mailto:"
+                  - cell [ref=f20e312]
+                  - cell "Tècnic Cultura te acces al gestor d'expedients. Però rol baix." [ref=f20e313]
+                  - cell [ref=f20e314]:
+                    - button [ref=f20e315] [cursor=pointer]
+                    - button [ref=f20e318] [cursor=pointer]
+                - row [ref=f20e321]:
+                  - cell [ref=f20e322]
+                  - cell "Gemma Planas" [ref=f20e323]
+                  - cell [ref=f20e324]:
+                    - link:
+                      - /url: "mailto:"
+                  - cell [ref=f20e325]
+                  - cell "Directora de la Biblioteca. - Treballa amb eines de la diputació per gestionar el catàleg de llibres i qui ho ha llogat." [ref=f20e326]
+                  - cell [ref=f20e327]:
+                    - button [ref=f20e328] [cursor=pointer]
+                    - button [ref=f20e331] [cursor=pointer]
+                - row [ref=f20e334]:
+                  - cell [ref=f20e335]
+                  - cell "Ester Àvila" [ref=f20e336]
+                  - cell [ref=f20e337]:
+                    - link "avilaae@premiadedalt.cat" [ref=f20e338] [cursor=pointer]:
+                      - /url: mailto:avilaae@premiadedalt.cat
+                  - cell [ref=f20e339]
+                  - cell "Reponsable de la interacció amb la AOC i de tots els datasets que hi resideixin al AOC. Per exemple, donar IDCat als ciutadans, la que controla el tema del padró." [ref=f20e340]
+                  - cell [ref=f20e341]:
+                    - button [ref=f20e342] [cursor=pointer]
+                    - button [ref=f20e345] [cursor=pointer]
+                - row [ref=f20e348]:
+                  - cell [ref=f20e349]
+                  - cell "Dolors Ollero" [ref=f20e350]
+                  - cell [ref=f20e351]:
+                    - link "ollerobd@premiadedalt.cat" [ref=f20e352] [cursor=pointer]:
+                      - /url: mailto:ollerobd@premiadedalt.cat
+                  - cell [ref=f20e353]
+                  - cell "Arquitecte. - Te accès al gestor d'expedients. Geoportal i a la ùnitat compartida." [ref=f20e354]
+                  - cell [ref=f20e355]:
+                    - button [ref=f20e356] [cursor=pointer]
+                    - button [ref=f20e359] [cursor=pointer]
+            - button "Afegir fila" [ref=f20e363] [cursor=pointer]
+        - dialog:
+          - generic:
+            - heading "Afegir Empleat" [level=3]
+            - generic:
+              - generic:
+                - generic: Nom
+                - textbox "Nom"
+              - generic:
+                - generic: Posició / Rol
+                - textbox "Posició / Rol"
+              - generic:
+                - generic: Reporta a (Deixar buit si és Arrel)
+                - combobox "Reporta a (Deixar buit si és Arrel)":
+                  - option "Cap (Arrel)" [selected]
+                  - option "Equip de Govern (Govern Municipal)"
+                  - option "Serveis Generals ()"
+                  - option "Serveis Territorials ()"
+                  - option "Serveis a les Persones ()"
+                  - option "Mònica Farré (Gabinet de Comunicació)"
+                  - option "Mireia Boté (Secretaria)"
+                  - option "Teresa Pallarés (Interventora Accidental)"
+                  - option "Ricard Amaya (Tresorera)"
+                  - option "Gemma Álvarez (Cap RRHH)"
+                  - option "Pedro Obrero (Polítiques Digitals)"
+                  - option "Esther Ávila (Cap OAC)"
+                  - option "Sergent (Policia Local)"
+                  - option "Eva Roig (Tècnica auxiliar)"
+                  - option "Isabel Xarrié (Directora Premià de Dalt Ràdio)"
+                  - option "Eulàlia Ribera (Arxivera)"
+                  - option "2 Auxiliars Administratives (Secretaria)"
+                  - option "Teresa Pallarés (Interventora Accidental)"
+                  - option "Carme Hernando (Tècnica auxiliar)"
+                  - option "Administratiu ()"
+                  - option "Tècnica mitjana (RRHH)"
+                  - option "Auxiliar Administrativa (RRHH)"
+                  - option "Xavier Silva / Maria del Mar Car (3 Tècnics aux. Informàtica)"
+                  - option "2 Auxiliars Administratives (OAC)"
+                  - option "4 Caporals (Policia Local)"
+                  - option "14 Agents (Policia Local)"
+                  - option "Administrativa (Policia Local)"
+                  - option "Lluís Garcia (Gerent Serveis Territorials)"
+                  - option "Dolors Ollero (Arquitecte)"
+                  - option "Àlex Ramírez (Arquitecte tècnic)"
+                  - option "Josep Meca (Arquitecte tècnic d'edificis)"
+                  - option "Joan Riera (Enginyer)"
+                  - option "Oriol Arderiu (Tècnic Medi Ambient)"
+                  - option "Teresa Fraile (Delineant)"
+                  - option "2 Administratives 1 Aux. (Administració Territorial)"
+                  - option "4 Conserges (Edificis municipals)"
+                  - option "Encarregat Brigada ()"
+                  - option "4 Oficials 1a (Brigada)"
+                  - option "7 Peons (Brigada)"
+                  - option "Gemma Álvarez (Cap Serveis a les Persones)"
+                  - option "Núria Riera (Coordinadora Acció Social)"
+                  - option "Virgínia Merlos (Tècnica Sup. Empresa)"
+                  - option "Elisenda Gummà (Coordinadora Educació)"
+                  - option "Enric Miralles (Tècnic Cultura)"
+                  - option "Gemma Planas (Directora Biblioteca)"
+                  - option "Carme Cristóbal (Tècnica Joventut)"
+                  - option "Mar Anicart (Tècnica d'Esports)"
+                  - option "Administrativa (Serveis a les Persones)"
+                  - option "2 Treballadors socials (Acció Social)"
+                  - option "2 Educadors socials (Acció Social)"
+                  - option "Treballadora familiar (Acció Social)"
+                  - option "Administrativa (Acció Social)"
+                  - option "Auxiliar Administrativa (Acció Social)"
+                  - option "Tècnica Ocupació ()"
+                  - option "Auxiliar Administrativa ()"
+                  - option "Professora Dansa ()"
+                  - option "Gemma Ferran (Directora Escoles Bressol)"
+                  - option "Núria Yagüe (Professora Aula d'Adults)"
+                  - option "2 Coordinadors (Escoles Bressol)"
+                  - option "3 Mestres (Escoles Bressol)"
+                  - option "8 Educadores (Escoles Bressol)"
+                  - option "2 Ajudants de cuina (Escoles Bressol)"
+                  - option "Sergi Bello (Director Escola Música)"
+                  - option "4 Professors/es (Escola Música)"
+                  - option "2 Tècniques Aux. (Biblioteca)"
+                  - option "2 Auxiliars Ludoteca (Joventut)"
+                  - option "3 Peons manteniment (Esports)"
+                  - option "Auxiliar Administrativa (Serveis a les Persones)"
+            - generic:
+              - button "Cancel·lar"
+              - button "Guardar"
+          - generic:
+            - button "close"
+        - dialog:
+          - generic:
+            - heading "Afegir Fila" [level=3]
+            - generic:
+              - generic:
+                - generic: Nom / Àmbit
+                - textbox
+              - generic:
+                - generic: Responsable
+                - combobox "Responsable":
+                  - option "-- Selecciona responsable --"
+                  - option "Gemma Álvarez"
+                  - option "Gemma Àlvarez"
+                  - option "Nuria Riera"
+                  - option "Teresa Pallarés"
+                  - option "Pedro Obrero Román"
+                  - option "Lluis García"
+                  - option "Virginia Merlos"
+                  - option "Eli Gummà"
+                  - option "Carlos Matallan"
+                  - option "Mireia Boté"
+                  - option "Monica Farré"
+                  - option "Eva Roig"
+                  - option "Mireia Boté"
+                  - option "Ricard Amaya"
+                  - option "Gemma Ferran"
+                  - option "Enric Miralles"
+                  - option "Gemma Planas"
+                  - option "Ester Àvila"
+                  - option "Dolors Ollero"
+                  - option "✏️ Escriu manualment..."
+              - generic:
+                - generic: Correu
+                - textbox "Correu Es deriva automàticament del Rol Clau seleccionat"
+                - generic: Es deriva automàticament del Rol Clau seleccionat
+              - generic:
+                - generic: Telèfon
+                - textbox "Telèfon Es deriva automàticament del Rol Clau seleccionat"
+                - generic: Es deriva automàticament del Rol Clau seleccionat
+              - generic:
+                - generic: Observacions
+                - textbox "Observacions"
+            - generic:
+              - button "Cancel·lar"
+              - button "Guardar"
+          - generic:
+            - button "close"
+        - dialog:
+          - generic:
+            - generic:
+              - heading "Informació de:" [level=3]
+              - button "✕"
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Rols Clau" [level=4]
+                    - button "+ Afegir"
+                  - list:
+                    - listitem: Cap rol assignat
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Processos" [level=4]
+                    - button "+ Afegir"
+                  - list:
+                    - listitem: Cap procés assignat
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Projectes" [level=4]
+                    - button "+ Afegir"
+                  - list:
+                    - listitem: Cap projecte assignat
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Àrees / Dominis" [level=4]
+                    - button "+ Afegir"
+                  - list:
+                    - listitem: Cap àrea assignada
+          - generic:
+            - button "close"
+        - dialog:
+          - generic:
+            - generic:
+              - heading "Descripció dels Rols" [level=3]
+              - button "✕"
+            - generic:
+              - generic:
+                - generic:
+                  - heading "🔧 Custodi tècnic de les dades" [level=4]
+                  - paragraph: Perfil tecnològic responsable del funcionament tècnic, emmagatzematge, seguretat i disponibilitat de les dades dins dels sistemes d'informació. Implementa les decisions aprovades pel propietari i col·labora amb el gestor per garantir la integritat tècnica de la dada.
+                  - paragraph:
+                    - strong: "Exemple:"
+                    - text: El perfil tecnològic responsable del sistema de gestió d'ajudes garanteix que la base de dades funcioni correctament, aplica els controls d'accés definits i executa les actualitzacions tècniques necessàries.
+              - generic:
+                - generic:
+                  - heading "📋 Gestor de les dades" [level=4]
+                  - paragraph: Perfil tècnic-funcional de l'àmbit de negoci responsable de la gestió operativa i quotidiana de la dada en el seu domini. Coneix el seu significat, les seves regles i casuístiques, i vetlla per la seva correcta aplicació i documentació. Actua com a enllaç entre l'àmbit de negoci i el perfil tecnològic.
+                  - paragraph:
+                    - strong: "Exemple:"
+                    - text: El tècnic funcional de l'àrea de Cultura revisa que els registres d'equipaments culturals estiguin complets, aplica les regles de validació definides i coordina amb el perfil tecnològic la resolució d'incidències.
+              - generic:
+                - generic:
+                  - heading "👑 Propietari de les dades" [level=4]
+                  - paragraph: Unitat administrativa responsable última d'un conjunt de dades. Defineix les normes d'ús i accés, els criteris de qualitat i la prioritat de la seva evolució. Té l'autoritat final sobre les decisions relacionades amb aquella dada.
+                  - paragraph:
+                    - strong: "Exemple:"
+                    - text: La Direcció de Serveis Socials és la propietària del registre de beneficiaris d'ajudes i decideix qui pot accedir a la informació i quins requisits de qualitat s'han de complir.
+              - generic:
+                - generic:
+                  - heading "✅ Responsable de qualitat de les dades" [level=4]
+                  - paragraph: Perfil encarregat de vetllar per la correcta definició, coherència semàntica i qualitat de les dades dins un domini.
+                  - paragraph:
+                    - strong: "Exemple:"
+                    - text: Revisar duplicats a la base de dades de clients i corregir incoherències.
+            - generic:
+              - button "Tancar"
+          - generic:
+            - button "close"

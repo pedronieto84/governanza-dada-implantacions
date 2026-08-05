@@ -1,0 +1,207 @@
+- generic [ref=f16e4]:
+  - banner [ref=f16e5]:
+    - generic [ref=f16e6]:
+      - link "Gobernanza Dashboard Principal" [ref=f16e7] [cursor=pointer]:
+        - /url: /home
+        - generic [ref=f16e8]: Gobernanza
+        - generic [ref=f16e9]: Dashboard Principal
+      - button "Premià de Dalt" [ref=f16e11] [cursor=pointer]
+      - link "Iniciar sesión" [ref=f16e17] [cursor=pointer]:
+        - /url: /login
+    - navigation [ref=f16e20]:
+      - list [ref=f16e21]:
+        - listitem [ref=f16e22]:
+          - link "1B Quëstionari d'avaluació" [ref=f16e23] [cursor=pointer]:
+            - /url: /questionari
+        - listitem [ref=f16e26]:
+          - link "3B. Inventari" [ref=f16e27] [cursor=pointer]:
+            - /url: /inventari
+        - listitem [ref=f16e30]:
+          - link "3C. Glossari" [ref=f16e31] [cursor=pointer]:
+            - /url: /glossari
+  - main [ref=f16e34]:
+    - generic [ref=f16e36]:
+      - tablist [ref=f16e37]:
+        - tab "Sistemas" [ref=f16e38] [cursor=pointer]
+        - tab "Entitats" [ref=f16e39] [cursor=pointer]
+        - tab "Atributs" [ref=f16e40] [cursor=pointer]
+        - tab "Rel. Atributs" [ref=f16e41] [cursor=pointer]
+        - tab "Llistes" [ref=f16e42] [cursor=pointer]
+        - tab "Llegenda" [ref=f16e43] [cursor=pointer]
+      - generic [ref=f16e45]:
+        - heading [level=2] [ref=f16e48]:
+          - generic [ref=f16e49]: Entitats (conjunts de dades)
+          - button "Fake data" [ref=f16e53] [cursor=pointer]
+        - dialog:
+          - generic:
+            - heading "Afegir Entitat" [level=3]
+            - generic:
+              - generic: Informació bàsica
+              - generic:
+                - generic: Nom
+                - textbox "Nom"
+              - generic:
+                - generic: Sistema
+                - textbox "Sistema"
+              - generic:
+                - generic: Descripció
+                - textbox "Descripció"
+              - generic:
+                - generic: Nom del terme relacionat (Glossari)
+                - textbox "Nom del terme relacionat (Glossari)"
+              - generic:
+                - generic: Tipus
+                - combobox "Tipus":
+                  - option "-- Selecciona --" [selected]
+                  - option "Dada mestre"
+                  - option "Dada de negoci"
+                  - option "Dada de referència"
+                  - option "Dada operativa"
+                  - option "Dada analítica"
+              - generic: Tipologia de la informació
+              - generic:
+                - generic: Informació geogràfica (SI/NO)
+                - combobox "Informació geogràfica (SI/NO)":
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic:
+                - generic: Informació ciutadania (SI/NO)
+                - combobox "Informació ciutadania (SI/NO)":
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic:
+                - generic: Informació d'empreses (SI/NO)
+                - combobox "Informació d'empreses (SI/NO)":
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic:
+                - generic: Informació de gènere (SI/NO)
+                - combobox "Informació de gènere (SI/NO)":
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic: Valoracions
+              - generic:
+                - generic: Valoració del llindar a tenir present per evitar la identificació
+                - textbox "Valoració del llindar a tenir present per evitar la identificació"
+              - generic:
+                - generic: Valoració d'esbiaixos en la recopilació de dades
+                - textbox "Valoració d'esbiaixos en la recopilació de dades"
+              - generic:
+                - generic: Valoració global de qualitat
+                - textbox "Valoració global de qualitat"
+              - generic:
+                - generic: Protecció de dades
+                - combobox "Protecció de dades":
+                  - option "-- Selecciona --" [selected]
+                  - option "Personals"
+                  - option "No personals"
+                  - option "Confidencial"
+                  - option "Públic"
+              - generic: Visibilitat i interoperabilitat
+              - generic:
+                - generic: Visibilitat
+                - combobox "Visibilitat":
+                  - option "-- Selecciona --" [selected]
+                  - option "Intern per l'ens local"
+                  - option "Intern per àrea"
+                  - option "Públic"
+                  - option "Restringit"
+              - generic:
+                - generic: Interès de la ciutadania (SI/NO)
+                - combobox "Interès de la ciutadania (SI/NO)":
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic:
+                - generic: "Intraoperabilitat: altres departaments consumeixen o podrien consumir les dades?"
+                - 'combobox "Intraoperabilitat: altres departaments consumeixen o podrien consumir les dades?"':
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic:
+                - generic: "Interoperabilitat: s'envien dades a altres administracions?"
+                - 'combobox "Interoperabilitat: s''envien dades a altres administracions?"':
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic:
+                - generic: Obertura
+                - combobox "Obertura":
+                  - option "-- Selecciona --" [selected]
+                  - option "Obert"
+                  - option "No obert, es podria obrir/s'obrirà"
+                  - option "No obert, es podria obrir/s'obrirà parcialment"
+                  - option "Restringit"
+                  - option "No aplicable"
+              - generic:
+                - generic: Restriccions a l'obertura
+                - textbox "Restriccions a l'obertura"
+              - generic: Completitud i consistència
+              - generic:
+                - generic: L'entitat existeix una única vegada en tots els sistemes d'informació?
+                - combobox "L'entitat existeix una única vegada en tots els sistemes d'informació?":
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic:
+                - generic: S'utilitzen llenguatges controlats i consistents per tots els atributs?
+                - combobox "S'utilitzen llenguatges controlats i consistents per tots els atributs?":
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic:
+                - generic: Les dades que conté són completes amb caràcter històric?
+                - textbox "Les dades que conté són completes amb caràcter històric?"
+              - generic:
+                - generic: Les dades que conté són completes - dades actuals?
+                - textbox "Les dades que conté són completes - dades actuals?"
+              - generic:
+                - generic: Caràcter històric o es fan enviaments o transferències periòdiques? (per gestionar conservació)
+                - combobox "Caràcter històric o es fan enviaments o transferències periòdiques? (per gestionar conservació)":
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic: Criticitat i seguiment
+              - generic:
+                - generic: "CRITICITAT: Les dades formen part d'un registre que certifiqui drets o obligacions? (SI/NO)"
+                - 'combobox "CRITICITAT: Les dades formen part d''un registre que certifiqui drets o obligacions? (SI/NO)"':
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic:
+                - generic: S'hi ha construït quadres de comandament sobre aquestes dades?
+                - combobox "S'hi ha construït quadres de comandament sobre aquestes dades?":
+                  - option [selected]
+                  - option "SI"
+                  - option "NO"
+              - generic: Referents i arquitectes
+              - generic:
+                - generic: Referent tècnic
+                - textbox "Referent tècnic"
+              - generic:
+                - generic: Correu electrònic Referent tècnic
+                - textbox "Correu electrònic Referent tècnic"
+              - generic:
+                - generic: Unitat orgànica Referent tècnic
+                - textbox "Unitat orgànica Referent tècnic"
+              - generic:
+                - generic: Arquitecte de la dada
+                - textbox "Arquitecte de la dada"
+              - generic:
+                - generic: Correu electrònic Arquitecte de la dada
+                - textbox "Correu electrònic Arquitecte de la dada"
+              - generic:
+                - generic: Unitat orgànica Arquitecte de la dada
+                - textbox "Unitat orgànica Arquitecte de la dada"
+              - generic: Observacions
+              - generic:
+                - textbox
+            - generic:
+              - button "Cancel·lar"
+              - button "Guardar"
+          - generic:
+            - button "close"

@@ -1,0 +1,166 @@
+- generic [ref=f28e4]:
+  - banner [ref=f28e5]:
+    - generic [ref=f28e6]:
+      - link "Gobernanza Dashboard Principal" [ref=f28e7] [cursor=pointer]:
+        - /url: /home
+        - generic [ref=f28e8]: Gobernanza
+        - generic [ref=f28e9]: Dashboard Principal
+      - button "Premià de Dalt" [ref=f28e11] [cursor=pointer]
+      - generic [ref=f28e16]:
+        - generic [ref=f28e17]:
+          - button "DEV" [ref=f28e18] [cursor=pointer]
+          - button "PROD" [ref=f28e19] [cursor=pointer]
+        - link "Admin" [ref=f28e20] [cursor=pointer]:
+          - /url: /admin
+        - link "Iniciar sesión" [ref=f28e24] [cursor=pointer]:
+          - /url: /login
+    - navigation [ref=f28e27]:
+      - list [ref=f28e28]:
+        - listitem [ref=f28e29]:
+          - link "1B Quëstionari d'avaluació" [ref=f28e30] [cursor=pointer]:
+            - /url: /questionari
+        - listitem [ref=f28e33]:
+          - link "3B. Inventari" [ref=f28e34] [cursor=pointer]:
+            - /url: /inventari
+        - listitem [ref=f28e37]:
+          - link "3C. Glossari" [ref=f28e38] [cursor=pointer]:
+            - /url: /glossari
+  - main [ref=f28e41]:
+    - generic [ref=f28e43]:
+      - tablist [ref=f28e44]:
+        - tab "Mapa Responsables" [ref=f28e45] [cursor=pointer]
+        - tab "Qüestionari" [ref=f28e46] [cursor=pointer]
+        - tab "Pla d'accions" [ref=f28e47] [cursor=pointer]
+        - tab "Resultat" [ref=f28e48] [cursor=pointer]
+      - generic [ref=f28e50]:
+        - generic [ref=f28e51]:
+          - tablist [ref=f28e53]:
+            - tab "Tabla" [ref=f28e54] [cursor=pointer]
+            - tab "Organigrama" [ref=f28e55] [cursor=pointer]
+          - generic [ref=f28e56]:
+            - heading "Rols Clau" [level=2] [ref=f28e59]
+            - heading "Àrees / Dominis" [level=2] [ref=f28e63]
+            - heading "Processos clau" [level=2] [ref=f28e67]
+            - heading "Projectes estratègics" [level=2] [ref=f28e71]
+            - heading "Altres actors" [level=2] [ref=f28e75]
+        - dialog:
+          - generic:
+            - heading "Afegir Empleat" [level=3]
+            - generic:
+              - generic:
+                - generic: Nom
+                - textbox "Nom"
+              - generic:
+                - generic: Posició / Rol
+                - textbox "Posició / Rol"
+              - generic:
+                - generic: Reporta a (Deixar buit si és Arrel)
+                - combobox "Reporta a (Deixar buit si és Arrel)":
+                  - option "Cap (Arrel)" [selected]
+            - generic:
+              - button "Cancel·lar"
+              - button "Guardar"
+          - generic:
+            - button "close"
+        - dialog:
+          - generic:
+            - heading "Afegir Fila" [level=3]
+            - generic:
+              - generic:
+                - generic: Nom / Àmbit
+                - textbox
+              - generic:
+                - generic: Responsable
+                - combobox "Responsable":
+                  - option "-- Selecciona responsable --"
+                  - option "✏️ Escriu manualment..."
+              - generic:
+                - generic: Correu
+                - textbox "Correu Es deriva automàticament del Rol Clau seleccionat"
+                - generic: Es deriva automàticament del Rol Clau seleccionat
+              - generic:
+                - generic: Telèfon
+                - textbox "Telèfon Es deriva automàticament del Rol Clau seleccionat"
+                - generic: Es deriva automàticament del Rol Clau seleccionat
+              - generic:
+                - generic: Observacions
+                - textbox "Observacions"
+            - generic:
+              - button "Cancel·lar"
+              - button "Guardar"
+          - generic:
+            - button "close"
+        - dialog:
+          - generic:
+            - generic:
+              - heading "Informació de:" [level=3]
+              - button "✕"
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Rols Clau" [level=4]
+                    - button "+ Afegir"
+                  - list:
+                    - listitem: Cap rol assignat
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Processos" [level=4]
+                    - button "+ Afegir"
+                  - list:
+                    - listitem: Cap procés assignat
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Projectes" [level=4]
+                    - button "+ Afegir"
+                  - list:
+                    - listitem: Cap projecte assignat
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Àrees / Dominis" [level=4]
+                    - button "+ Afegir"
+                  - list:
+                    - listitem: Cap àrea assignada
+          - generic:
+            - button "close"
+        - dialog:
+          - generic:
+            - generic:
+              - heading "Descripció dels Rols" [level=3]
+              - button "✕"
+            - generic:
+              - generic:
+                - generic:
+                  - heading "🔧 Custodi tècnic de les dades" [level=4]
+                  - paragraph: Perfil tecnològic responsable del funcionament tècnic, emmagatzematge, seguretat i disponibilitat de les dades dins dels sistemes d'informació. Implementa les decisions aprovades pel propietari i col·labora amb el gestor per garantir la integritat tècnica de la dada.
+                  - paragraph:
+                    - strong: "Exemple:"
+                    - text: El perfil tecnològic responsable del sistema de gestió d'ajudes garanteix que la base de dades funcioni correctament, aplica els controls d'accés definits i executa les actualitzacions tècniques necessàries.
+              - generic:
+                - generic:
+                  - heading "📋 Gestor de les dades" [level=4]
+                  - paragraph: Perfil tècnic-funcional de l'àmbit de negoci responsable de la gestió operativa i quotidiana de la dada en el seu domini. Coneix el seu significat, les seves regles i casuístiques, i vetlla per la seva correcta aplicació i documentació. Actua com a enllaç entre l'àmbit de negoci i el perfil tecnològic.
+                  - paragraph:
+                    - strong: "Exemple:"
+                    - text: El tècnic funcional de l'àrea de Cultura revisa que els registres d'equipaments culturals estiguin complets, aplica les regles de validació definides i coordina amb el perfil tecnològic la resolució d'incidències.
+              - generic:
+                - generic:
+                  - heading "👑 Propietari de les dades" [level=4]
+                  - paragraph: Unitat administrativa responsable última d'un conjunt de dades. Defineix les normes d'ús i accés, els criteris de qualitat i la prioritat de la seva evolució. Té l'autoritat final sobre les decisions relacionades amb aquella dada.
+                  - paragraph:
+                    - strong: "Exemple:"
+                    - text: La Direcció de Serveis Socials és la propietària del registre de beneficiaris d'ajudes i decideix qui pot accedir a la informació i quins requisits de qualitat s'han de complir.
+              - generic:
+                - generic:
+                  - heading "✅ Responsable de qualitat de les dades" [level=4]
+                  - paragraph: Perfil encarregat de vetllar per la correcta definició, coherència semàntica i qualitat de les dades dins un domini.
+                  - paragraph:
+                    - strong: "Exemple:"
+                    - text: Revisar duplicats a la base de dades de clients i corregir incoherències.
+            - generic:
+              - button "Tancar"
+          - generic:
+            - button "close"
