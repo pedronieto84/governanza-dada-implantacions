@@ -1,0 +1,11 @@
+.git/
+.gitignore
+.firebase/
+.firebaseignore
+firebase-debug.log
+firebase-debug.*.log
+**/node_modules/**
+**/*.log
+.env
+.env.local
+backend/service-account.json

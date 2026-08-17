@@ -1,0 +1,35 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-wrap items-center gap-3 bg-base-100" [stickyStack]="1">
+    <div role="tablist" class="tabs tabs-boxed max-w-full overflow-x-auto">
+      @for (ambit of ambits; track ambit) {
+        <button type="button" role="tab" class="tab whitespace-nowrap" [class.tab-active]="activeAmbit === ambit" (click)="activeAmbit = ambit">{{ ambit }}</button>
+      }
+    </div>
+    <app-fake-data-button (fill)="fillFakeData()" />
+  </div>
+  <p class="text-sm text-base-content/70 max-w-4xl">Pla generat a partir del Qüestionari Impacte Organitzatiu. El nivell i la prioritat són automàtics; impacte, dificultat i termini es desen immediatament.</p>
+
+  @for (ambit of ambits; track ambit) {
+    @if (activeAmbit === ambit) {
+      <div class="overflow-x-auto rounded-lg border border-base-200">
+        <table class="table table-zebra table-sm min-w-[1250px]">
+          <thead [stickyStack]="2"><tr class="bg-primary text-primary-content">
+            <th>Id.</th><th>Procés</th><th>Pla d'acció</th><th>Nivell</th><th>Prioritat aut.</th><th>Impacte</th><th>Dificultat</th><th>Imp. + Dif.</th><th>Termini objectiu</th>
+          </tr></thead>
+          <tbody>
+            @for (action of actionsByAmbit(ambit); track action.key) {
+              <tr>
+                <td class="font-bold text-primary">{{ action.codi }}</td><td>{{ action.proces }}</td><td>{{ action.accio }}</td>
+                <td class="font-bold text-center">{{ nivell(action.key) || '—' }}</td><td class="font-bold text-center">{{ prioritat(action.key) || '—' }}</td>
+                <td><select class="select select-bordered select-xs w-full" [ngModel]="impactes[action.key]" (ngModelChange)="impactes[action.key] = $event; saveData()"><option value="">-- Selecciona --</option>@for (option of impacteOptions; track option) {<option [value]="option">{{ option }}</option>}</select></td>
+                <td><select class="select select-bordered select-xs w-full" [ngModel]="dificultats[action.key]" (ngModelChange)="dificultats[action.key] = $event; saveData()"><option value="">-- Selecciona --</option>@for (option of dificultatOptions; track option) {<option [value]="option">{{ option }}</option>}</select></td>
+                <td class="font-bold text-center">{{ impacteDificultat(action.key) || '—' }}</td>
+                <td><select class="select select-bordered select-xs w-full" [ngModel]="terminis[action.key]" (ngModelChange)="terminis[action.key] = $event; saveData()"><option value="">-- Selecciona --</option>@for (option of terminiOptions; track option) {<option [value]="option">{{ option }}</option>}</select></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

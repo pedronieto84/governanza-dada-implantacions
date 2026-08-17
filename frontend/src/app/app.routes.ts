@@ -12,6 +12,9 @@ import { MapaResponsables } from './pages/questionari/mapa-responsables/mapa-res
 import { FormQuestionari } from './pages/questionari/form-questionari/form-questionari';
 import { PlaAccions } from './pages/questionari/pla-accions/pla-accions';
 import { Resultat } from './pages/questionari/resultat/resultat';
+import { QuestionariImpacte } from './pages/questionari/questionari-impacte/questionari-impacte';
+import { PlaAccionsImpacte } from './pages/questionari/pla-accions-impacte/pla-accions-impacte';
+import { ResultatImpacte } from './pages/questionari/resultat-impacte/resultat-impacte';
 // Level 2 - Inventari
 import { InstruccionsInventari } from './pages/inventari/instruccions/instruccions';
 import { TaulaInventari } from './pages/inventari/taula-inventari/taula-inventari';
@@ -51,6 +54,9 @@ export const routes: Routes = [
           { path: 'form', component: FormQuestionari },
           { path: 'pla-accions', component: PlaAccions },
           { path: 'resultat', component: Resultat },
+          { path: 'questionari-impacte', component: QuestionariImpacte },
+          { path: 'pla-accions-impacte', component: PlaAccionsImpacte },
+          { path: 'resultat-impacte', component: ResultatImpacte },
           { path: '', redirectTo: 'mapa-responsables', pathMatch: 'full' }
         ]
       },

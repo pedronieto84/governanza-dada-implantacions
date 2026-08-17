@@ -1,0 +1,48 @@
+@if (isLoading) {
+  <div class="result-loading" role="status"><span class="loading loading-spinner loading-md"></span><span>Carregant resultats...</span></div>
+} @else {
+  <section class="result-page">
+    <header class="result-header">
+      <div><p class="result-kicker">Impacte organitzatiu</p><h2>Resultat (2)</h2></div>
+      <div class="result-meta"><span>Ajuntament/Organisme</span><strong>{{ municipiActual || 'Cap municipi seleccionat' }}</strong></div>
+    </header>
+
+    <div class="summary-band">
+      <div class="global-score"><span>Mitjana global</span><strong>{{ formatScore(globalScore) }}</strong><small>sobre 4</small></div>
+      <div class="completion">
+        <div class="completion-copy"><span>Actuacions avaluades</span><strong>{{ completedQuestions }} de {{ totalQuestions }}</strong></div>
+        <progress class="progress progress-primary" [value]="completedQuestions" [max]="totalQuestions"></progress>
+      </div>
+      @for (ambit of ambits; track ambit.nom) {<div class="scope-score"><span>{{ ambit.nom }}</span><strong>{{ formatScore(ambit.puntuacio) }}</strong></div>}
+    </div>
+
+    <div class="result-grid">
+      <article class="result-panel overview-panel">
+        <div class="panel-heading"><div><span class="panel-index">01</span><h3>Visió global</h3></div><strong>{{ formatScore(globalScore) }}</strong></div>
+        <div class="radar-layout"><div class="radar"><app-radar-chart [labels]="ambitLabels" [data]="ambitScores" /></div>
+          <ol class="radar-legend">@for (ambit of ambits; track ambit.nom) {<li><span></span><b>{{ ambit.nom }}</b><strong>{{ formatScore(ambit.puntuacio) }}</strong></li>}</ol>
+        </div>
+      </article>
+      @for (ambit of ambits; track ambit.nom; let index = $index) {
+        <article class="result-panel">
+          <div class="panel-heading"><div><span class="panel-index">0{{ index + 2 }}</span><h3>{{ ambit.nom }}</h3></div><strong>{{ formatScore(ambit.puntuacio) }}</strong></div>
+          <div class="radar-layout"><div class="radar"><app-radar-chart [labels]="ambit.procesLabels" [data]="ambit.procesScores" /></div>
+            <ol class="radar-legend">@for (proces of ambit.processos; track proces.nom) {<li><span></span><b>{{ proces.nom }}</b><strong>{{ formatScore(proces.puntuacio) }}</strong></li>}</ol>
+          </div>
+        </article>
+      }
+    </div>
+
+    <section class="detail-section">
+      <div class="detail-heading"><div><p class="result-kicker">Traçabilitat del càlcul</p><h3>Detall de puntuacions</h3></div><span>Escala 0-4</span></div>
+      @for (ambit of ambits; track ambit.nom) {
+        <div class="scope-table">
+          <div class="scope-table-title"><h4>{{ ambit.nom }}</h4><span>Mitjana de processos</span><strong>{{ formatScore(ambit.puntuacio) }}</strong></div>
+          <div class="overflow-x-auto"><table class="table table-sm"><thead><tr><th>Procés</th><th class="score-cell">Mitjana</th></tr></thead><tbody>
+            @for (proces of ambit.processos; track proces.nom) {<tr><td>{{ proces.nom }}</td><td class="score-cell"><strong>{{ formatScore(proces.puntuacio) }}</strong></td></tr>}
+          </tbody></table></div>
+        </div>
+      }
+    </section>
+  </section>
+}

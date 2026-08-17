@@ -1,0 +1,59 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-wrap items-center gap-3 bg-base-100" [stickyStack]="1">
+    <div role="tablist" class="tabs tabs-boxed max-w-full overflow-x-auto">
+      @for (ambit of ambits; track ambit) {
+        <button type="button" role="tab" class="tab whitespace-nowrap" [class.tab-active]="activeAmbit === ambit" (click)="selectAmbit(ambit)">{{ ambit }}</button>
+      }
+    </div>
+    <app-fake-data-button (fill)="fillFakeData()" />
+  </div>
+
+  <p class="text-sm text-base-content/70 max-w-4xl">
+    Avalua el grau d'implantació de cada actuació sobre persones, tecnologia i processos. Les respostes alimenten automàticament el segon pla d'accions i el resultat d'impacte organitzatiu.
+  </p>
+
+  @for (ambit of ambits; track ambit) {
+    @if (activeAmbit === ambit) {
+      <div class="overflow-x-auto rounded-lg border border-base-200">
+        <table class="table table-zebra w-full min-w-[1500px]">
+          <thead>
+            <tr class="bg-primary text-primary-content">
+              <th class="w-20">Id.</th>
+              <th class="w-[28rem]">Qüestió d'avaluació</th>
+              <th class="w-72">Actuació vinculada</th>
+              <th class="w-80">Nivell d'implantació</th>
+              <th class="w-56">Observacions</th>
+              <th class="w-56">Evidències i documentació</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (action of actionsByAmbit(ambit); track action.key) {
+              @if ($first || action.proces !== actionsByAmbit(ambit)[$index - 1].proces) {
+                <tr class="bg-base-200"><td colspan="6" class="font-semibold">{{ action.proces }}</td></tr>
+              }
+              <tr>
+                <td class="font-bold text-primary align-top">{{ action.codi }}</td>
+                <td class="text-sm font-medium align-top">{{ action.pregunta }}</td>
+                <td class="text-sm text-base-content/70 align-top">{{ action.accio }}</td>
+                <td class="align-top">
+                  <select class="select select-bordered select-sm w-full text-xs" [ngModel]="answers[action.key]" (ngModelChange)="answers[action.key] = $event; saveData()">
+                    <option value="">-- Selecciona --</option>
+                    @for (nivell of nivells; track $index) {
+                      <option [value]="($index + 1).toString()">{{ $index + 1 }}. {{ nivell }}</option>
+                    }
+                  </select>
+                </td>
+                <td class="align-top">
+                  <textarea class="textarea textarea-bordered textarea-sm w-full text-xs" rows="2" [ngModel]="observacions[action.key]" (ngModelChange)="observacions[action.key] = $event; saveData()" placeholder="Observacions..."></textarea>
+                </td>
+                <td class="align-top">
+                  <textarea class="textarea textarea-bordered textarea-sm w-full text-xs" rows="2" [ngModel]="evidencies[action.key]" (ngModelChange)="evidencies[action.key] = $event; saveData()" placeholder="Evidències..."></textarea>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

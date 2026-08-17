@@ -21,7 +21,7 @@ export const createNestServer = async (expressInstance: express.Express) => {
 
 createNestServer(server)
   .then(() => {
-    if (process.env.FUNCTION_TARGET || process.env.K_SERVICE) {
+    if (process.env.FUNCTION_TARGET || process.env.K_SERVICE || process.env.PORT) {
       console.log('Nest Ready');
       return;
     }
