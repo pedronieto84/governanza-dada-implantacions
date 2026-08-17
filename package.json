@@ -1,6 +1,6 @@
 {
   "name": "dashboard-gobernanza",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Dashboard de Gobernanza de Datos - Monorepo",
   "private": true,
   "scripts": {
