@@ -1,1 +1,20 @@
-<p>llegenda works!</p>
+<section class="legend-page">
+	<header><p>Diccionari de camps</p><h2>Llegenda</h2></header>
+	@for (section of sections; track section.collection) {
+		<div class="legend-section">
+			<h3>{{ section.title }}</h3>
+			<table class="table table-sm">
+				<thead><tr><th>Camp</th><th>Format</th><th>Valors admesos</th></tr></thead>
+				<tbody>
+					@for (column of section.columns; track column.key) {
+						<tr>
+							<th>{{ column.label }}</th>
+							<td>{{ column.type === 'computed' ? 'Calculat' : column.type === 'select' ? 'Selecció' : column.type === 'date' ? 'Data' : 'Text' }}</td>
+							<td>{{ column.options?.join(' · ') || (column.type === 'computed' ? 'No editable' : 'Valor lliure') }}</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	}
+</section>

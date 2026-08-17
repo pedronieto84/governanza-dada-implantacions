@@ -1,20 +1,40 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth, authState, signInWithPopup, GoogleAuthProvider, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, User } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
+import { API_BASE } from '../api.config';
+
+export interface AccessProfile {
+  uid: string;
+  email: string;
+  isAdmin: boolean;
+  municipalitySlugs: string[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private auth: Auth = inject(Auth);
+  private http = inject(HttpClient);
 
   // Observable que emite el estado del usuario (null si no está logueado)
   public readonly user$: Observable<User | null> = authState(this.auth);
 
-  // Observable para facilitar si es admin o no
-  public readonly isAdmin$: Observable<boolean> = this.user$.pipe(
-    map(user => !!user && user.email === 'pedro.nieto.sanchez@gmail.com')
+  public readonly profile$: Observable<AccessProfile | null> = this.user$.pipe(
+    switchMap((user) =>
+      user
+        ? this.http
+            .get<AccessProfile>(`${API_BASE}/api/auth/me`)
+            .pipe(catchError(() => of(null)))
+        : of(null),
+    ),
+    shareReplay({ bufferSize: 1, refCount: true }),
+  );
+
+  public readonly isAdmin$: Observable<boolean> = this.profile$.pipe(
+    map((profile) => profile?.isAdmin ?? false),
   );
 
   async loginWithGoogle(): Promise<void> {

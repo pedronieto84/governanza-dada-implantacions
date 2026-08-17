@@ -1,0 +1,91 @@
+<section class="inventory-sheet">
+  <header class="sheet-header" [stickyStack]="1">
+    <div>
+      <p>3B · Plantilla d'inventari d'actius de dades</p>
+      <h2>{{ config.title }}</h2>
+    </div>
+    <span>{{ rows().length }} registres</span>
+  </header>
+
+  @if (loading()) {
+    <div class="loading-state" role="status">
+      <span class="loading loading-spinner loading-md"></span>
+      <span>Carregant inventari...</span>
+    </div>
+  } @else {
+    <div class="table-scroll">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th class="row-number">#</th>
+            @for (column of config.columns; track column.key) {
+              <th [style.min-width]="column.width ?? '14rem'">{{ column.label }}</th>
+            }
+            <th class="actions">Accions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows(); track $index; let rowIndex = $index) {
+            <tr>
+              <td class="row-number">{{ rowIndex + 1 }}</td>
+              @for (column of config.columns; track column.key) {
+                <td>
+                  @if (column.type === 'computed') {
+                    <output
+                      class="computed-value"
+                      [class.valid]="value(row, column) === 'OK'"
+                      [class.invalid]="value(row, column).includes('erroni') || value(row, column) === 'Error'">
+                      {{ value(row, column) }}
+                    </output>
+                  } @else if (column.type === 'select' || column.key === 'domini' || column.key === 'conjunt' || column.key === 'sistema') {
+                    <select
+                      class="select select-bordered select-sm"
+                      [ngModel]="value(row, column)"
+                      (ngModelChange)="update(rowIndex, column.key, $event)">
+                      <option value="">-- Selecciona --</option>
+                      @for (option of options(column); track option) {
+                        <option [value]="option">{{ option }}</option>
+                      }
+                    </select>
+                  } @else if (column.type === 'textarea') {
+                    <textarea
+                      class="textarea textarea-bordered textarea-sm"
+                      rows="2"
+                      [ngModel]="value(row, column)"
+                      (ngModelChange)="update(rowIndex, column.key, $event)"></textarea>
+                  } @else {
+                    <input
+                      class="input input-bordered input-sm"
+                      [type]="column.type === 'date' ? 'date' : 'text'"
+                      [ngModel]="value(row, column)"
+                      (ngModelChange)="update(rowIndex, column.key, $event)" />
+                  }
+                </td>
+              }
+              <td class="actions">
+                <button class="btn btn-ghost btn-sm text-error" type="button" title="Eliminar" (click)="remove(rowIndex)">
+                  <span aria-hidden="true">×</span>
+                  <span class="sr-only">Eliminar {{ config.itemLabel }}</span>
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td class="empty-state" [attr.colspan]="config.columns.length + 2">
+                Encara no hi ha cap {{ config.itemLabel }} a l'inventari.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="sheet-footer">
+      <button class="btn btn-sm btn-primary" type="button" (click)="add()">
+        <span aria-hidden="true">+</span>
+        Afegir {{ config.itemLabel }}
+      </button>
+      <span>Els canvis es desen automàticament.</span>
+    </footer>
+  }
+</section>

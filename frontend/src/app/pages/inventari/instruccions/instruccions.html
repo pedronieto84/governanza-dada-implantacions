@@ -1,0 +1,34 @@
+<section class="instructions-page">
+  <header>
+    <p>3B · Plantilla d'inventari d'actius de dades</p>
+    <h2>Instruccions</h2>
+    <span>La plantilla s'organitza en les pestanyes següents:</span>
+  </header>
+
+  <div class="sheet-list">
+    @for (sheet of sheets; track sheet[0]; let index = $index) {
+      <article>
+        <b>{{ index + 1 }}</b>
+        <div>
+          <h3>{{ sheet[0] }}</h3>
+          <p>{{ sheet[1] }}</p>
+        </div>
+      </article>
+    }
+  </div>
+
+  <div class="responsibility-band">
+    <h3>Responsabilitat</h3>
+    <p>L'àmbit de suport en governança de dades municipal i el responsable de dades de l'ens local són els responsables de documentar, mantenir i gestionar l'inventari d'actius de dades.</p>
+  </div>
+
+  <div class="scope-grid">
+    <h3>Àmbits dels dominis de dades</h3>
+    <dl>
+      <div><dt>Govern i administració</dt><dd>Gestió administrativa de l'ens local.</dd></div>
+      <div><dt>Gestió de l'espai públic</dt><dd>Gestió de la ciutat: residus, clavegueram, informació geogràfica i serveis territorials.</dd></div>
+      <div><dt>Serveis a les persones</dt><dd>Serveis municipals adreçats a la ciutadania.</dd></div>
+      <div><dt>Corporatiu</dt><dd>Dades mestres i de referència comunes a tot l'espai de dades.</dd></div>
+    </dl>
+  </div>
+</section>

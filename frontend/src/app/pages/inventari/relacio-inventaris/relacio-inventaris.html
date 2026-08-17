@@ -1,0 +1,11 @@
+<section class="references-page">
+  <header><p>Traçabilitat del model</p><h2>Relació inventaris</h2></header>
+  <table class="table">
+    <thead><tr><th>Inventari</th><th>Principal referència</th><th>Detalls</th></tr></thead>
+    <tbody>
+      @for (reference of references; track reference.inventari) {
+        <tr><th>{{ reference.inventari }}</th><td>{{ reference.referencia }}</td><td>{{ reference.detall }}</td></tr>
+      }
+    </tbody>
+  </table>
+</section>

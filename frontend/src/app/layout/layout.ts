@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MunicipiService } from '../services/municipi.service';
 import { AuthService } from '../services/auth.service';
+import { toSlug } from '../utils/slug';
 import { AppModeService } from '../services/app-mode.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class Layout implements OnInit, OnDestroy {
   municipiSeleccionat = '';
   showMunicipiDropdown = false;
   municipiSearch = '';
-  private _sub!: Subscription;
+  private _sub = new Subscription();
 
   municipis: string[] = [
     'Abrera', 'Aguilar de Segarra', 'Aiguafreda', 'Alella', 'Alpens',
@@ -89,7 +90,7 @@ export class Layout implements OnInit, OnDestroy {
     'Teià', 'Terrassa', 'Tiana', 'Tona', 'Torelló', 'Torre de Claramunt, La',
     'Torrelavit', 'Torrelles de Foix', 'Torrelles de Llobregat', 'Ullastrell',
     'Vacarisses', 'Vallbona d\'Anoia', 'Vallcebre', 'Vallgorguina',
-    'Vallirana', 'Vallromanes', 'Vic', 'Viladecans', 'Viladecavalls',
+    'Vallirana', 'Vallromanes', 'Veciana', 'Vic', 'Viladecans', 'Viladecavalls',
     'Vilafranca del Penedès', 'Vilalba Sasserra', 'Vilanova del Camí',
     'Vilanova del Vallès', 'Vilanova i la Geltrú', 'Vilassar de Dalt',
     'Vilassar de Mar', 'Vilobí del Penedès', 'Viver i Serrateix'
@@ -104,9 +105,28 @@ export class Layout implements OnInit, OnDestroy {
   constructor(private municipiService: MunicipiService) {}
 
   ngOnInit() {
-    this._sub = this.municipiService.municipiSeleccionat$.subscribe(m => {
-      this.municipiSeleccionat = m;
-    });
+    this._sub.add(
+      this.municipiService.municipiSeleccionat$.subscribe((m) => {
+        this.municipiSeleccionat = m;
+      }),
+    );
+    this._sub.add(
+      this.authService.profile$.subscribe((profile) => {
+        if (!profile) {
+          this.municipis = [];
+          return;
+        }
+        if (!profile.isAdmin) {
+          const allowedSlugs = new Set(profile.municipalitySlugs);
+          this.municipis = this.municipis.filter((municipi) =>
+            allowedSlugs.has(toSlug(municipi)),
+          );
+        }
+        if (!this.municipiSeleccionat && this.municipis.length > 0) {
+          this.selectMunicipi(this.municipis[0]);
+        }
+      }),
+    );
   }
 
   ngOnDestroy() {

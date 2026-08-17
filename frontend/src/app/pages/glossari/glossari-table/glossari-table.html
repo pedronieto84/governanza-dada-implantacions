@@ -12,7 +12,7 @@
       </div>
     } @else {
     <div class="flex flex-wrap items-center gap-3 px-4 pt-2 bg-base-100" [stickyStack]="2">
-      <div role="tablist" class="tabs tabs-bordered">
+      <div role="tablist" class="tabs tabs-boxed">
         <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'mestres'" (click)="setActiveTab('mestres')">Dades Mestres</button>
         <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'referencia'" (click)="setActiveTab('referencia')">Dades de Referència</button>
         <button role="tab" class="tab font-semibold" [class.tab-active]="activeTab === 'negoci'" (click)="setActiveTab('negoci')">Dades de Negoci</button>

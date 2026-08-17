@@ -1,0 +1,11 @@
+.lists-page { border: 1px solid oklch(var(--bc) / .14); }
+header { padding: 1.25rem; color: oklch(var(--pc)); background: oklch(var(--p)); }
+header p { margin: 0 0 .3rem; font-size: .72rem; font-weight: 800; }
+header h2 { margin: 0; font-size: 1.3rem; font-weight: 850; }
+.lists-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: oklch(var(--bc) / .14); }
+article { padding: 1rem; background: oklch(var(--b1)); }
+h3 { margin: 0 0 .7rem; font-size: .9rem; font-weight: 850; }
+ul { margin: 0; padding: 0; list-style: none; }
+li { padding: .35rem 0; color: oklch(var(--bc) / .72); font-size: .78rem; border-top: 1px solid oklch(var(--bc) / .09); white-space: pre-line; }
+@media (max-width: 900px) { .lists-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 580px) { .lists-grid { grid-template-columns: 1fr; } }

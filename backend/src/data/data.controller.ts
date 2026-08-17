@@ -1,16 +1,23 @@
-import { Controller, Get, Post, Body, Param, HttpException, HttpStatus, Inject } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, HttpException, HttpStatus, Inject, Req, UseGuards } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { AccessService } from '../auth/access.service';
+import { FirebaseAuthGuard } from '../auth/firebase-auth.guard';
+import type { AuthenticatedRequest } from '../auth/firebase-auth.guard';
 
 @Controller('data') // Prefix changed to 'data' assuming api is set globally in main.ts
+@UseGuards(FirebaseAuthGuard)
 export class DataController {
 
-  constructor(@Inject('FIRESTORE') private readonly db: admin.firestore.Firestore) {}
+  constructor(
+    @Inject('FIRESTORE') private readonly db: admin.firestore.Firestore,
+    private readonly accessService: AccessService,
+  ) {}
 
   /** Returns an index of all municipalities that have real data.
    *  Shape: { [slug]: { [page]: rowCount } }
    */
   @Get('municipis')
-  async getMunicipisIndex() {
+  async getMunicipisIndex(@Req() request: AuthenticatedRequest) {
     const index: Record<string, Record<string, number>> = {};
     
     // In Firestore, retrieving all collections sizes per municipality can be heavy.
@@ -20,6 +27,9 @@ export class DataController {
       
       for (const doc of municipisSnapshot.docs) {
         const slug = doc.id;
+        if (!request.access.isAdmin && !request.access.municipalitySlugs.includes(slug)) {
+          continue;
+        }
         index[slug] = {};
         
         // Fetch pages subcollection sizes
@@ -38,9 +48,14 @@ export class DataController {
   }
 
   @Get('municipis/:slug/:page')
-  async getMunicipiData(@Param('slug') slug: string, @Param('page') page: string) {
+  async getMunicipiData(
+    @Param('slug') slug: string,
+    @Param('page') page: string,
+    @Req() request: AuthenticatedRequest,
+  ) {
     this.validateSegment(slug);
     this.validateSegment(page);
+    this.accessService.assertMunicipality(request.access, slug);
     try {
       const docRef = this.db.doc(`municipis/${slug}/pages/${page}`);
       const docSnap = await docRef.get();
@@ -62,9 +77,11 @@ export class DataController {
     @Param('slug') slug: string,
     @Param('page') page: string,
     @Body() data: any,
+    @Req() request: AuthenticatedRequest,
   ) {
     this.validateSegment(slug);
     this.validateSegment(page);
+    this.accessService.assertMunicipality(request.access, slug);
     try {
       const docRef = this.db.doc(`municipis/${slug}/pages/${page}`);
       
@@ -81,7 +98,12 @@ export class DataController {
   }
 
   @Get(':page')
-  async getData(@Param('page') page: string) {
+  async getData(
+    @Param('page') page: string,
+    @Req() request: AuthenticatedRequest,
+  ) {
+    this.validateSegment(page);
+    this.accessService.assertAdmin(request.access);
     try {
       const docRef = this.db.collection('global_data').doc(page);
       const docSnap = await docRef.get();
@@ -100,7 +122,13 @@ export class DataController {
   }
 
   @Post(':page')
-  async saveData(@Param('page') page: string, @Body() data: any) {
+  async saveData(
+    @Param('page') page: string,
+    @Body() data: any,
+    @Req() request: AuthenticatedRequest,
+  ) {
+    this.validateSegment(page);
+    this.accessService.assertAdmin(request.access);
     try {
       const docRef = this.db.collection('global_data').doc(page);
       await docRef.set({ payload: data });

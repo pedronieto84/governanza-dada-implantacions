@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MunicipiService } from '../../services/municipi.service';
 import { API_BASE } from '../../api.config';
 import { toSlug } from '../../utils/slug';
+import { AuthService } from '../../services/auth.service';
 
 interface Column {
   label: string;
@@ -61,7 +62,7 @@ export class Home implements OnInit {
   selectedTable = 0;
   selectedMunicipiAnalisi = 'Todos';
 
-  readonly municipis: string[] = [
+  municipis: string[] = [
     'Abrera', 'Aguilar de Segarra', 'Aiguafreda', 'Alella', 'Alpens',
     'Arenys de Mar', 'Arenys de Munt', 'Argençola', 'Argentona', 'Artés',
     'Avià', 'Avinyó', 'Avinyonet del Penedès', 'Bagà', 'Balenyà',
@@ -129,7 +130,7 @@ export class Home implements OnInit {
     'Teià', 'Terrassa', 'Tiana', 'Tona', 'Torelló', 'Torre de Claramunt, La',
     'Torrelavit', 'Torrelles de Foix', 'Torrelles de Llobregat', 'Ullastrell',
     'Vacarisses', "Vallbona d'Anoia", 'Vallcebre', 'Vallgorguina',
-    'Vallirana', 'Vallromanes', 'Vic', 'Viladecans', 'Viladecavalls',
+    'Vallirana', 'Vallromanes', 'Veciana', 'Vic', 'Viladecans', 'Viladecavalls',
     'Vilafranca del Penedès', 'Vilalba Sasserra', 'Vilanova del Camí',
     'Vilanova del Vallès', 'Vilanova i la Geltrú', 'Vilassar de Dalt',
     'Vilassar de Mar', 'Vilobí del Penedès', 'Viver i Serrateix',
@@ -216,9 +217,25 @@ export class Home implements OnInit {
     private router: Router,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
+    this.authService.profile$.subscribe((profile) => {
+      if (profile && !profile.isAdmin) {
+        const allowedSlugs = new Set(profile.municipalitySlugs);
+        this.municipis = this.municipis.filter((municipi) =>
+          allowedSlugs.has(toSlug(municipi)),
+        );
+        if (
+          this.selectedMunicipiAnalisi !== 'Todos' &&
+          !this.municipis.includes(this.selectedMunicipiAnalisi)
+        ) {
+          this.selectedMunicipiAnalisi = 'Todos';
+        }
+        this.cdr.detectChanges();
+      }
+    });
     this.http.get<Record<string, Record<string, number>>>(`${API_BASE}/api/data/municipis`).subscribe({
       next: (data) => {
         this.realIndex = data;

@@ -13,12 +13,12 @@ import { FormQuestionari } from './pages/questionari/form-questionari/form-quest
 import { PlaAccions } from './pages/questionari/pla-accions/pla-accions';
 import { Resultat } from './pages/questionari/resultat/resultat';
 // Level 2 - Inventari
-import { Sistemas } from './pages/inventari/sistemas/sistemas';
-import { Entitats } from './pages/inventari/entitats/entitats';
-import { Atributs } from './pages/inventari/atributs/atributs';
-import { RelacionAtributs } from './pages/inventari/relacion-atributs/relacion-atributs';
+import { InstruccionsInventari } from './pages/inventari/instruccions/instruccions';
+import { TaulaInventari } from './pages/inventari/taula-inventari/taula-inventari';
+import { QualitatInventari } from './pages/inventari/qualitat/qualitat';
 import { Llistes } from './pages/inventari/llistes/llistes';
 import { Llegenda } from './pages/inventari/llegenda/llegenda';
+import { RelacioInventaris } from './pages/inventari/relacio-inventaris/relacio-inventaris';
 // Level 2 - Glossari
 import { GlossariTable } from './pages/glossari/glossari-table/glossari-table';
 import { RelacionGlossari } from './pages/glossari/relacion-glossari/relacion-glossari';
@@ -30,6 +30,7 @@ import { AdminComponent } from './pages/admin/admin';
 import { AdminUsuariosComponent } from './pages/admin/usuarios/admin-usuarios';
 import { AdminEntidadesComponent } from './pages/admin/entidades/admin-entidades';
 import { adminGuard } from './guards/admin.guard';
+import { authGuard } from './guards/auth.guard';
 
 // En modo DEV se evita forzar el login (p.ej. para webscraping/testing automatizado).
 const homeOrLoginRedirect = () => (inject(AppModeService).isDev() ? '/home' : '/login');
@@ -39,6 +40,7 @@ export const routes: Routes = [
   {
     path: '',
     component: Layout,
+    canActivate: [authGuard],
     children: [
       { path: 'home', component: Home },
       { 
@@ -56,13 +58,20 @@ export const routes: Routes = [
         path: 'inventari', 
         component: Inventari,
         children: [
-          { path: 'sistemas', component: Sistemas },
-          { path: 'entitats', component: Entitats },
-          { path: 'atributs', component: Atributs },
-          { path: 'relacion', component: RelacionAtributs },
-          { path: 'llistes', component: Llistes },
+          { path: 'instruccions', component: InstruccionsInventari },
+          { path: 'sistemes', component: TaulaInventari, data: { collection: 'sistemes' } },
+          { path: 'dominis-dades', component: TaulaInventari, data: { collection: 'dominis' } },
+          { path: 'conjunts-dades', component: TaulaInventari, data: { collection: 'conjunts' } },
+          {
+            path: 'relacio-conjunts-sistemes',
+            component: TaulaInventari,
+            data: { collection: 'relacions' },
+          },
+          { path: 'qualitat', component: QualitatInventari },
           { path: 'llegenda', component: Llegenda },
-          { path: '', redirectTo: 'sistemas', pathMatch: 'full' }
+          { path: 'relacio-inventaris', component: RelacioInventaris },
+          { path: 'llistes', component: Llistes },
+          { path: '', redirectTo: 'sistemes', pathMatch: 'full' }
         ]
       },
       { 

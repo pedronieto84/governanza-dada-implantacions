@@ -1,0 +1,8 @@
+.legend-page { border: 1px solid oklch(var(--bc) / .14); }
+header { padding: 1.25rem; color: oklch(var(--pc)); background: oklch(var(--p)); }
+header p { margin: 0 0 .3rem; font-size: .72rem; font-weight: 800; }
+header h2 { margin: 0; font-size: 1.3rem; font-weight: 850; }
+.legend-section h3 { margin: 0; padding: .8rem 1rem; background: oklch(var(--b2)); font-size: .95rem; font-weight: 850; }
+.legend-section + .legend-section { border-top: 4px solid oklch(var(--b3)); }
+th { font-weight: 800; }
+td { max-width: 46rem; white-space: normal; }

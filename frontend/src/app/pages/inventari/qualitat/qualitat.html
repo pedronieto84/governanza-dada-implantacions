@@ -1,0 +1,45 @@
+@if (inventari.loading()) {
+  <div class="quality-loading"><span class="loading loading-spinner"></span> Carregant indicadors...</div>
+} @else {
+  <section class="quality-page">
+    <header>
+      <p>Resultat</p>
+      <h2>Qualitat i completitud de l'inventari d'actius de dades</h2>
+    </header>
+
+    <div class="quality-sections">
+      <article>
+        <div class="section-title"><span>01</span><h3>Sistemes</h3></div>
+        <dl>
+          <div><dt>Sistemes identificats</dt><dd>{{ metrics().systems }}</dd></div>
+          <div><dt>Completitud informació</dt><dd>{{ percent(metrics().systemsCompletion) }}</dd></div>
+          <div><dt>Sistemes amb Conjunts de dades</dt><dd>{{ metrics().systemsRelated }}</dd></div>
+          <div><dt>Sistemes sense relacions correctes</dt><dd>{{ metrics().systemsWithout }}</dd></div>
+        </dl>
+        <app-pie-chart [labels]="systemLabels" [data]="systemChartData()" />
+      </article>
+
+      <article>
+        <div class="section-title"><span>02</span><h3>Dominis de dades</h3></div>
+        <dl>
+          <div><dt>Dominis identificats</dt><dd>{{ metrics().domains }}</dd></div>
+          <div><dt>Completitud informació</dt><dd>{{ percent(metrics().domainsCompletion) }}</dd></div>
+          <div><dt>Dominis amb conjunts de dades</dt><dd>{{ metrics().domainsRelated }}</dd></div>
+          <div><dt>Dominis sense cap Conjunt de dades</dt><dd>{{ metrics().domainsWithout }}</dd></div>
+        </dl>
+        <app-pie-chart [labels]="domainLabels" [data]="domainChartData()" />
+      </article>
+
+      <article class="datasets-panel">
+        <div class="section-title"><span>03</span><h3>Conjunts de dades</h3></div>
+        <dl>
+          <div><dt>Conjunts de dades identificats</dt><dd>{{ metrics().datasets }}</dd></div>
+          <div><dt>Completitud informació</dt><dd>{{ percent(metrics().datasetsCompletion) }}</dd></div>
+          <div><dt>Relacionats amb Sistemes de dades</dt><dd>{{ percent(metrics().datasetsRelationRate) }}</dd></div>
+          <div><dt>Relacions correctes</dt><dd>{{ metrics().validRelations }}</dd></div>
+          <div><dt>Relacions amb errors</dt><dd>{{ metrics().relationErrors }}</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+}

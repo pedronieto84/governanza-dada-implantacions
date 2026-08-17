@@ -8,4 +8,24 @@ import { StickyStackDirective } from '../../shared/sticky-stack.directive';
   templateUrl: './inventari.html',
   styleUrl: './inventari.css'
 })
-export class Inventari {}
+export class Inventari {
+  infoTooltipVisible = false;
+  infoTooltipLeft = 0;
+  infoTooltipTop = 0;
+
+  showInfoTooltip(event: Event): void {
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const halfTooltipWidth = 88;
+    this.infoTooltipLeft = Math.min(
+      Math.max(rect.left + rect.width / 2, halfTooltipWidth),
+      window.innerWidth - halfTooltipWidth,
+    );
+    this.infoTooltipTop = rect.bottom + 8;
+    this.infoTooltipVisible = true;
+  }
+
+  hideInfoTooltip(): void {
+    this.infoTooltipVisible = false;
+  }
+}

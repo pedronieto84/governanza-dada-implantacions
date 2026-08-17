@@ -1,1 +1,13 @@
-<p>llistes works!</p>
+<section class="lists-page">
+	<header><p>Valors de referència</p><h2>Llistes</h2></header>
+	<div class="lists-grid">
+		@for (list of lists; track list[0]) {
+			<article>
+				<h3>{{ list[0] }}</h3>
+				<ul>
+					@for (value of list[1]; track value) { <li>{{ value }}</li> }
+				</ul>
+			</article>
+		}
+	</div>
+</section>
